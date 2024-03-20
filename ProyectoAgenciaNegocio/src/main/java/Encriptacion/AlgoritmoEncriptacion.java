@@ -9,5 +9,13 @@ package Encriptacion;
  * @author pc
  */
 public class AlgoritmoEncriptacion {
+
+    public AlgoritmoEncriptacion() {
+    }
+    public void Encriptador(){
+        
+        
+    }
+   
     
 }
