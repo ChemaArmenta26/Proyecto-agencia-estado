@@ -37,7 +37,7 @@ public class Tramite implements Serializable {
     private Calendar fecha;
 
     @Column(name = "costo",nullable = false)
-    private int costo;
+    private Float costo;
 
     @ManyToOne
     @JoinColumn(name = "id_Persona",nullable = false)
@@ -55,7 +55,7 @@ public class Tramite implements Serializable {
     public Tramite() {
     }
 
-    public Tramite(Calendar fecha, int costo, Persona persona) {
+    public Tramite(Calendar fecha, Float costo, Persona persona) {
         this.fecha = fecha;
         this.costo = costo;
         this.persona = persona;
@@ -69,11 +69,11 @@ public class Tramite implements Serializable {
         this.fecha = fecha;
     }
 
-    public int getCosto() {
+    public Float getCosto() {
         return costo;
     }
 
-    public void setCosto(int costo) {
+    public void setCosto(Float costo) {
         this.costo = costo;
     }
 
