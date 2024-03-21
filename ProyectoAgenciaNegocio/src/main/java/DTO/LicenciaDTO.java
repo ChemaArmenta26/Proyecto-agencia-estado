@@ -4,10 +4,41 @@
  */
 package DTO;
 
+import java.util.Calendar;
+
 /**
  *
  * @author pc
  */
-public class LicenciaDTO {
+public class LicenciaDTO extends TramiteDTO {
+    
+    private int duracionAños;
+    private Calendar vigenciaF;
+
+    public LicenciaDTO() {
+    }
+
+    public LicenciaDTO(int duracionAños, Calendar vigenciaF, Calendar fecha, float costo) {
+        super(fecha, costo);
+        this.duracionAños = duracionAños;
+        this.vigenciaF = vigenciaF;
+    }
+
+    public int getDuracionAños() {
+        return duracionAños;
+    }
+
+    public void setDuracionAños(int duracionAños) {
+        this.duracionAños = duracionAños;
+    }
+
+    public Calendar getVigenciaF() {
+        return vigenciaF;
+    }
+
+    public void setVigenciaF(Calendar vigenciaF) {
+        this.vigenciaF = vigenciaF;
+    }
+    
     
 }

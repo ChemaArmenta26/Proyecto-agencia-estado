@@ -2,18 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package DAOs;
+package Conexion;
 
 import Persistencia.PersistenciaException;
+import javax.persistence.EntityManager;
+
 
 /**
  *
  * @author pc
  */
-public interface IUsuarioDAO {
+public interface IConexionBD {
     
     
-    public boolean autenticarUsuario(String usuario, String contraseña) throws PersistenciaException;
-    public boolean agregarUsuario(String usuario, String contraseña) throws PersistenciaException;
-    
+    public EntityManager conexion() throws PersistenciaException;
 }
