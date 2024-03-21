@@ -57,8 +57,7 @@ public class Persona implements Serializable {
 
     @OneToMany(mappedBy = "Persona")
     private List<Tramite> tramites;
-    @OneToOne(mappedBy = "persona", cascade = CascadeType.PERSIST)
-    private Usuario usario;
+    
 
     public Persona() {
     }
@@ -120,13 +119,6 @@ public class Persona implements Serializable {
         this.tramites = tramites;
     }
 
-    public Usuario getUsario() {
-        return usario;
-    }
-
-    public void setUsario(Usuario usario) {
-        this.usario = usario;
-    }
     
 
     @Override
