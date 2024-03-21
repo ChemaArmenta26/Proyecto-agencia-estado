@@ -4,6 +4,7 @@
  */
 package DAOs;
 
+import DAOs.IUsuarioDAO;
 import Persistencia.PersistenciaException;
 
 /**
