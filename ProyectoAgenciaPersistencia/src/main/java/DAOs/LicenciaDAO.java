@@ -8,6 +8,8 @@ import Conexion.IConexionBD;
 import Entidades.Persona;
 import Entidades.Tramite;
 import Persistencia.PersistenciaException;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  *
@@ -23,7 +25,26 @@ public class LicenciaDAO extends TramiteDAO implements ILicenciaDAO{
     
     @Override
     public long autenticarDatos(Persona persona) throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        EntityManager entity = conexion.conexion();
+        try {
+            // Construir la consulta JPQL
+            String jpql = "SELECT COUNT(p) FROM Persona p WHERE p.RFC = :rfc AND p.nombre = :nombre AND p.telefono = :telefono AND p.fechaNacimiento = :fechaNacimiento AND p.discapacitado = :discapacitado";
+            Query query = entity.createQuery(jpql);
+            query.setParameter("rfc", persona.getRFC());
+            query.setParameter("nombre", persona.getNombre());
+            query.setParameter("telefono", persona.getTelefono());
+            query.setParameter("fechaNacimiento", persona.getFechaNacimiento());
+            query.setParameter("discapacitado", persona.isDiscapacitado());
+
+            // Ejecutar la consulta
+            Long count = (Long) query.getSingleResult();
+
+            // Si el resultado es mayor que cero, significa que se encontró una coincidencia
+            return count;
+        } catch(Exception e) {
+              System.out.println(e);
+              return 0;
+        }  
     }
 
     @Override

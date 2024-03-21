@@ -55,7 +55,7 @@ public class Persona implements Serializable {
     @Column(name = "discapacitado",nullable = false)
     private boolean discapacitado;
 
-    @OneToMany(mappedBy = "Persona")
+    @OneToMany(mappedBy = "Persona", cascade = CascadeType.PERSIST)
     private List<Tramite> tramites;
     
 

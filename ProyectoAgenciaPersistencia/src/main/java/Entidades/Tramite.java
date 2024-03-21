@@ -27,7 +27,7 @@ import javax.persistence.TemporalType;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Tramite implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,7 +40,7 @@ public class Tramite implements Serializable {
     private Float costo;
 
     @ManyToOne
-    @JoinColumn(name = "id_Persona",nullable = false)
+    @JoinColumn(name = "id_Persona", referencedColumnName = "id")
     private Persona persona;
     
     

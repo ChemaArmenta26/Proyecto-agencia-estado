@@ -21,9 +21,7 @@ import javax.persistence.TemporalType;
 @Entity
 public class Licencia extends Tramite implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    
 
     @Column(name = "Vigencia", nullable = false)
     private int duracionAños;
@@ -59,7 +57,9 @@ public class Licencia extends Tramite implements Serializable {
 
     @Override
     public String toString() {
-        return "Licencia{" + "id=" + id + ", duracionA\u00f1os=" + duracionAños + ", vigenciaF=" + vigenciaF + '}';
+        return "Licencia{" + "duracionA\u00f1os=" + duracionAños + ", vigenciaF=" + vigenciaF + '}';
     }
+
+    
 
 }
