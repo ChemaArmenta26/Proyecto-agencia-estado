@@ -5,7 +5,9 @@
 package DAOs;
 
 import Conexion.IConexionBD;
+import Entidades.Persona;
 import Persistencia.PersistenciaException;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -20,8 +22,15 @@ public class PersonaDAO implements IPersonaDAO{
     }
     
     @Override
-    public void agregarPersonas() throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Persona agregarPersona(Persona persona) throws PersistenciaException {
+        EntityManager entityManager = conexion.conexion();
+
+        entityManager.getTransaction().begin();
+        entityManager.persist(persona);
+
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        return persona;
     }
     
 }

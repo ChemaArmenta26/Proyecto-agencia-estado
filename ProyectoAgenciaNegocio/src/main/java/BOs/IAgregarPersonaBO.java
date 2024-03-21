@@ -2,17 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package DAOs;
+package BOs;
 
-import Entidades.Persona;
-import Persistencia.PersistenciaException;
+import java.util.List;
 
 /**
  *
- * @author pc
+ * @author PC
  */
-public interface IPersonaDAO {
-    
-    public Persona agregarPersona(Persona persona) throws PersistenciaException;
+public interface IAgregarPersonaBO {
+    public void agregarPersonas();
     
 }
