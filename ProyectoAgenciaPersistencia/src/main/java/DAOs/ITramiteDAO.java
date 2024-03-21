@@ -4,10 +4,14 @@
  */
 package DAOs;
 
+import Entidades.Tramite;
+import Persistencia.PersistenciaException;
+
 /**
  *
  * @author pc
  */
 public interface ITramiteDAO {
     
+    public boolean agregarTramite(Tramite tramite) throws PersistenciaException;
 }

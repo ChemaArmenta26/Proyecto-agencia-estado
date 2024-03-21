@@ -4,10 +4,24 @@
  */
 package DAOs;
 
+import Conexion.IConexionBD;
+import Persistencia.PersistenciaException;
+
 /**
  *
  * @author pc
  */
-public class PersonaDAO {
+public class PersonaDAO implements IPersonaDAO{
+
+    IConexionBD conexion;
+
+    public PersonaDAO(IConexionBD conexion) {
+        this.conexion = conexion;
+    }
+    
+    @Override
+    public void agregarPersonas() throws PersistenciaException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

@@ -2,16 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package DAOs;
+package Conexion;
 
 import Persistencia.PersistenciaException;
+import javax.persistence.EntityManager;
+
 
 /**
  *
  * @author pc
  */
-public interface IPersonaDAO {
+public interface IConexionBD {
     
-    public void agregarPersonas() throws PersistenciaException;
     
+    public EntityManager conexion() throws PersistenciaException;
 }

@@ -4,10 +4,17 @@
  */
 package DAOs;
 
+import Entidades.Persona;
+import Persistencia.PersistenciaException;
+
 /**
  *
  * @author pc
  */
-public interface ILicenciaDAO {
+public interface ILicenciaDAO extends ITramiteDAO{
     
+    public long autenticarDatos(Persona persona) throws PersistenciaException;
+    public boolean consultarRFC(String rfc) throws PersistenciaException;
+    public boolean agregarLicencia(int duracion, long idPersona) throws PersistenciaException;
+    public float sacarCosto(long id, int duracion) throws PersistenciaException;
 }
