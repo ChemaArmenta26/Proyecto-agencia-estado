@@ -4,6 +4,7 @@
  */
 package BOs;
 
+import Entidades.Persona;
 import java.util.List;
 
 /**
@@ -13,4 +14,5 @@ import java.util.List;
 public interface IAgregarPersonaBO {
     public void agregarPersonas();
     
+    public List<Persona> crearPersonas();
 }
