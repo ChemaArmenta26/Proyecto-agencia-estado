@@ -1,10 +1,16 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-
 package com.mycompany.proyectoagenciapersistencia;
 
+import Conexion.ConexionBD;
+import Conexion.IConexionBD;
+import DAOs.ILicenciaDAO;
+import DAOs.IPersonaDAO;
+import DAOs.LicenciaDAO;
+import DAOs.PersonaDAO;
 import Entidades.Persona;
+import Persistencia.PersistenciaException;
 import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.EntityManager;
@@ -17,32 +23,26 @@ import javax.persistence.Persistence;
  */
 public class ProyectoAgenciaPersistencia {
 
-    public static void main(String[] args) {
-        EntityManagerFactory entity = Persistence.createEntityManagerFactory("conexionPU");
-        //2. 
-        EntityManager entityManager = entity.createEntityManager();
-        //3. TRANSACCIONES
-        entityManager.getTransaction().begin();
-        Date fechaNacimiento = new Date(); // Esta es solo una fecha de ejemplo, debes proporcionar la fecha real
-
-        // Creamos un objeto Calendar y lo configuramos con la fecha de nacimiento
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(fechaNacimiento);
+    public static void main(String[] args) throws PersistenciaException {
+        IConexionBD conexion = new ConexionBD();
+        IPersonaDAO persona1 = new PersonaDAO(conexion);
+        ILicenciaDAO licencia1 = new LicenciaDAO(conexion);
+        
+        Calendar fechaNacimiento = Calendar.getInstance();
+       fechaNacimiento.set(2004, Calendar.AUGUST, 26);
 
         // Ahora, podemos agregar años, meses o días según sea necesario
-        calendar.add(Calendar.YEAR, -20); // Restamos 20 años a la fecha de nacimiento
-        calendar.add(Calendar.MONTH, -6);  // Restamos 6 meses a la fecha de nacimiento
-
         // Obtener la nueva fecha de nacimiento después de restar los años y meses
-        Date nuevaFechaNacimiento = calendar.getTime();
-        Persona persona = new Persona("123", "yo", "123456", nuevaFechaNacimiento, true);
+        Persona persona = new Persona("1222", "yo","yo2","yo3", "123456", fechaNacimiento, true);
+//        persona1.agregarPersona(persona);
+//
+//        System.out.println(persona1.consultarPersonaRFC("1222"));
+        if (licencia1.agregarLicencia(3, persona1.consultarPersonaRFC("1222"))) {
+            System.out.println("SE AGREGO");
+        }else{
+        System.out.println("NO SE AGREGO");
+        }
         
-        
-        entityManager.persist(persona);
-        
-        entityManager.close();
-        entity.close();
-        
-        
+
     }
 }

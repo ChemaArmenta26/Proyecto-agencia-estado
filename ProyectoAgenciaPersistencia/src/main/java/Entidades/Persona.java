@@ -6,6 +6,7 @@ package Entidades;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -44,32 +45,42 @@ public class Persona implements Serializable {
 
     @Column(name = "nombre",nullable = false)
     private String nombre;
+    
+    @Column(name = "ApellidoPaterno",nullable = false)
+    private String ApellidoPaterno;
+    
+    @Column(name = "ApellidoMaterno",nullable = false)
+    private String ApellidoMaterno;
 
     @Column(name = "telefono",nullable = false)
     private String telefono;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "fechaNacimiento",nullable = false)
-    private Date fechaNacimiento;
+    private Calendar fechaNacimiento;
 
     @Column(name = "discapacitado",nullable = false)
     private boolean discapacitado;
 
     @OneToMany(mappedBy = "Persona", cascade = CascadeType.PERSIST)
-    private List<Tramite> tramites;
+    private List<Licencia> licencia;
     
 
     public Persona() {
     }
 
-    public Persona(String RFC, String nombre, String telefono, Date fechaNacimiento, boolean discapacitado) {
+    public Persona(String RFC, String nombre, String ApellidoPaterno, String ApellidoMaterno, String telefono, Calendar fechaNacimiento, boolean discapacitado) {
         this.RFC = RFC;
         this.nombre = nombre;
+        this.ApellidoPaterno = ApellidoPaterno;
+        this.ApellidoMaterno = ApellidoMaterno;
         this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
         this.discapacitado = discapacitado;
-        this.tramites = new ArrayList<>();
+        this.licencia = new ArrayList<>();
     }
+
+    
 
     public String getRFC() {
         return RFC;
@@ -95,13 +106,15 @@ public class Persona implements Serializable {
         this.telefono = telefono;
     }
 
-    public Date getFechaNacimiento() {
+    public Calendar getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(Calendar fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
+
+    
 
     public boolean isDiscapacitado() {
         return discapacitado;
@@ -111,20 +124,41 @@ public class Persona implements Serializable {
         this.discapacitado = discapacitado;
     }
 
-    public List<Tramite> getTramites() {
-        return tramites;
+    public List<Licencia> getTramites() {
+        return licencia;
     }
 
-    public void setTramites(List<Tramite> tramites) {
-        this.tramites = tramites;
+    public void setTramites(List<Licencia> licencia) {
+        this.licencia = licencia;
     }
 
-    
+    public String getApellidoPaterno() {
+        return ApellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String ApellidoPaterno) {
+        this.ApellidoPaterno = ApellidoPaterno;
+    }
+
+    public String getApellidoMaterno() {
+        return ApellidoMaterno;
+    }
+
+    public void setApellidoMaterno(String ApellidoMaterno) {
+        this.ApellidoMaterno = ApellidoMaterno;
+    }
 
     @Override
     public String toString() {
-        return "Persona{" + "id=" + id + ", RFC=" + RFC + ", nombre=" + nombre + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + ", discapacitado=" + discapacitado + ", tramites=" + tramites + '}';
+        return "Persona{" + "id=" + id + ", RFC=" + RFC + ", nombre=" + nombre + ", ApellidoPaterno=" + ApellidoPaterno + ", ApellidoMaterno=" + ApellidoMaterno + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + ", discapacitado=" + discapacitado + ", licencia=" + licencia + '}';
     }
+    
+
+    
+
+    
+
+    
     
     
     

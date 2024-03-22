@@ -27,24 +27,19 @@ import javax.persistence.TemporalType;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Tramite implements Serializable {
 
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "fecha",nullable = false)
-     @Temporal(TemporalType.DATE)
+    @Column(name = "fecha", nullable = false)
+    @Temporal(TemporalType.DATE)
     private Calendar fecha;
 
-    @Column(name = "costo",nullable = false)
+    @Column(name = "costo", nullable = false)
     private Float costo;
+    
 
-    @ManyToOne
-    @JoinColumn(name = "id_Persona", referencedColumnName = "id")
-    private Persona persona;
-    
-    
-     public Long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -55,10 +50,10 @@ public class Tramite implements Serializable {
     public Tramite() {
     }
 
-    public Tramite(Calendar fecha, Float costo, Persona persona) {
+    public Tramite(Calendar fecha, Float costo) {
         this.fecha = fecha;
         this.costo = costo;
-        this.persona = persona;
+        
     }
 
     public Calendar getFecha() {
@@ -77,18 +72,11 @@ public class Tramite implements Serializable {
         this.costo = costo;
     }
 
-    public Persona getPersona() {
-        return persona;
-    }
-
-    public void setPersona(Persona persona) {
-        this.persona = persona;
-    }
+    
 
     @Override
     public String toString() {
-        return "Tramite{" + "id=" + id + ", fecha=" + fecha + ", costo=" + costo + ", persona=" + persona + '}';
+        return "Tramite{" + "id=" + id + ", fecha=" + fecha + ", costo=" + costo + '}';
     }
-    
-    
+
 }

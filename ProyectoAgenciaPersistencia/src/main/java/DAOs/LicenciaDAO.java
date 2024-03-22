@@ -5,9 +5,11 @@
 package DAOs;
 
 import Conexion.IConexionBD;
+import Entidades.Licencia;
 import Entidades.Persona;
 import Entidades.Tramite;
 import Persistencia.PersistenciaException;
+import java.util.Calendar;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -21,50 +23,53 @@ public class LicenciaDAO extends TramiteDAO implements ILicenciaDAO{
 
     public LicenciaDAO(IConexionBD conexion) {
         super(conexion);
+        this.conexion = conexion;
     }
     
+    
+
     @Override
-    public long autenticarDatos(Persona persona) throws PersistenciaException {
-        EntityManager entity = conexion.conexion();
-        try {
-            // Construir la consulta JPQL
-            String jpql = "SELECT COUNT(p) FROM Persona p WHERE p.RFC = :rfc AND p.nombre = :nombre AND p.telefono = :telefono AND p.fechaNacimiento = :fechaNacimiento AND p.discapacitado = :discapacitado";
-            Query query = entity.createQuery(jpql);
-            query.setParameter("rfc", persona.getRFC());
-            query.setParameter("nombre", persona.getNombre());
-            query.setParameter("telefono", persona.getTelefono());
-            query.setParameter("fechaNacimiento", persona.getFechaNacimiento());
-            query.setParameter("discapacitado", persona.isDiscapacitado());
+    public boolean agregarLicencia(int duracion, Persona persona) throws PersistenciaException {
+        if (persona != null) {
+          EntityManager entityManager = conexion.conexion();
 
-            // Ejecutar la consulta
-            Long count = (Long) query.getSingleResult();
+        entityManager.getTransaction().begin();
+        Calendar fecha = Calendar.getInstance();
+        Licencia licencia = new Licencia(duracion, fecha, this.sacarCosto(persona, duracion), persona);
+        entityManager.persist(licencia);
 
-            // Si el resultado es mayor que cero, significa que se encontró una coincidencia
-            return count;
-        } catch(Exception e) {
-              System.out.println(e);
-              return 0;
-        }  
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        return true;
+        }
+        return false;
     }
 
     @Override
-    public boolean consultarRFC(String rfc) throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public float sacarCosto(Persona persona, int duracion) throws PersistenciaException {
+        if (!persona.isDiscapacitado()) {
+            if (duracion == 1) {
+                return 600.00f;
+            }else if(duracion == 2){
+                return 900.00f;
+            }else if(duracion == 3){
+                return 1100.00f;
+            }else{
+                return 0f;
+            }
+        }else{
+            if (duracion == 1) {
+                return 200.00f;
+            }else if(duracion == 2){
+                return 500.00f;
+            }else if(duracion == 3){
+                return 700.00f;
+            }else{
+                return 0f;
+            }
+        }
     }
 
-    @Override
-    public boolean agregarLicencia(int duracion, long idPersona) throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public float sacarCosto(long id, int duracion) throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public boolean agregarTramite(Tramite tramite) throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
     
 }

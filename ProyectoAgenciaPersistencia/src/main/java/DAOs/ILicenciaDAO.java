@@ -13,8 +13,7 @@ import Persistencia.PersistenciaException;
  */
 public interface ILicenciaDAO extends ITramiteDAO{
     
-    public long autenticarDatos(Persona persona) throws PersistenciaException;
-    public boolean consultarRFC(String rfc) throws PersistenciaException;
-    public boolean agregarLicencia(int duracion, long idPersona) throws PersistenciaException;
-    public float sacarCosto(long id, int duracion) throws PersistenciaException;
+    
+    public boolean agregarLicencia(int duracion, Persona persona) throws PersistenciaException;
+    public float sacarCosto(Persona persona, int duracion) throws PersistenciaException;
 }

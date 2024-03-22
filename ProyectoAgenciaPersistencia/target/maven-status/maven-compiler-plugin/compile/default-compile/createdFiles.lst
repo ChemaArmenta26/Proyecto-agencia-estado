@@ -1,0 +1,13 @@
+Entidades\Persona.class
+com\mycompany\proyectoagenciapersistencia\ProyectoAgenciaPersistencia.class
+Conexion\ConexionBD.class
+Entidades\Licencia.class
+DAOs\ILicenciaDAO.class
+DAOs\ITramiteDAO.class
+Persistencia\PersistenciaException.class
+Conexion\IConexionBD.class
+DAOs\TramiteDAO.class
+Entidades\Tramite.class
+DAOs\LicenciaDAO.class
+DAOs\IPersonaDAO.class
+DAOs\PersonaDAO.class
