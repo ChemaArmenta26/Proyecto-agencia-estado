@@ -159,7 +159,7 @@ public class OpcionPlacas extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         dispose();
-        Principal p = new Principal();
+        SolicitarLicPlacas p = new SolicitarLicPlacas();
         p.setVisible(true);
         
     }//GEN-LAST:event_jButton2ActionPerformed
