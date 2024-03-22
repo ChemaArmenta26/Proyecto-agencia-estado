@@ -15,4 +15,5 @@ public interface IPersonaDAO {
     
     public Persona agregarPersona(Persona persona) throws PersistenciaException;
     
+    public Persona consultarPersonaRFC(String RFC) throws PersistenciaException;
 }
