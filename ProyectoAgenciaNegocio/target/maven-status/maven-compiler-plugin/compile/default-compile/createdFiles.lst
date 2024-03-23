@@ -1,0 +1,9 @@
+BOs\IAgregarPersonaBO.class
+DTO\PersonaDTO.class
+BOs\IRegistroLicenciaBO.class
+BOs\AgregarPersonaBO.class
+DTO\TramiteDTO.class
+BOs\RegistroLicenciaBO.class
+com\mycompany\proyectoagencianegocio\ProyectoAgenciaNegocio.class
+DTO\LicenciaDTO.class
+Encriptacion\AlgoritmoEncriptacion.class

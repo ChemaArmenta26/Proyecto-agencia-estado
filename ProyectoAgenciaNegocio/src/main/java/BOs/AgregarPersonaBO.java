@@ -6,7 +6,9 @@ package BOs;
 
 import Conexion.ConexionBD;
 import Conexion.IConexionBD;
+import DAOs.IPersonaDAO;
 import DAOs.PersonaDAO;
+import Encriptacion.AlgoritmoEncriptacion;
 import Entidades.Persona;
 import Persistencia.PersistenciaException;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,18 +25,31 @@ import java.util.logging.Logger;
 public class AgregarPersonaBO implements IAgregarPersonaBO {
 
     IConexionBD conexionBD = new ConexionBD();
-    private PersonaDAO personaDAO = new PersonaDAO(conexionBD);
+    private IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
+    private AlgoritmoEncriptacion aes = new AlgoritmoEncriptacion();
 
     @Override
     public void agregarPersonas() {
         List<Persona> listaPersonas = this.crearPersonas();
-
+        boolean validacion = true;
         for (int i = 0; i < listaPersonas.size(); i++) {
             try {
+                listaPersonas.get(i).setNombre(aes.encrypt(listaPersonas.get(i).getNombre()));
+                listaPersonas.get(i).setApellidoPaterno(aes.encrypt(listaPersonas.get(i).getApellidoPaterno()));
+                listaPersonas.get(i).setApellidoMaterno(aes.encrypt(listaPersonas.get(i).getApellidoMaterno()));
                 personaDAO.agregarPersona(listaPersonas.get(i));
             } catch (PersistenciaException ex) {
+                validacion = false;
+                Logger.getLogger(AgregarPersonaBO.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                validacion = false;
                 Logger.getLogger(AgregarPersonaBO.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        if (validacion) {
+            JOptionPane.showMessageDialog(null, "Registro de Personas exitoso");
+        } else {
+            JOptionPane.showMessageDialog(null, "Algo ocurrio mal");
         }
     }
 

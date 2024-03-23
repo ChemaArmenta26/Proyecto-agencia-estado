@@ -195,34 +195,28 @@ public class TramitarLicencia extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Ingrese los siguientes datos:");
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("RFC:");
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Nombre:");
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Apellido Paterno:");
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Apellido Materno:");
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Fecha de nacimiento:");
 
         jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Telefono:");
 
         txtApellidoPaterno.setBackground(new java.awt.Color(204, 204, 204));
+        txtApellidoPaterno.setEnabled(false);
         txtApellidoPaterno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtApellidoPaternoActionPerformed(evt);
@@ -237,6 +231,7 @@ public class TramitarLicencia extends javax.swing.JFrame {
         });
 
         txtNombre.setBackground(new java.awt.Color(204, 204, 204));
+        txtNombre.setEnabled(false);
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreActionPerformed(evt);
@@ -244,6 +239,7 @@ public class TramitarLicencia extends javax.swing.JFrame {
         });
 
         txtTelefono.setBackground(new java.awt.Color(204, 204, 204));
+        txtTelefono.setEnabled(false);
         txtTelefono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTelefonoActionPerformed(evt);
@@ -251,6 +247,7 @@ public class TramitarLicencia extends javax.swing.JFrame {
         });
 
         txtApellidoMaterno.setBackground(new java.awt.Color(204, 204, 204));
+        txtApellidoMaterno.setEnabled(false);
         txtApellidoMaterno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtApellidoMaternoActionPerformed(evt);
@@ -259,25 +256,30 @@ public class TramitarLicencia extends javax.swing.JFrame {
 
         txtFechaN.setBackground(new java.awt.Color(204, 204, 204));
         txtFechaN.setForeground(new java.awt.Color(255, 255, 255));
+        txtFechaN.setEnabled(false);
 
         jButton1.setBackground(new java.awt.Color(51, 153, 0));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Verificar RFC");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("¿Es discapacitado?");
 
-        DiscapacitadoSi.setForeground(new java.awt.Color(0, 0, 0));
         DiscapacitadoSi.setText("SÍ");
+        DiscapacitadoSi.setEnabled(false);
         DiscapacitadoSi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DiscapacitadoSiActionPerformed(evt);
             }
         });
 
-        DiscapacitadoNo.setForeground(new java.awt.Color(0, 0, 0));
         DiscapacitadoNo.setText("No");
+        DiscapacitadoNo.setEnabled(false);
         DiscapacitadoNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DiscapacitadoNoActionPerformed(evt);
@@ -285,10 +287,8 @@ public class TramitarLicencia extends javax.swing.JFrame {
         });
 
         jLabel10.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Elegir duracion de licencia:");
 
-        cb1.setForeground(new java.awt.Color(0, 0, 0));
         cb1.setText("1 Año");
         cb1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -296,7 +296,6 @@ public class TramitarLicencia extends javax.swing.JFrame {
             }
         });
 
-        cb2.setForeground(new java.awt.Color(0, 0, 0));
         cb2.setText("2 Años");
         cb2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -304,7 +303,6 @@ public class TramitarLicencia extends javax.swing.JFrame {
             }
         });
 
-        cb3.setForeground(new java.awt.Color(0, 0, 0));
         cb3.setText("3 Años");
         cb3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -323,7 +321,6 @@ public class TramitarLicencia extends javax.swing.JFrame {
         });
 
         txtCosto.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        txtCosto.setForeground(new java.awt.Color(0, 0, 0));
         txtCosto.setText("El costo será: ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -426,10 +423,11 @@ public class TramitarLicencia extends javax.swing.JFrame {
                             .addComponent(cb2)
                             .addComponent(cb3)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtRFC, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(p1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(p1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3)
+                                .addComponent(txtRFC, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -455,10 +453,11 @@ public class TramitarLicencia extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(txtFechaN, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8)
-                                    .addComponent(p5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(p5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel8)))))))
                 .addGap(21, 21, 21)
                 .addComponent(txtCosto)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
@@ -651,6 +650,10 @@ public class TramitarLicencia extends javax.swing.JFrame {
     private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTelefonoActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     //FUTUROS METODOS A UTILIZAR
     public void actualizaprecio() {

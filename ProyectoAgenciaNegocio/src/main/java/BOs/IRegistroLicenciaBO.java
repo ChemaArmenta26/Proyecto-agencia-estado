@@ -4,10 +4,15 @@
  */
 package BOs;
 
+import Entidades.Persona;
+
 /**
  *
  * @author PC
  */
 public interface IRegistroLicenciaBO {
     
+    public void agregarLicencia(int duracion, Persona persona);
+    public Persona consultarRFC(String rfc, boolean verifiacion);
+    public boolean verificarRFC(String rfc);
 }

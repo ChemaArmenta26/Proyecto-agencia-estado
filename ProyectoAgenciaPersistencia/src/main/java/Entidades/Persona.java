@@ -40,19 +40,19 @@ public class Persona implements Serializable {
         this.id = id;
     }
 
-    @Column(name = "RFC",nullable = false, unique = true)
+    @Column(name = "RFC",nullable = false, unique = true, length = 150)
     private String RFC;
 
-    @Column(name = "nombre",nullable = false)
+    @Column(name = "nombre",nullable = false, length = 150)
     private String nombre;
     
-    @Column(name = "ApellidoPaterno",nullable = false)
+    @Column(name = "ApellidoPaterno",nullable = false, length = 150)
     private String ApellidoPaterno;
     
-    @Column(name = "ApellidoMaterno",nullable = false)
+    @Column(name = "ApellidoMaterno",nullable = false, length = 150)
     private String ApellidoMaterno;
 
-    @Column(name = "telefono",nullable = false)
+    @Column(name = "telefono",nullable = false, length = 150)
     private String telefono;
 
     @Temporal(TemporalType.DATE)
@@ -62,7 +62,7 @@ public class Persona implements Serializable {
     @Column(name = "discapacitado",nullable = false)
     private boolean discapacitado;
 
-    @OneToMany(mappedBy = "Persona", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "Persona", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Licencia> licencia;
     
 

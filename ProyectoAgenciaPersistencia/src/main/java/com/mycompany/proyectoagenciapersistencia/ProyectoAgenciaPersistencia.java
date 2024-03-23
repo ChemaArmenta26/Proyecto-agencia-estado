@@ -37,11 +37,12 @@ public class ProyectoAgenciaPersistencia {
 //        persona1.agregarPersona(persona);
 //
 //        System.out.println(persona1.consultarPersonaRFC("1222"));
-        if (licencia1.agregarLicencia(3, persona1.consultarPersonaRFC("1222"))) {
-            System.out.println("SE AGREGO");
-        }else{
-        System.out.println("NO SE AGREGO");
-        }
+//        if (licencia1.agregarLicencia(3, persona1.consultarPersonaRFC("1222"))) {
+//            System.out.println("SE AGREGO");
+//        }else{
+//        System.out.println("NO SE AGREGO");
+//        }
+                System.out.println(fechaNacimiento.get(Calendar.YEAR));
         
 
     }

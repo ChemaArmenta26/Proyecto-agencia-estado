@@ -29,7 +29,7 @@ public class Licencia extends Tramite implements Serializable {
     @Column(name = "Vigencia", nullable = false)
     private int duracionAños;
 
-    @Column(name = "FechaVigenciaExpiracion", nullable = true)
+    @Column(name = "FechaVigenciaExpiracion", nullable = false)
     @Temporal(TemporalType.DATE)
     private Calendar vigenciaF;
     
@@ -40,12 +40,16 @@ public class Licencia extends Tramite implements Serializable {
     public Licencia() {
     }
 
-    public Licencia(int duracionAños, Calendar fecha, Float costo, Persona persona) {
+    public Licencia(int duracionAños, Calendar vigenciaF, Persona persona, Calendar fecha, Float costo) {
         super(fecha, costo);
         this.duracionAños = duracionAños;
         this.vigenciaF = vigenciaF;
         this.persona = persona;
     }
+
+    
+
+    
 
     public int getDuracionAños() {
         return duracionAños;

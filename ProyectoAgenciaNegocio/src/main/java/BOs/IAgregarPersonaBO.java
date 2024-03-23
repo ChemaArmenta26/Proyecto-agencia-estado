@@ -12,7 +12,8 @@ import java.util.List;
  * @author PC
  */
 public interface IAgregarPersonaBO {
+
     public void agregarPersonas();
-    
+
     public List<Persona> crearPersonas();
 }

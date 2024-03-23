@@ -35,7 +35,9 @@ public class LicenciaDAO extends TramiteDAO implements ILicenciaDAO{
 
         entityManager.getTransaction().begin();
         Calendar fecha = Calendar.getInstance();
-        Licencia licencia = new Licencia(duracion, fecha, this.sacarCosto(persona, duracion), persona);
+        Calendar fechaVigencia = Calendar.getInstance();
+        fechaVigencia.set(fechaVigencia.get(Calendar.YEAR)+duracion, fechaVigencia.get(Calendar.MONTH), fechaVigencia.get(Calendar.DAY_OF_MONTH));
+        Licencia licencia = new Licencia(duracion, fechaVigencia ,persona, fecha,  this.sacarCosto(persona, duracion));
         entityManager.persist(licencia);
 
         entityManager.getTransaction().commit();
