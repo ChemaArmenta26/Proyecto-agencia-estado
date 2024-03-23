@@ -26,6 +26,7 @@ GUI\Login$1.class
 GUI\Login.class
 GUI\ConsultarLP$2.class
 GUI\TramitarLicencia$1.class
+GUI\TramitarLicencia$18.class
 GUI\TramiteFinalizado$1.class
 GUI\SolicitarLicPlacas$2.class
 GUI\TramitarLicencia$13.class
@@ -38,6 +39,7 @@ GUI\Principal$1.class
 GUI\ConsultarLiYPla.class
 GUI\ConfirmarTraPlacas$1.class
 GUI\ConsultarLP$3.class
+GUI\Login$3.class
 GUI\TramitarLicencia$17.class
 GUI\Principal.class
 GUI\ConfirmarTraPlacas.class

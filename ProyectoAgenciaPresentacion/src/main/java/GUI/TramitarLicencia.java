@@ -5,6 +5,10 @@
 package GUI;
 
 
+import BOs.IRegistroLicenciaBO;
+import BOs.RegistroLicenciaBO;
+import Encriptacion.AlgoritmoEncriptacion;
+import Entidades.Persona;
 import Validaciones.Validaciones;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -18,7 +22,8 @@ import javax.swing.event.DocumentListener;
 public class TramitarLicencia extends javax.swing.JFrame {
 
     
-    
+    private IRegistroLicenciaBO licencia = new RegistroLicenciaBO();
+    private AlgoritmoEncriptacion aes = new AlgoritmoEncriptacion();
     private String existe = "PrimeraVez";
     
     
@@ -492,45 +497,57 @@ public class TramitarLicencia extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuActionPerformed
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
-        // TODO add your handling code here:
-
-         if (existe.equals("Espera")) {
+        if (!(txtRFC.getText().equalsIgnoreCase("")) && (cb1.isSelected() || cb2.isSelected() || cb3.isSelected())) {
+        licencia.agregarLicencia(duracion(), licencia.consultarRFC(txtRFC.getText(), true));
+        //logica que falta para la activacion de las licencias
+        dispose();
+        Principal p = new Principal();
+        p.setVisible(true);
+        }else{
             JOptionPane.showMessageDialog(this, "Por favor, verifica primero para continuar.", "Verifique campos", JOptionPane.ERROR_MESSAGE);
         }
-        if (existe.equals("PrimeraVez")) {
-            if (!txtRFC.getText().isEmpty() && !txtNombre.getText().isEmpty()
-                    && txtFechaN.getDate() != null && !txtTelefono.getText().isEmpty()
-                    && (DiscapacitadoSi.isSelected() ^ DiscapacitadoNo.isSelected())
-                    && (cb1.isSelected() ^ cb2.isSelected() ^ cb3.isSelected())) {
+        
+        
+        
+        
 
-                if (txtRFC.getText().length() == 13 && txtTelefono.getText().length() == 10) {
-                    Date fechaActual = new Date();
-                    Date fechaNacimiento = txtFechaN.getDate();
-
-                    // Calcular la diferencia de años entre la fecha de nacimiento y la fecha actual
-                    long diff = fechaActual.getTime() - fechaNacimiento.getTime();
-                    long edadMillis = Math.abs(diff);
-                    int edad = (int) (edadMillis / (24 * 60 * 60 * 1000 * 365.25));
-
-                    // La variable 'edad' ahora contiene la edad de la persona
-                    System.out.println("Edad: " + edad + " años");
-
-                    if (txtFechaN.getDate().compareTo(fechaActual) < 0 && edad >= 18) {
-                       
-                        JOptionPane.showMessageDialog(this, "Se genero con exito la licencia de la \n RFC: " + txtRFC.getText(), "Licencia Generada", JOptionPane.INFORMATION_MESSAGE);
-                        ConfirmarTraLicencia cc = new ConfirmarTraLicencia();
-                        cc.setVisible(true);
-                        this.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Alguno de tus datos es erroneo debido a\n-Fecha nacimiento mayor a la actual.\n-Es menor de edad.", "Verifique campos", JOptionPane.ERROR_MESSAGE);
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(this, "Alguno de tus datos falta de completar\n-Telefono 10 digitos.\n-RFC 13 digitos.", "Verifique campos", JOptionPane.ERROR_MESSAGE);
-                }
-            } else {                
-                JOptionPane.showMessageDialog(this, "Por favor, verifica los campos y seleccione las opciones correctas.", "Verifique campos", JOptionPane.ERROR_MESSAGE);
-            }
-        }
+//         if (existe.equals("Espera")) {
+//            JOptionPane.showMessageDialog(this, "Por favor, verifica primero para continuar.", "Verifique campos", JOptionPane.ERROR_MESSAGE);
+//        }
+//        if (existe.equals("PrimeraVez")) {
+//            if (!txtRFC.getText().isEmpty() && !txtNombre.getText().isEmpty()
+//                    && txtFechaN.getDate() != null && !txtTelefono.getText().isEmpty()
+//                    && (DiscapacitadoSi.isSelected() ^ DiscapacitadoNo.isSelected())
+//                    && (cb1.isSelected() ^ cb2.isSelected() ^ cb3.isSelected())) {
+//
+//                if (txtRFC.getText().length() == 13 && txtTelefono.getText().length() == 10) {
+//                    Date fechaActual = new Date();
+//                    Date fechaNacimiento = txtFechaN.getDate();
+//
+//                    // Calcular la diferencia de años entre la fecha de nacimiento y la fecha actual
+//                    long diff = fechaActual.getTime() - fechaNacimiento.getTime();
+//                    long edadMillis = Math.abs(diff);
+//                    int edad = (int) (edadMillis / (24 * 60 * 60 * 1000 * 365.25));
+//
+//                    // La variable 'edad' ahora contiene la edad de la persona
+//                    System.out.println("Edad: " + edad + " años");
+//
+//                    if (txtFechaN.getDate().compareTo(fechaActual) < 0 && edad >= 18) {
+//                       
+//                        JOptionPane.showMessageDialog(this, "Se genero con exito la licencia de la \n RFC: " + txtRFC.getText(), "Licencia Generada", JOptionPane.INFORMATION_MESSAGE);
+//                        ConfirmarTraLicencia cc = new ConfirmarTraLicencia();
+//                        cc.setVisible(true);
+//                        this.dispose();
+//                    } else {
+//                        JOptionPane.showMessageDialog(this, "Alguno de tus datos es erroneo debido a\n-Fecha nacimiento mayor a la actual.\n-Es menor de edad.", "Verifique campos", JOptionPane.ERROR_MESSAGE);
+//                    }
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Alguno de tus datos falta de completar\n-Telefono 10 digitos.\n-RFC 13 digitos.", "Verifique campos", JOptionPane.ERROR_MESSAGE);
+//                }
+//            } else {                
+//                JOptionPane.showMessageDialog(this, "Por favor, verifica los campos y seleccione las opciones correctas.", "Verifique campos", JOptionPane.ERROR_MESSAGE);
+//            }
+//        }
  
     }//GEN-LAST:event_btnGenerarActionPerformed
 
@@ -652,7 +669,25 @@ public class TramitarLicencia extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTelefonoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        Persona persona = licencia.consultarRFC(txtRFC.getText(), licencia.verificarRFC(txtRFC.getText()));
+        if (persona != null) {
+            try{
+            txtRFC.enable(false);
+            txtNombre.setText(aes.decrypt(persona.getNombre()));
+            txtApellidoPaterno.setText(aes.decrypt(persona.getApellidoPaterno()));
+            txtApellidoMaterno.setText(aes.decrypt(persona.getApellidoMaterno()));
+            txtFechaN.setCalendar(persona.getFechaNacimiento());
+            txtTelefono.setText(persona.getTelefono());
+            if (persona.isDiscapacitado()) {
+            DiscapacitadoSi.setSelected(true);    
+            }else{
+                DiscapacitadoNo.setSelected(true);
+            }
+            }catch(Exception e){
+                
+            }
+            
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     //FUTUROS METODOS A UTILIZAR
@@ -678,6 +713,15 @@ public class TramitarLicencia extends javax.swing.JFrame {
             if (cb3.isSelected()) {
                 txtCosto.setText("El costo de la licencia sera de $1100");
             }
+        }
+    }
+    public int duracion(){
+        if (cb1.isSelected()) {
+            return 1;
+        }else if(cb2.isSelected()){
+            return 2;     
+       }else{
+            return 3;
         }
     }
 
