@@ -4,17 +4,28 @@
  */
 package GUI;
 
+import BOs.AgregarPersonaBO;
+import BOs.IAgregarPersonaBO;
+import Control.ControladorFlujo;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Carlo
  */
 public class Principal extends javax.swing.JFrame {
 
+    ControladorFlujo controlador;
+    IAgregarPersonaBO agregarPersonaBO;
+    private boolean insercionMasivaRealizada = false;
+
     /**
      * Creates new form Menu
      */
     public Principal() {
         initComponents();
+        agregarPersonaBO = new AgregarPersonaBO();
+        controlador = new ControladorFlujo();
     }
 
     /**
@@ -35,6 +46,7 @@ public class Principal extends javax.swing.JFrame {
         btnReporteTramites = new javax.swing.JButton();
         btnConsultas = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        botonInsercionMasiva = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,7 +76,6 @@ public class Principal extends javax.swing.JFrame {
         );
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("MENÚ");
 
         btnSolicitarPlacas.setBackground(new java.awt.Color(102, 0, 51));
@@ -117,12 +128,23 @@ public class Principal extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(153, 153, 153));
         jButton2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(0, 0, 0));
         jButton2.setText("SALIR");
         jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+
+        botonInsercionMasiva.setBackground(new java.awt.Color(102, 0, 51));
+        botonInsercionMasiva.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        botonInsercionMasiva.setForeground(new java.awt.Color(255, 255, 255));
+        botonInsercionMasiva.setText("Insercion de Personas");
+        botonInsercionMasiva.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        botonInsercionMasiva.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonInsercionMasiva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonInsercionMasivaActionPerformed(evt);
             }
         });
 
@@ -146,7 +168,9 @@ public class Principal extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(106, 106, 106)
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botonInsercionMasiva, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,9 +186,11 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(btnConsultas, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnReporteTramites, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonInsercionMasiva, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(57, 57, 57))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -184,58 +210,63 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnTramitarLicenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTramitarLicenciaActionPerformed
         // TODO add your handling code here:
-        
+
         dispose();
-        TramitarLicencia tl = new TramitarLicencia();
-        tl.setVisible(true);
-        
-        
-        
+        controlador.mostrarTramitarLicencia();
+
+
     }//GEN-LAST:event_btnTramitarLicenciaActionPerformed
 
     private void btnSolicitarPlacasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarPlacasActionPerformed
         // TODO add your handling code here:
-        
+
         dispose();
-        SolicitarLicPlacas L = new SolicitarLicPlacas();
-        L.setVisible(true);
-        
+        controlador.mostrarSolicitarPlacas();
+
     }//GEN-LAST:event_btnSolicitarPlacasActionPerformed
 
     private void btnConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultasActionPerformed
         // TODO add your handling code here:
-        
+
         dispose();
-        ConsultarLiYPla c = new ConsultarLiYPla();
-        c.setVisible(true);
-        
-        
-        
+        controlador.mostrarConsultarLicenciaYPlacas();
+
+
     }//GEN-LAST:event_btnConsultasActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        
+
         dispose();
-        
-        
+
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnReporteTramitesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteTramitesActionPerformed
         // TODO add your handling code here:
-        
+
         dispose();
-        ReporteLicYPla pp = new ReporteLicYPla();
-        pp.setVisible(true);
-        
+        controlador.mostrarReporteLicenciaYPlacas();
+
     }//GEN-LAST:event_btnReporteTramitesActionPerformed
+
+    private void botonInsercionMasivaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInsercionMasivaActionPerformed
+        if (!insercionMasivaRealizada) {
+            // Llamada al método de inserción masiva
+            agregarPersonaBO.agregarPersonas();
+            insercionMasivaRealizada = true;
+            botonInsercionMasiva.setEnabled(false); // Desactivar el botón después de la inserción masiva
+        } else {
+            JOptionPane.showMessageDialog(this, "La inserción masiva ya se ha realizado.", "Inserción masiva ya realizada", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_botonInsercionMasivaActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonInsercionMasiva;
     private javax.swing.JButton btnConsultas;
     private javax.swing.JButton btnReporteTramites;
     private javax.swing.JButton btnSolicitarPlacas;

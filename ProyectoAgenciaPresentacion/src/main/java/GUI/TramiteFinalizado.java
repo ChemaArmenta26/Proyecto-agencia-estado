@@ -4,17 +4,22 @@
  */
 package GUI;
 
+import Control.ControladorFlujo;
+
 /**
  *
  * @author Carlo
  */
 public class TramiteFinalizado extends javax.swing.JFrame {
 
+    ControladorFlujo controlador;
+
     /**
      * Creates new form TramiteFinalizado
      */
     public TramiteFinalizado() {
         initComponents();
+        controlador = new ControladorFlujo();
     }
 
     /**
@@ -60,7 +65,6 @@ public class TramiteFinalizado extends javax.swing.JFrame {
         );
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("SU TRAMITE SE HA FINALIZADO Y REALIZADO CON EXITO ");
 
         btnMenu.setBackground(new java.awt.Color(204, 0, 0));
@@ -85,19 +89,19 @@ public class TramiteFinalizado extends javax.swing.JFrame {
                         .addGap(492, 492, 492)
                         .addComponent(btnMenu))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(92, 92, 92)
+                        .addGap(30, 30, 30)
                         .addComponent(jLabel4)))
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addContainerGap(157, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(179, 179, 179)
+                .addGap(164, 164, 164)
                 .addComponent(jLabel4)
-                .addGap(134, 134, 134)
-                .addComponent(btnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(280, Short.MAX_VALUE))
+                .addGap(133, 133, 133)
+                .addComponent(btnMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                .addContainerGap(288, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -117,18 +121,16 @@ public class TramiteFinalizado extends javax.swing.JFrame {
 
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
         // TODO add your handling code here:
-        
+
         dispose();
-        Principal p = new Principal();
-        p.setVisible(true);
-        
-        
+        controlador.mostrarVentanaPrincipal();
+
+
     }//GEN-LAST:event_btnMenuActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMenu;

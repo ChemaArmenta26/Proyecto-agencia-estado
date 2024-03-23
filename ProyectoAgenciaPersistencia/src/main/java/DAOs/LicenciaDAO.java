@@ -37,7 +37,7 @@ public class LicenciaDAO extends TramiteDAO implements ILicenciaDAO{
         Calendar fecha = Calendar.getInstance();
         Calendar fechaVigencia = Calendar.getInstance();
         fechaVigencia.set(fechaVigencia.get(Calendar.YEAR)+duracion, fechaVigencia.get(Calendar.MONTH), fechaVigencia.get(Calendar.DAY_OF_MONTH));
-        Licencia licencia = new Licencia(duracion, fechaVigencia ,persona, fecha,  this.sacarCosto(persona, duracion));
+        Licencia licencia = new Licencia(duracion, fechaVigencia ,persona, fecha,  this.sacarCosto(persona, duracion), true);
         entityManager.persist(licencia);
 
         entityManager.getTransaction().commit();
@@ -70,6 +70,21 @@ public class LicenciaDAO extends TramiteDAO implements ILicenciaDAO{
                 return 0f;
             }
         }
+    }
+    
+    @Override
+    public boolean actualizarEstadoLicencia(Persona persona) throws PersistenciaException {
+        EntityManager entityManager = conexion.conexion();
+        entityManager.getTransaction().begin();
+
+        Query query = entityManager.createQuery("UPDATE Licencia l SET l.estado = false WHERE l.persona = :persona AND l.estado = true");
+        query.setParameter("persona", persona);
+        int rowsUpdated = query.executeUpdate();
+
+        entityManager.getTransaction().commit();
+        entityManager.close();
+
+        return rowsUpdated > 0;
     }
 
     

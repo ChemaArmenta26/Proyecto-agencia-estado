@@ -24,8 +24,14 @@ public class RegistroLicenciaBO implements IRegistroLicenciaBO {
     private ILicenciaDAO licenciaDAO = new LicenciaDAO(conexionBD);
     private IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
     
+    @Override
     public void agregarLicencia(int duracion, Persona persona){
         try{
+               
+            if (licenciaDAO.actualizarEstadoLicencia(persona)) {
+                JOptionPane.showMessageDialog(null, "La licencia existente de la persona ha sido marcada como inactiva.");
+            }
+            
             if (licenciaDAO.agregarLicencia(duracion, persona)) {
                 JOptionPane.showMessageDialog(null, "Licencia agregada exitosamente");
             }else{
@@ -35,6 +41,7 @@ public class RegistroLicenciaBO implements IRegistroLicenciaBO {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+    @Override
     public Persona consultarRFC(String rfc, boolean verificacion){
         try{
             Persona personaNueva = personaDAO.consultarPersonaRFC(rfc);
@@ -48,6 +55,7 @@ public class RegistroLicenciaBO implements IRegistroLicenciaBO {
             return null;
         }
         }
+    @Override
     public boolean verificarRFC(String rfc){
         try{
             if (personaDAO.consultarPersonaRFC(rfc) != null) {

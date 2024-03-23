@@ -37,6 +37,7 @@ public class AgregarPersonaBO implements IAgregarPersonaBO {
                 listaPersonas.get(i).setNombre(aes.encrypt(listaPersonas.get(i).getNombre()));
                 listaPersonas.get(i).setApellidoPaterno(aes.encrypt(listaPersonas.get(i).getApellidoPaterno()));
                 listaPersonas.get(i).setApellidoMaterno(aes.encrypt(listaPersonas.get(i).getApellidoMaterno()));
+                listaPersonas.get(i).setTelefono(aes.encrypt(listaPersonas.get(i).getTelefono()));
                 personaDAO.agregarPersona(listaPersonas.get(i));
             } catch (PersistenciaException ex) {
                 validacion = false;

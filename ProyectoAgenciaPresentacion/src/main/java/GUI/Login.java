@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import Control.ControladorFlujo;
 import javax.swing.JOptionPane;
 
 /**
@@ -11,12 +12,14 @@ import javax.swing.JOptionPane;
  * @author pc
  */
 public class Login extends javax.swing.JFrame {
+    ControladorFlujo controlador;
 
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
+        controlador = new ControladorFlujo();
     }
 
     public boolean verificacion() {
@@ -177,8 +180,7 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "BIENVENIDO", "Agencia ITSON", JOptionPane.INFORMATION_MESSAGE);
 
                 dispose();
-                Principal p = new Principal();
-                p.setVisible(true);
+                controlador.mostrarVentanaPrincipal();
             } else {
                 JOptionPane.showMessageDialog(this, "Por favor, verifica primero para continuar.", "Intente de nuevo", JOptionPane.ERROR_MESSAGE);
             }

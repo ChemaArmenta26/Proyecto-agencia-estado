@@ -7,6 +7,7 @@ package GUI;
 
 import BOs.IRegistroLicenciaBO;
 import BOs.RegistroLicenciaBO;
+import Control.ControladorFlujo;
 import Encriptacion.AlgoritmoEncriptacion;
 import Entidades.Persona;
 import Validaciones.Validaciones;
@@ -21,7 +22,7 @@ import javax.swing.event.DocumentListener;
  */
 public class TramitarLicencia extends javax.swing.JFrame {
 
-    
+    ControladorFlujo controlador;
     private IRegistroLicenciaBO licencia = new RegistroLicenciaBO();
     private AlgoritmoEncriptacion aes = new AlgoritmoEncriptacion();
     private String existe = "PrimeraVez";
@@ -32,6 +33,7 @@ public class TramitarLicencia extends javax.swing.JFrame {
      */
     public TramitarLicencia() {
         initComponents();
+        controlador = new ControladorFlujo();
 
         txtRFC.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -145,7 +147,7 @@ public class TramitarLicencia extends javax.swing.JFrame {
         txtTelefono = new javax.swing.JTextField();
         txtApellidoMaterno = new javax.swing.JTextField();
         txtFechaN = new com.toedter.calendar.JDateChooser();
-        jButton1 = new javax.swing.JButton();
+        botonVerificar = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         DiscapacitadoSi = new javax.swing.JCheckBox();
         DiscapacitadoNo = new javax.swing.JCheckBox();
@@ -263,12 +265,12 @@ public class TramitarLicencia extends javax.swing.JFrame {
         txtFechaN.setForeground(new java.awt.Color(255, 255, 255));
         txtFechaN.setEnabled(false);
 
-        jButton1.setBackground(new java.awt.Color(51, 153, 0));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Verificar RFC");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botonVerificar.setBackground(new java.awt.Color(51, 153, 0));
+        botonVerificar.setForeground(new java.awt.Color(255, 255, 255));
+        botonVerificar.setText("Verificar RFC");
+        botonVerificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botonVerificarActionPerformed(evt);
             }
         });
 
@@ -381,7 +383,7 @@ public class TramitarLicencia extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(p1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(54, 54, 54)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(botonVerificar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(p5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(99, 99, 99)
@@ -413,7 +415,7 @@ public class TramitarLicencia extends javax.swing.JFrame {
                 .addGap(65, 65, 65)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botonVerificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(74, 74, 74)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -491,8 +493,7 @@ public class TramitarLicencia extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         dispose();
-        Principal p = new Principal();
-        p.setVisible(true);
+        controlador.mostrarVentanaPrincipal();
 
     }//GEN-LAST:event_btnMenuActionPerformed
 
@@ -501,8 +502,7 @@ public class TramitarLicencia extends javax.swing.JFrame {
         licencia.agregarLicencia(duracion(), licencia.consultarRFC(txtRFC.getText(), true));
         //logica que falta para la activacion de las licencias
         dispose();
-        Principal p = new Principal();
-        p.setVisible(true);
+        controlador.mostrarTramiteFinalizado();
         }else{
             JOptionPane.showMessageDialog(this, "Por favor, verifica primero para continuar.", "Verifique campos", JOptionPane.ERROR_MESSAGE);
         }
@@ -668,7 +668,7 @@ public class TramitarLicencia extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTelefonoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botonVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVerificarActionPerformed
         Persona persona = licencia.consultarRFC(txtRFC.getText(), licencia.verificarRFC(txtRFC.getText()));
         if (persona != null) {
             try{
@@ -677,7 +677,7 @@ public class TramitarLicencia extends javax.swing.JFrame {
             txtApellidoPaterno.setText(aes.decrypt(persona.getApellidoPaterno()));
             txtApellidoMaterno.setText(aes.decrypt(persona.getApellidoMaterno()));
             txtFechaN.setCalendar(persona.getFechaNacimiento());
-            txtTelefono.setText(persona.getTelefono());
+            txtTelefono.setText(aes.decrypt(persona.getTelefono()));
             if (persona.isDiscapacitado()) {
             DiscapacitadoSi.setSelected(true);    
             }else{
@@ -688,7 +688,7 @@ public class TramitarLicencia extends javax.swing.JFrame {
             }
             
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_botonVerificarActionPerformed
 
     //FUTUROS METODOS A UTILIZAR
     public void actualizaprecio() {
@@ -732,12 +732,12 @@ public class TramitarLicencia extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox DiscapacitadoNo;
     private javax.swing.JCheckBox DiscapacitadoSi;
+    private javax.swing.JButton botonVerificar;
     private javax.swing.JButton btnGenerar;
     private javax.swing.JButton btnMenu;
     private javax.swing.JCheckBox cb1;
     private javax.swing.JCheckBox cb2;
     private javax.swing.JCheckBox cb3;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
