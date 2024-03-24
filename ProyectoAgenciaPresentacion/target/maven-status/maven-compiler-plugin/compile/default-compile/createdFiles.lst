@@ -1,7 +1,9 @@
+GUI\Principal$6.class
 GUI\TramitarPlacaUsado$2.class
 GUI\ReporteLicYPla$1.class
 GUI\OpcionPlacas.class
 GUI\TramitarLicencia$5.class
+Control\ControladorFlujo.class
 GUI\ReporteLicYPla.class
 GUI\TramitarLicencia$11.class
 GUI\Principal$3.class
@@ -15,11 +17,9 @@ GUI\SolicitarLicPlacas.class
 com\mycompany\proyectoagenciapresentacion\ProyectoAgenciaPresentacion.class
 GUI\TramitarLicencia$12.class
 GUI\OpcionPlacas$2.class
-GUI\ConfirmarTraLicencia$1.class
 GUI\TramitarLicencia$4.class
 GUI\ConfirmarTraPlacas$2.class
 GUI\Principal$5.class
-GUI\ConfirmarTraLicencia.class
 GUI\Principal$2.class
 GUI\TramitarLicencia$15.class
 GUI\Login$1.class
@@ -56,7 +56,6 @@ GUI\TramitarPlacaNuevo.class
 GUI\ConsultarLP.class
 GUI\TramitarLicencia$10.class
 GUI\TramitarLicencia$16.class
-GUI\ConfirmarTraLicencia$2.class
 GUI\TramitarLicencia$9.class
 GUI\Principal$4.class
 GUI\TramitarLicencia$6.class
