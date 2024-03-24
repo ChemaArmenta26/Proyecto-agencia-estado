@@ -17,15 +17,18 @@ public class Principal extends javax.swing.JFrame {
 
     ControladorFlujo controlador;
     IAgregarPersonaBO agregarPersonaBO;
-    private boolean insercionMasivaRealizada = false;
-
+    private boolean insercionMasivaRealizada;
     /**
      * Creates new form Menu
      */
-    public Principal() {
+    public Principal(boolean insercionMasiva) {
         initComponents();
+        this.insercionMasivaRealizada = insercionMasiva;
         agregarPersonaBO = new AgregarPersonaBO();
         controlador = new ControladorFlujo();
+        if (insercionMasivaRealizada = false) {
+            botonInsercionMasiva.enable(false);
+        }
     }
 
     /**
@@ -236,7 +239,6 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-
         dispose();
 
 
@@ -251,13 +253,15 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReporteTramitesActionPerformed
 
     private void botonInsercionMasivaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInsercionMasivaActionPerformed
-        if (!insercionMasivaRealizada) {
+       
+        if (insercionMasivaRealizada) {
             // Llamada al método de inserción masiva
             agregarPersonaBO.agregarPersonas();
             insercionMasivaRealizada = true;
             botonInsercionMasiva.setEnabled(false); // Desactivar el botón después de la inserción masiva
         } else {
             JOptionPane.showMessageDialog(this, "La inserción masiva ya se ha realizado.", "Inserción masiva ya realizada", JOptionPane.INFORMATION_MESSAGE);
+            botonInsercionMasiva.setEnabled(false);
         }
     }//GEN-LAST:event_botonInsercionMasivaActionPerformed
 

@@ -180,7 +180,7 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "BIENVENIDO", "Agencia ITSON", JOptionPane.INFORMATION_MESSAGE);
 
                 dispose();
-                controlador.mostrarVentanaPrincipal();
+                controlador.mostrarVentanaPrincipal(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Por favor, verifica primero para continuar.", "Intente de nuevo", JOptionPane.ERROR_MESSAGE);
             }

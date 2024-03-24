@@ -89,19 +89,15 @@ public class ReporteLicYPla extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Ingrese los siguientes datos:");
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Nombre:");
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Apellido Paterno:");
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Apellido Materno:");
 
         jTextField1.setBackground(new java.awt.Color(204, 204, 204));
@@ -113,6 +109,11 @@ public class ReporteLicYPla extends javax.swing.JFrame {
         btnConsultar.setBackground(new java.awt.Color(51, 153, 0));
         btnConsultar.setForeground(new java.awt.Color(255, 255, 255));
         btnConsultar.setText("CONSULTAR");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
 
         btnGenerarPDF.setBackground(new java.awt.Color(51, 153, 0));
         btnGenerarPDF.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -125,25 +126,19 @@ public class ReporteLicYPla extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("PERIODO:");
 
         jDateChooser1.setBackground(new java.awt.Color(204, 204, 204));
-        jDateChooser1.setForeground(new java.awt.Color(0, 0, 0));
 
         jDateChooser2.setBackground(new java.awt.Color(204, 204, 204));
-        jDateChooser2.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Fecha Inicio:");
 
         jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Fecha Fin:");
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Tipo de tramite:");
 
         jCheckBox1.setText("Licencia");
@@ -286,7 +281,7 @@ public class ReporteLicYPla extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         dispose();
-        Principal p = new Principal();
+        Principal p = new Principal(false);
         p.setVisible(true);
 
     }//GEN-LAST:event_btnMenuActionPerformed
@@ -297,6 +292,10 @@ public class ReporteLicYPla extends javax.swing.JFrame {
         
 
     }//GEN-LAST:event_btnGenerarPDFActionPerformed
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConsultarActionPerformed
 
     /**
      * @param args the command line arguments

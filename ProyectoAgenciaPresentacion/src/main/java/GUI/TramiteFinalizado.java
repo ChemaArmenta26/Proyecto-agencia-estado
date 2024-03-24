@@ -123,7 +123,7 @@ public class TramiteFinalizado extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         dispose();
-        controlador.mostrarVentanaPrincipal();
+        controlador.mostrarVentanaPrincipal(false);
 
 
     }//GEN-LAST:event_btnMenuActionPerformed

@@ -22,8 +22,8 @@ import GUI.TramiteFinalizado;
  */
 public class ControladorFlujo {
 
-    public void mostrarVentanaPrincipal() {
-        Principal p = new Principal();
+    public void mostrarVentanaPrincipal(boolean insercion) {
+        Principal p = new Principal(insercion);
         p.setVisible(true);
     }
 

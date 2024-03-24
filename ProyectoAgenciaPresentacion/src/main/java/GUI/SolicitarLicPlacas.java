@@ -164,7 +164,7 @@ public class SolicitarLicPlacas extends javax.swing.JFrame {
         
         
         dispose();
-        Principal p = new Principal();
+        Principal p = new Principal(false);
         p.setVisible(true);
         
     }//GEN-LAST:event_jButton2ActionPerformed
