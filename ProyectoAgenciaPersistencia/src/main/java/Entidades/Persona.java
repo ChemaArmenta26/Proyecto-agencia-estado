@@ -40,31 +40,33 @@ public class Persona implements Serializable {
         this.id = id;
     }
 
-    @Column(name = "RFC",nullable = false, unique = true, length = 150)
+    @Column(name = "RFC", nullable = false, unique = true, length = 150)
     private String RFC;
 
-    @Column(name = "nombre",nullable = false, length = 150)
+    @Column(name = "nombre", nullable = false, length = 150)
     private String nombre;
-    
-    @Column(name = "ApellidoPaterno",nullable = false, length = 150)
+
+    @Column(name = "ApellidoPaterno", nullable = false, length = 150)
     private String ApellidoPaterno;
-    
-    @Column(name = "ApellidoMaterno",nullable = false, length = 150)
+
+    @Column(name = "ApellidoMaterno", nullable = false, length = 150)
     private String ApellidoMaterno;
 
-    @Column(name = "telefono",nullable = false, length = 150)
+    @Column(name = "telefono", nullable = false, length = 150)
     private String telefono;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "fechaNacimiento",nullable = false)
+    @Column(name = "fechaNacimiento", nullable = false)
     private Calendar fechaNacimiento;
 
-    @Column(name = "discapacitado",nullable = false)
+    @Column(name = "discapacitado", nullable = false)
     private boolean discapacitado;
 
     @OneToMany(mappedBy = "Persona", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Licencia> licencia;
-    
+
+    @OneToMany(mappedBy = "Persona", cascade = CascadeType.PERSIST)
+    private List<Vehiculo> vehiculos;
 
     public Persona() {
     }
@@ -79,8 +81,6 @@ public class Persona implements Serializable {
         this.discapacitado = discapacitado;
         this.licencia = new ArrayList<>();
     }
-
-    
 
     public String getRFC() {
         return RFC;
@@ -114,8 +114,6 @@ public class Persona implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    
-
     public boolean isDiscapacitado() {
         return discapacitado;
     }
@@ -124,11 +122,11 @@ public class Persona implements Serializable {
         this.discapacitado = discapacitado;
     }
 
-    public List<Licencia> getTramites() {
+    public List<Licencia> getLicencias() {
         return licencia;
     }
 
-    public void setTramites(List<Licencia> licencia) {
+    public void setLicencias(List<Licencia> licencia) {
         this.licencia = licencia;
     }
 
@@ -148,18 +146,19 @@ public class Persona implements Serializable {
         this.ApellidoMaterno = ApellidoMaterno;
     }
 
+    public List<Vehiculo> getVehiculos() {
+        return vehiculos;
+    }
+
+    public void setVehiculos(List<Vehiculo> vehiculos) {
+        this.vehiculos = vehiculos;
+    }
+
     @Override
     public String toString() {
-        return "Persona{" + "id=" + id + ", RFC=" + RFC + ", nombre=" + nombre + ", ApellidoPaterno=" + ApellidoPaterno + ", ApellidoMaterno=" + ApellidoMaterno + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + ", discapacitado=" + discapacitado + ", licencia=" + licencia + '}';
+        return "Persona{" + "id=" + id + ", RFC=" + RFC + ", nombre=" + nombre + ", ApellidoPaterno=" + ApellidoPaterno + ", ApellidoMaterno=" + ApellidoMaterno + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + ", discapacitado=" + discapacitado + ", licencia=" + licencia + ", vehiculos=" + vehiculos + '}';
     }
     
 
-    
 
-    
-
-    
-    
-    
-    
 }
