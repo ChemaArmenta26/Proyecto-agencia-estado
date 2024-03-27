@@ -4,8 +4,10 @@
  */
 package DAOs;
 
+import Entidades.Persona;
 import Entidades.Vehiculo;
 import Persistencia.PersistenciaException;
+import java.util.List;
 
 /**
  *
@@ -14,5 +16,5 @@ import Persistencia.PersistenciaException;
 public interface IVehiculoDAO {
     public Vehiculo agregarVehiculo(Vehiculo vehiculo) throws PersistenciaException;
     
-    public Vehiculo consultarVehiculoNumeroSerie(String numSerie) throws PersistenciaException;
+    public List<Vehiculo> consultarVehiculosPersona(Persona persona) throws PersistenciaException;
 }

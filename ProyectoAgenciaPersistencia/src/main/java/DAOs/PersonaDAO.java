@@ -1,4 +1,3 @@
-
 package DAOs;
 
 import Conexion.IConexionBD;
@@ -23,12 +22,15 @@ public class PersonaDAO implements IPersonaDAO {
     @Override
     public Persona agregarPersona(Persona persona) throws PersistenciaException {
         EntityManager entityManager = conexion.conexion();
-
-        entityManager.getTransaction().begin();
-        entityManager.persist(persona);
-
-        entityManager.getTransaction().commit();
-        entityManager.close();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(persona);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            throw new PersistenciaException("No se pudo agregar a la persona correctamente");
+        } finally {
+            entityManager.close();
+        }
         return persona;
     }
 
@@ -42,10 +44,9 @@ public class PersonaDAO implements IPersonaDAO {
         TypedQuery<Persona> query = entityManager.createQuery(jpql, Persona.class);
         query.setParameter("RFC", RFC);
 
-        
         try {
             persona = query.getSingleResult();
-        }catch(NoResultException e){
+        } catch (NoResultException e) {
             persona = null;
         }
         return persona;

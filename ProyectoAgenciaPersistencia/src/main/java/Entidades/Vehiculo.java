@@ -5,6 +5,7 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -39,10 +41,13 @@ public class Vehiculo implements Serializable {
 
     @Column(name = "marca", nullable = false)
     private String marca;
-    
+
     @ManyToOne
-    @JoinColumn(name = "id_Persona",referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "id_Persona", referencedColumnName = "id", nullable = false)
     private Persona propietario;
+    
+    @OneToMany(mappedBy = "vehiculo")
+    private List<Placa> placas;
 
     public Vehiculo() {
     }
@@ -111,11 +116,17 @@ public class Vehiculo implements Serializable {
         this.propietario = propietario;
     }
 
+    public List<Placa> getPlacas() {
+        return placas;
+    }
+
+    public void setPlacas(List<Placa> placas) {
+        this.placas = placas;
+    }
+
     @Override
     public String toString() {
         return "Vehiculo{" + "id=" + id + ", numeroSerie=" + numeroSerie + ", modelo=" + modelo + ", color=" + color + ", linea=" + linea + ", marca=" + marca + ", propietario=" + propietario + '}';
     }
-
-    
 
 }
