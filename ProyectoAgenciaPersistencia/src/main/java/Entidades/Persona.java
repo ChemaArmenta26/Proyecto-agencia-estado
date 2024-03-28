@@ -80,6 +80,7 @@ public class Persona implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
         this.discapacitado = discapacitado;
         this.licencia = new ArrayList<>();
+        this.vehiculos = new ArrayList<>();
     }
 
     public String getRFC() {

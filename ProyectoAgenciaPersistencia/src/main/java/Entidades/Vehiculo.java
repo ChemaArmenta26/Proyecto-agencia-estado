@@ -5,6 +5,7 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -48,7 +49,7 @@ public class Vehiculo implements Serializable {
     @JoinColumn(name = "id_Persona", referencedColumnName = "id", nullable = false)
     private Persona propietario;
     
-    @OneToMany(mappedBy = "vehiculo", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "vehiculo", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Placa> placas;
 
     public Vehiculo() {
@@ -58,6 +59,7 @@ public class Vehiculo implements Serializable {
         this.numeroSerie = numeroSerie;
         this.modelo = modelo;
         this.marca = marca;
+        this.placas = new ArrayList<>();
     }
 
     public Long getId() {
