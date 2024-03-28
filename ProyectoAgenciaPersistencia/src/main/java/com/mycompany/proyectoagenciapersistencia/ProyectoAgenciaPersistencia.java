@@ -18,9 +18,11 @@ import DAOs.VehiculoDAO;
 import Entidades.Automovil;
 import Entidades.Persona;
 import Entidades.Placa;
+import Entidades.Vehiculo;
 import Persistencia.PersistenciaException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -53,11 +55,16 @@ public class ProyectoAgenciaPersistencia {
 //        }else{
 //        System.out.println("NO SE AGREGO");
 //        }
-            Automovil automovil = new Automovil("rojo", "nose", "123", "22333", "HONDA", persona1.consultarPersonaRFC("1222"));       
-            auto.agregarAutomovil(automovil);
-            Placa placa2 = new Placa("AAAA", fechaNacimiento, true, automovil, fechaNacimiento, 1500.00f);
-            placa.agregarPlaca(placa2);
+//            Automovil automovil = new Automovil("rojo", "nose", "123", "22333", "HONDA", persona1.consultarPersonaRFC("1222"));       
+//            auto.agregarAutomovil(automovil);
+//            Placa placa2 = new Placa("AAAA", fechaNacimiento, true, automovil, fechaNacimiento, 1500.00f);
+//            placa.agregarPlaca(placa2);
 
+            List<Vehiculo> vehiculos = vehiculo.consultarVehiculosPersona(persona1.consultarPersonaRFC("1222"));
+            for (int i = 0; i <vehiculos.size(); i++) {
+                System.out.println(vehiculos.get(i));
+        }
+            
           
           
         
