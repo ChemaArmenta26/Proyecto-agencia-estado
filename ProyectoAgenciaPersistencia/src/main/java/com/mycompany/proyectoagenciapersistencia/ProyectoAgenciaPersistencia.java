@@ -15,7 +15,9 @@ import DAOs.LicenciaDAO;
 import DAOs.PersonaDAO;
 import DAOs.PlacaDAO;
 import DAOs.VehiculoDAO;
+import Entidades.Automovil;
 import Entidades.Persona;
+import Entidades.Placa;
 import Persistencia.PersistenciaException;
 import java.util.Calendar;
 import java.util.Date;
@@ -38,7 +40,7 @@ public class ProyectoAgenciaPersistencia {
         IAutomovilDAO auto = new AutomovilDAO(conexion);
         
         Calendar fechaNacimiento = Calendar.getInstance();
-       fechaNacimiento.set(2004, Calendar.AUGUST, 26);
+//       fechaNacimiento.set(2004, Calendar.AUGUST, 26);
 
         // Ahora, podemos agregar años, meses o días según sea necesario
         // Obtener la nueva fecha de nacimiento después de restar los años y meses
@@ -51,6 +53,10 @@ public class ProyectoAgenciaPersistencia {
 //        }else{
 //        System.out.println("NO SE AGREGO");
 //        }
+            Automovil automovil = new Automovil("rojo", "nose", "123", "22333", "HONDA", persona1.consultarPersonaRFC("1222"));       
+            auto.agregarAutomovil(automovil);
+            Placa placa2 = new Placa("AAAA", fechaNacimiento, true, automovil, fechaNacimiento, 1500.00f);
+            placa.agregarPlaca(placa2);
 
           
           

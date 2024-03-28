@@ -55,10 +55,11 @@ public class Vehiculo implements Serializable {
     public Vehiculo() {
     }
 
-    public Vehiculo(String numeroSerie, String modelo, String marca) {
+    public Vehiculo(String numeroSerie, String modelo, String marca, Persona persona) {
         this.numeroSerie = numeroSerie;
         this.modelo = modelo;
         this.marca = marca;
+        this.propietario = persona;
         this.placas = new ArrayList<>();
     }
 
