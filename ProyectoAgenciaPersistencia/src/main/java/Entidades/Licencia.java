@@ -27,10 +27,10 @@ public class Licencia extends Tramite implements Serializable {
     
 
     @Column(name = "Vigencia", nullable = false)
-    private int duracionAños;
+    private Integer duracionAños;
     
     @Column(name = "estado", nullable = false)
-    private boolean estado;
+    private Boolean estado;
     
     @Column(name = "FechaVigenciaExpiracion", nullable = false)
     @Temporal(TemporalType.DATE)

@@ -7,10 +7,14 @@ package Entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -20,6 +24,8 @@ import javax.persistence.OneToMany;
  * @author PC
  */
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "tipo_vehiculo", discriminatorType = DiscriminatorType.STRING)
 public class Vehiculo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,11 +39,7 @@ public class Vehiculo implements Serializable {
     @Column(name = "modelo", nullable = false)
     private String modelo;
 
-    @Column(name = "color", nullable = false)
-    private String color;
-
-    @Column(name = "linea", nullable = false)
-    private String linea;
+    
 
     @Column(name = "marca", nullable = false)
     private String marca;
@@ -52,11 +54,9 @@ public class Vehiculo implements Serializable {
     public Vehiculo() {
     }
 
-    public Vehiculo(String numeroSerie, String modelo, String color, String linea, String marca) {
+    public Vehiculo(String numeroSerie, String modelo, String marca) {
         this.numeroSerie = numeroSerie;
         this.modelo = modelo;
-        this.color = color;
-        this.linea = linea;
         this.marca = marca;
     }
 
@@ -82,22 +82,6 @@ public class Vehiculo implements Serializable {
 
     public void setModelo(String modelo) {
         this.modelo = modelo;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getLinea() {
-        return linea;
-    }
-
-    public void setLinea(String linea) {
-        this.linea = linea;
     }
 
     public String getMarca() {
@@ -126,7 +110,8 @@ public class Vehiculo implements Serializable {
 
     @Override
     public String toString() {
-        return "Vehiculo{" + "id=" + id + ", numeroSerie=" + numeroSerie + ", modelo=" + modelo + ", color=" + color + ", linea=" + linea + ", marca=" + marca + ", propietario=" + propietario + '}';
+        return "Vehiculo{" + "id=" + id + ", numeroSerie=" + numeroSerie + ", modelo=" + modelo + ", marca=" + marca + ", propietario=" + propietario + ", placas=" + placas + '}';
     }
 
+   
 }

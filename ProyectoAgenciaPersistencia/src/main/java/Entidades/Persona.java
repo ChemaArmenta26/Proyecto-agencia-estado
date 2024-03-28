@@ -60,7 +60,7 @@ public class Persona implements Serializable {
     private Calendar fechaNacimiento;
 
     @Column(name = "discapacitado", nullable = false)
-    private boolean discapacitado;
+    private Boolean discapacitado;
 
     @OneToMany(mappedBy = "Persona", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Licencia> licencia;
