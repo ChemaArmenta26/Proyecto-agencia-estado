@@ -26,10 +26,10 @@ public class ProyectoAgenciaNegocio {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-//            IAgregarPersonaBO agregarBO = new AgregarPersonaBO();
-//            agregarBO.agregarPersonas();
-                IRegistroLicenciaBO licenciaBO = new RegistroLicenciaBO();
-                String rfc = "JHUA920520DEF";
-                licenciaBO.agregarLicencia(3, licenciaBO.consultarRFC(rfc, licenciaBO.verificarRFC(rfc)));
+            IAgregarPersonaBO agregarBO = new AgregarPersonaBO();
+            agregarBO.agregarPersonas();
+//                IRegistroLicenciaBO licenciaBO = new RegistroLicenciaBO();
+//                String rfc = "JHUA920520DEF";
+//                licenciaBO.agregarLicencia(3, licenciaBO.consultarRFC(rfc, licenciaBO.verificarRFC(rfc)));
     }
 }

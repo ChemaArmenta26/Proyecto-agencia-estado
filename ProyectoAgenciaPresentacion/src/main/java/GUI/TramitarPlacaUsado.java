@@ -155,7 +155,7 @@ public class TramitarPlacaUsado extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         dispose();
-        OpcionPlacas o = new OpcionPlacas();
+        TramitarPlacaUsado2 o = new TramitarPlacaUsado2();
         o.setVisible(true);
     }//GEN-LAST:event_btnContinuarActionPerformed
 

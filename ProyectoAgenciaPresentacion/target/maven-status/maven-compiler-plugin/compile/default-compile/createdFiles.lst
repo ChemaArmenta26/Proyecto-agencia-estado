@@ -6,6 +6,7 @@ GUI\TramitarLicencia$5.class
 Control\ControladorFlujo.class
 GUI\ReporteLicYPla.class
 GUI\TramitarLicencia$11.class
+GUI\TramitarPlacaUsado2$3.class
 GUI\Principal$3.class
 GUI\TramitarLicencia$2.class
 GUI\TramitarLicencia$8.class
@@ -40,9 +41,12 @@ GUI\Principal$1.class
 GUI\ConsultarLiYPla.class
 GUI\ConfirmarTraPlacas$1.class
 GUI\ConsultarLP$3.class
+GUI\TramitarPlacaUsado2.class
 GUI\Login$3.class
 GUI\TramitarLicencia$17.class
 GUI\Principal.class
+GUI\TramitarPlacaUsado2$1.class
+GUI\TramitarLicencia$19.class
 GUI\ConfirmarTraPlacas.class
 GUI\TramitarLicencia.class
 GUI\ReporteLicYPla$2.class
@@ -58,5 +62,6 @@ GUI\ConsultarLP.class
 GUI\TramitarLicencia$10.class
 GUI\TramitarLicencia$16.class
 GUI\TramitarLicencia$9.class
+GUI\TramitarPlacaUsado2$2.class
 GUI\Principal$4.class
 GUI\TramitarLicencia$6.class

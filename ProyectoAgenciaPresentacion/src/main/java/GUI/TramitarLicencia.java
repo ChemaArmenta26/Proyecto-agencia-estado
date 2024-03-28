@@ -4,7 +4,6 @@
  */
 package GUI;
 
-
 import BOs.IRegistroLicenciaBO;
 import BOs.RegistroLicenciaBO;
 import Control.ControladorFlujo;
@@ -26,8 +25,7 @@ public class TramitarLicencia extends javax.swing.JFrame {
     private IRegistroLicenciaBO licencia = new RegistroLicenciaBO();
     private AlgoritmoEncriptacion aes = new AlgoritmoEncriptacion();
     private String existe = "PrimeraVez";
-    
-    
+
     /**
      * Creates new form TramitarLicencia
      */
@@ -162,6 +160,7 @@ public class TramitarLicencia extends javax.swing.JFrame {
         p3 = new javax.swing.JLabel();
         p4 = new javax.swing.JLabel();
         p5 = new javax.swing.JLabel();
+        btnLimpiarCampos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -330,71 +329,80 @@ public class TramitarLicencia extends javax.swing.JFrame {
         txtCosto.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         txtCosto.setText("El costo será: ");
 
+        btnLimpiarCampos.setText("LIMPIAR CAMPOS");
+        btnLimpiarCampos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarCamposActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(84, 84, 84)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtRFC, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtApellidoPaterno)
-                            .addComponent(txtNombre)
-                            .addComponent(txtApellidoMaterno)
-                            .addComponent(txtTelefono)
-                            .addComponent(txtFechaN, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel9)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 110, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtCosto)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                            .addComponent(DiscapacitadoSi)
-                                            .addGap(56, 56, 56)
-                                            .addComponent(DiscapacitadoNo)
-                                            .addGap(176, 176, 176))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel10)
-                                            .addGap(113, 113, 113)))))
+                        .addGap(84, 84, 84)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(p2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(p1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(54, 54, 54)
-                                        .addComponent(botonVerificar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(p5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(99, 99, 99)
-                                        .addComponent(cb1)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(cb2)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(cb3))
-                                    .addComponent(p3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(p4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))))))
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtRFC, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel4))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtApellidoPaterno)
+                                    .addComponent(txtNombre)
+                                    .addComponent(txtApellidoMaterno)
+                                    .addComponent(txtTelefono)
+                                    .addComponent(txtFechaN, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnLimpiarCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(106, 106, 106)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 116, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtCosto)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(DiscapacitadoSi)
+                                    .addGap(56, 56, 56)
+                                    .addComponent(DiscapacitadoNo)
+                                    .addGap(176, 176, 176))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel10)
+                                    .addGap(113, 113, 113)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(p2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(p1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(54, 54, 54)
+                                .addComponent(botonVerificar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(p5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(99, 99, 99)
+                                .addComponent(cb1)
+                                .addGap(18, 18, 18)
+                                .addComponent(cb2)
+                                .addGap(18, 18, 18)
+                                .addComponent(cb3))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(p3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(112, 112, 112)
+                                .addComponent(jLabel9))
+                            .addComponent(p4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(48, 48, 48)
                 .addComponent(jLabel2)
@@ -416,9 +424,9 @@ public class TramitarLicencia extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(botonVerificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(74, 74, 74)
+                        .addGap(62, 62, 62)
                         .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(DiscapacitadoSi)
                             .addComponent(DiscapacitadoNo))
@@ -449,26 +457,29 @@ public class TramitarLicencia extends javax.swing.JFrame {
                             .addComponent(p3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(p4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(23, 23, 23)
-                                .addComponent(jLabel7))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(txtApellidoMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(9, 9, 9)
-                                .addComponent(txtFechaN, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtApellidoMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addComponent(p4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtFechaN, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(19, 19, 19)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(p5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel8)))))))
+                                        .addComponent(jLabel8))))
+                            .addComponent(jLabel7))))
                 .addGap(21, 21, 21)
-                .addComponent(txtCosto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCosto)
+                    .addComponent(btnLimpiarCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGenerar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -500,17 +511,13 @@ public class TramitarLicencia extends javax.swing.JFrame {
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
         if (!(txtRFC.getText().equalsIgnoreCase("")) && (cb1.isSelected() || cb2.isSelected() || cb3.isSelected())) {
-        licencia.agregarLicencia(duracion(), licencia.consultarRFC(txtRFC.getText(), true));
-        //logica que falta para la activacion de las licencias
-        dispose();
-        controlador.mostrarVentanaPrincipal(false);
-        }else{
+            licencia.agregarLicencia(duracion(), licencia.consultarRFC(txtRFC.getText(), true));
+            //logica que falta para la activacion de las licencias
+            dispose();
+            controlador.mostrarVentanaPrincipal(false);
+        } else {
             JOptionPane.showMessageDialog(this, "Por favor, verifica primero para continuar.", "Verifique campos", JOptionPane.ERROR_MESSAGE);
         }
-        
-        
-        
-        
 
 //         if (existe.equals("Espera")) {
 //            JOptionPane.showMessageDialog(this, "Por favor, verifica primero para continuar.", "Verifique campos", JOptionPane.ERROR_MESSAGE);
@@ -549,12 +556,10 @@ public class TramitarLicencia extends javax.swing.JFrame {
 //                JOptionPane.showMessageDialog(this, "Por favor, verifica los campos y seleccione las opciones correctas.", "Verifique campos", JOptionPane.ERROR_MESSAGE);
 //            }
 //        }
- 
+
     }//GEN-LAST:event_btnGenerarActionPerformed
 
-    
-    
-    
+
     private void cb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb1ActionPerformed
         // TODO add your handling code here:
 
@@ -616,7 +621,8 @@ public class TramitarLicencia extends javax.swing.JFrame {
             p1.setText("<html><font color='red'>*</font></html>");
         }
     }
-    private void validarNombre() {   
+
+    private void validarNombre() {
         String nombre = txtNombre.getText();
         if (Validaciones.validarNombre(nombre)) {
             p2.setText("<html><font color='green'>✓</font></html>");
@@ -624,7 +630,8 @@ public class TramitarLicencia extends javax.swing.JFrame {
             p2.setText("<html><font color='red'>*</font></html>");
         }
     }
-    private void validarApellidoPaterno() {       
+
+    private void validarApellidoPaterno() {
         String ApellidoPaterno = txtApellidoPaterno.getText();
         if (Validaciones.validarApellidoPaterno(ApellidoPaterno)) {
             p3.setText("<html><font color='green'>✓</font></html>");
@@ -633,7 +640,8 @@ public class TramitarLicencia extends javax.swing.JFrame {
         }
 
     }
-    private void validarApellidoMaterno() { 
+
+    private void validarApellidoMaterno() {
         String ApellidoMaterno = txtApellidoMaterno.getText();
         if (Validaciones.validarApellidoMaterno(ApellidoMaterno)) {
             p4.setText("<html><font color='green'>✓</font></html>");
@@ -642,6 +650,7 @@ public class TramitarLicencia extends javax.swing.JFrame {
         }
 
     }
+
     private void validarTelefono() {
         String Telefono = txtTelefono.getText();
         if (Validaciones.validarTelefono(Telefono)) {
@@ -672,24 +681,46 @@ public class TramitarLicencia extends javax.swing.JFrame {
     private void botonVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVerificarActionPerformed
         Persona persona = licencia.consultarRFC(txtRFC.getText(), licencia.verificarRFC(txtRFC.getText()));
         if (persona != null) {
-            try{
-            txtRFC.enable(false);
-            txtNombre.setText(aes.decrypt(persona.getNombre()));
-            txtApellidoPaterno.setText(aes.decrypt(persona.getApellidoPaterno()));
-            txtApellidoMaterno.setText(aes.decrypt(persona.getApellidoMaterno()));
-            txtFechaN.setCalendar(persona.getFechaNacimiento());
-            txtTelefono.setText(aes.decrypt(persona.getTelefono()));
-            if (persona.isDiscapacitado()) {
-            DiscapacitadoSi.setSelected(true);    
-            }else{
-                DiscapacitadoNo.setSelected(true);
+            try {
+                txtRFC.enable(false);
+                txtNombre.setText(aes.decrypt(persona.getNombre()));
+                txtApellidoPaterno.setText(aes.decrypt(persona.getApellidoPaterno()));
+                txtApellidoMaterno.setText(aes.decrypt(persona.getApellidoMaterno()));
+                txtFechaN.setCalendar(persona.getFechaNacimiento());
+                txtTelefono.setText(aes.decrypt(persona.getTelefono()));
+                if (persona.isDiscapacitado()) {
+                    DiscapacitadoSi.setSelected(true);
+                } else {
+                    DiscapacitadoNo.setSelected(true);
+                }
+            } catch (Exception e) {
+
             }
-            }catch(Exception e){
-                
-            }
-            
+
         }
     }//GEN-LAST:event_botonVerificarActionPerformed
+
+    private void btnLimpiarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarCamposActionPerformed
+        // TODO add your handling code here:
+
+        txtRFC.enable();
+        txtRFC.setText("");
+        txtNombre.setText("");
+        txtApellidoPaterno.setText("");
+        txtApellidoMaterno.setText("");
+        txtTelefono.setText("");
+        txtFechaN.setDate(null);
+        DiscapacitadoSi.setSelected(false);
+        DiscapacitadoNo.setSelected(false);
+        cb1.setSelected(false);
+        cb2.setSelected(false);
+        cb3.setSelected(false);
+        txtCosto.setText("El costo será: ");
+
+        reiniciarMensajesValidacion();
+
+
+    }//GEN-LAST:event_btnLimpiarCamposActionPerformed
 
     //FUTUROS METODOS A UTILIZAR
     public void actualizaprecio() {
@@ -716,14 +747,24 @@ public class TramitarLicencia extends javax.swing.JFrame {
             }
         }
     }
-    public int duracion(){
+
+    public int duracion() {
         if (cb1.isSelected()) {
             return 1;
-        }else if(cb2.isSelected()){
-            return 2;     
-       }else{
+        } else if (cb2.isSelected()) {
+            return 2;
+        } else {
             return 3;
         }
+    }
+
+    private void reiniciarMensajesValidacion() {
+
+        p1.setText("");
+        p2.setText("");
+        p3.setText("");
+        p4.setText("");
+        p5.setText("");
     }
 
     /**
@@ -735,6 +776,7 @@ public class TramitarLicencia extends javax.swing.JFrame {
     private javax.swing.JCheckBox DiscapacitadoSi;
     private javax.swing.JButton botonVerificar;
     private javax.swing.JButton btnGenerar;
+    private javax.swing.JButton btnLimpiarCampos;
     private javax.swing.JButton btnMenu;
     private javax.swing.JCheckBox cb1;
     private javax.swing.JCheckBox cb2;
