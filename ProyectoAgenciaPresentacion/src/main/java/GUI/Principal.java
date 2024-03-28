@@ -26,9 +26,6 @@ public class Principal extends javax.swing.JFrame {
         this.insercionMasivaRealizada = insercionMasiva;
         agregarPersonaBO = new AgregarPersonaBO();
         controlador = new ControladorFlujo();
-        if (insercionMasivaRealizada = false) {
-            botonInsercionMasiva.enable(false);
-        }
     }
 
     /**
@@ -257,7 +254,6 @@ public class Principal extends javax.swing.JFrame {
         if (insercionMasivaRealizada) {
             // Llamada al método de inserción masiva
             agregarPersonaBO.agregarPersonas();
-            insercionMasivaRealizada = true;
             botonInsercionMasiva.setEnabled(false); // Desactivar el botón después de la inserción masiva
         } else {
             JOptionPane.showMessageDialog(this, "La inserción masiva ya se ha realizado.", "Inserción masiva ya realizada", JOptionPane.INFORMATION_MESSAGE);
