@@ -39,7 +39,6 @@ public class Vehiculo implements Serializable {
     @Column(name = "modelo", nullable = false)
     private String modelo;
 
-    
 
     @Column(name = "marca", nullable = false)
     private String marca;
