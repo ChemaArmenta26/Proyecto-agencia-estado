@@ -34,7 +34,7 @@ public class Placa extends Tramite implements Serializable {
     private Boolean estado;
     
     @ManyToOne
-    @JoinColumn(name = "numero_serie", nullable = false)
+    @JoinColumn(name = "numero_serie", nullable = false, referencedColumnName = "id")
     private Vehiculo vehiculo;
 
     public Placa() {

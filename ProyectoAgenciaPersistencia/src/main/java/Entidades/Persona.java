@@ -62,10 +62,10 @@ public class Persona implements Serializable {
     @Column(name = "discapacitado", nullable = false)
     private Boolean discapacitado;
 
-    @OneToMany(mappedBy = "Persona", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "persona", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Licencia> licencia;
 
-    @OneToMany(mappedBy = "Persona", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "propietario", cascade = CascadeType.PERSIST)
     private List<Vehiculo> vehiculos;
 
     public Persona() {

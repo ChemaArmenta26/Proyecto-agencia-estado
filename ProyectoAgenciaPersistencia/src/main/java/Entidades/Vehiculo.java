@@ -6,6 +6,7 @@ package Entidades;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -30,7 +31,7 @@ public class Vehiculo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "numero_serie", nullable = false, unique = true)
@@ -47,7 +48,7 @@ public class Vehiculo implements Serializable {
     @JoinColumn(name = "id_Persona", referencedColumnName = "id", nullable = false)
     private Persona propietario;
     
-    @OneToMany(mappedBy = "vehiculo")
+    @OneToMany(mappedBy = "vehiculo", cascade = CascadeType.PERSIST)
     private List<Placa> placas;
 
     public Vehiculo() {
