@@ -4,7 +4,10 @@
  */
 package DTO;
 
+import Entidades.Licencia;
+import Entidades.Vehiculo;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  *
@@ -19,11 +22,13 @@ public class PersonaDTO {
     private Boolean discapacitado;
     private Calendar fecha_nacimiento;
     private String telefono;
+     private List<Licencia> licencias;
+    private List<Vehiculo> vehiculos;
 
     public PersonaDTO() {
     }
 
-    public PersonaDTO(String rfc, String nombre, String apellido_paterno, String apellido_materno, Boolean discapacitado, Calendar fecha_nacimiento, String telefono) {
+    public PersonaDTO(String rfc, String nombre, String apellido_paterno, String apellido_materno, Boolean discapacitado, Calendar fecha_nacimiento, String telefono, List<Licencia> tramites, List<Vehiculo> vehiculos) {
         this.rfc = rfc;
         this.nombre = nombre;
         this.apellido_paterno = apellido_paterno;
@@ -31,8 +36,11 @@ public class PersonaDTO {
         this.discapacitado = discapacitado;
         this.fecha_nacimiento = fecha_nacimiento;
         this.telefono = telefono;
+        this.licencias = tramites;
+        this.vehiculos = vehiculos;
     }
 
+   
     public String getRfc() {
         return rfc;
     }
@@ -87,6 +95,22 @@ public class PersonaDTO {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public List<Licencia> getLicencias() {
+        return licencias;
+    }
+
+    public void setLicencias(List<Licencia> tramites) {
+        this.licencias = tramites;
+    }
+
+    public List<Vehiculo> getVehiculos() {
+        return vehiculos;
+    }
+
+    public void setVehiculos(List<Vehiculo> vehiculos) {
+        this.vehiculos = vehiculos;
     }
 
     

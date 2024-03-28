@@ -5,6 +5,7 @@
 package DAOs;
 
 import Entidades.Placa;
+import Entidades.Vehiculo;
 import Persistencia.PersistenciaException;
 
 /**
@@ -16,4 +17,8 @@ public interface IPlacaDAO {
     public Placa agregarPlaca(Placa placa) throws PersistenciaException;
 
     public Placa consultarPlacaNum(String num) throws PersistenciaException;
+    
+    public Placa consultarPlacaActiva(Vehiculo vehiculo) throws PersistenciaException;
+    
+    public boolean actualizarEstadoPlaca(Placa placa) throws PersistenciaException;
 }

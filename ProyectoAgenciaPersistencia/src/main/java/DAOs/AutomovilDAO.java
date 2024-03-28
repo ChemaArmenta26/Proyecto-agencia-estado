@@ -8,18 +8,21 @@ import Conexion.IConexionBD;
 import Entidades.Automovil;
 import Persistencia.PersistenciaException;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 
 /**
  *
  * @author PC
  */
-public class AutomovilDAO implements IAutomovilDAO{
-IConexionBD conexion;
+public class AutomovilDAO implements IAutomovilDAO {
+
+    IConexionBD conexion;
 
     public AutomovilDAO(IConexionBD conexion) {;
         this.conexion = conexion;
     }
-    
+
     @Override
     public Automovil agregarAutomovil(Automovil automovil) throws PersistenciaException {
         EntityManager entityManager = conexion.conexion();
@@ -34,5 +37,29 @@ IConexionBD conexion;
         }
         return automovil;
     }
-    
+
+    @Override
+    public Automovil consultarAutomovilNumSerie(String numSerie) throws PersistenciaException {
+        EntityManager entityManager = conexion.conexion();
+        Automovil automovil = new Automovil();
+
+        try {
+            entityManager.getTransaction().begin();
+            String jpql = "SELECT a FROM Automovil a WHERE a.numSerie = :numSerie";
+
+            TypedQuery<Automovil> query = entityManager.createQuery(jpql, Automovil.class);
+            query.setParameter("numSerie", numSerie);
+            try {
+                automovil = query.getSingleResult();
+            } catch (NoResultException e) {
+                automovil = null;
+            }
+            return automovil;
+        } catch (Exception e) {
+            throw new PersistenciaException("No se pudo consultar el automovil.");
+        } finally {
+            entityManager.close();
+        }
+    }
+
 }

@@ -13,4 +13,6 @@ import Persistencia.PersistenciaException;
  */
 public interface IAutomovilDAO {
     public Automovil agregarAutomovil(Automovil automovil) throws PersistenciaException;
+    
+    public Automovil consultarAutomovilNumSerie(String numSerie) throws PersistenciaException;
 }
