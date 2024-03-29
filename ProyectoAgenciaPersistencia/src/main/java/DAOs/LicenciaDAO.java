@@ -50,7 +50,7 @@ public class LicenciaDAO extends TramiteDAO implements ILicenciaDAO {
 
     @Override
     public float sacarCosto(Persona persona, int duracion) throws PersistenciaException {
-        if (!persona.isDiscapacitado()) {
+        if (!persona.getDiscapacitado()) {
             if (duracion == 1) {
                 return 600.00f;
             } else if (duracion == 2) {

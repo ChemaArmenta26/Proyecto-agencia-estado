@@ -6,10 +6,13 @@ package BOs;
 
 import DTO.PlacaDTO;
 
+
 /**
  *
  * @author PC
  */
 public interface IRegistroPlacaBO {
     public PlacaDTO agregarPlaca(PlacaDTO placa);
+    
+    public void agregarNuevaPlaca(PlacaDTO placaNuevaDTO);
 }

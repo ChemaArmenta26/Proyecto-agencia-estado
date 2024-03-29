@@ -81,23 +81,26 @@ public class PlacaDAO implements IPlacaDAO {
 
     @Override
     public boolean actualizarEstadoPlaca(Placa placa) throws PersistenciaException {
-        EntityManager entityManager = conexion.conexion();
-        entityManager.getTransaction().begin();
-        
-        Calendar fechaActual = Calendar.getInstance();
-        
-        String sentenciaJpql = "UPDATE Placa p SET p.estado = :estado, p.fechaRecepcion = :fecha WHERE p.numeroPlaca = :numPlaca";
-        Query query = entityManager.createQuery(sentenciaJpql);
-        query.setParameter("estado", false);
-        query.setParameter("fecha", fechaActual);
-        query.setParameter("numPlaca", placa.getNumeroPlaca());
-        
-        int rowsUpdated = query.executeUpdate();
+        try {
+            EntityManager entityManager = conexion.conexion();
+            entityManager.getTransaction().begin();
 
-        entityManager.getTransaction().commit();
-        entityManager.close();
+            Calendar fechaActual = Calendar.getInstance();
 
-        return rowsUpdated > 0;
+            String sentenciaJpql = "UPDATE Placa p SET p.estado = :estado, p.fechaRecepcion = :fecha WHERE p.numeroPlaca = :numPlaca";
+            Query query = entityManager.createQuery(sentenciaJpql);
+            query.setParameter("estado", false);
+            query.setParameter("fecha", fechaActual);
+            query.setParameter("numPlaca", placa.getNumeroPlaca());
+
+            int rowsUpdated = query.executeUpdate();
+
+            entityManager.getTransaction().commit();
+            entityManager.close();
+            return rowsUpdated > 0;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al actualizar el estado de la placa", e);
+        }
     }
 
 }

@@ -20,6 +20,8 @@ import Entidades.Automovil;
 import Entidades.Persona;
 import Entidades.Placa;
 import Persistencia.PersistenciaException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -33,51 +35,67 @@ public class RegistroAutomovilBO implements IRegistroAutomovilBO {
     private IPersonaDAO personasDAO = new PersonaDAO(conexionBD);
     private IPlacaDAO placaDAO = new PlacaDAO(conexionBD);
     AlgoritmoEncriptacion encriptador = new AlgoritmoEncriptacion();
+    private static final Logger logger = Logger.getLogger(RegistroAutomovilBO.class.getName());
 
     @Override
     public void agregarAutomovil(AutomovilDTO automovil) {
         try {
+            // Consultar la persona asociada al automóvil
             Persona persona = personasDAO.consultarPersonaRFC(automovil.getPersona().getRfc());
-            Automovil automovilAgregar = new Automovil(automovil.getColor(), automovil.getLinea(), automovil.getNumero_serie(), automovil.getModelo(),
-                    automovil.getMarca(), persona);
+            if (persona == null) {
+                throw new IllegalArgumentException("La persona asociada al automóvil no existe en la base de datos.");
+            }
 
+            // Agregar el automóvil
+            Automovil automovilAgregar = new Automovil(automovil.getColor(), automovil.getLinea(), automovil.getNumero_serie(),
+                    automovil.getModelo(), automovil.getMarca(), persona);
             automovilDAO.agregarAutomovil(automovilAgregar);
         } catch (PersistenciaException ex) {
+            logger.log(Level.SEVERE, "Error al agregar el automóvil al sistema", ex);
             JOptionPane.showMessageDialog(null, "No se pudo agregar el vehículo al sistema.");
         }
     }
 
     @Override
     public AutomovilDTO consultarAutomovilPlaca(String numPlaca) {
-        Placa placa = null;
-        try {
-            placa = placaDAO.consultarPlacaNum(numPlaca);
-        } catch (PersistenciaException ex) {
-            JOptionPane.showMessageDialog(null, "No se pudo consultar la placa.");
+       try {
+        // Consultar la placa
+        Placa placa = placaDAO.consultarPlacaNum(numPlaca);
+        if (placa == null || placa.getVehiculo() == null) {
+            return null;
         }
-
-        Automovil automovil = null;
-        try {
-            automovil = automovilDAO.consultarAutomovilNumSerie(placa.getVehiculo().getNumeroSerie());
-        } catch (PersistenciaException ex) {
-            JOptionPane.showMessageDialog(null, "No se pudo consultar el automovil.");
+        
+        // Consultar el automóvil asociado a la placa
+        Automovil automovil = automovilDAO.consultarAutomovilNumSerie(placa.getVehiculo().getNumeroSerie());
+        if (automovil == null) {
+            return null;
         }
-
-        String telefonoEnc = new String(automovil.getPropietario().getTelefono());
-        PersonaDTO persona = null;
+        
+        // Desencriptar el teléfono de la persona
+        String telefonoEncriptado = new String(automovil.getPropietario().getTelefono());
+        String telefonoDesencriptado = null;
         try {
-            persona = new PersonaDTO(automovil.getPropietario().getRFC(), automovil.getPropietario().getNombre(), automovil.getPropietario().getApellidoPaterno(),
-                    automovil.getPropietario().getApellidoMaterno(), automovil.getPropietario().isDiscapacitado(), automovil.getPropietario().getFechaNacimiento(),
-                    encriptador.decrypt(telefonoEnc), automovil.getPropietario().getLicencias(), automovil.getPropietario().getVehiculos()
-            );
+            telefonoDesencriptado = encriptador.decrypt(telefonoEncriptado);
         } catch (Exception ex) {
-
+            logger.log(Level.WARNING, "Error al desencriptar el teléfono del propietario", ex);
         }
+        
+        // Crear el objeto PersonaDTO
+        PersonaDTO personaDTO = new PersonaDTO(automovil.getPropietario().getRFC(), automovil.getPropietario().getNombre(),
+            automovil.getPropietario().getApellidoPaterno(), automovil.getPropietario().getApellidoMaterno(),
+            automovil.getPropietario().getDiscapacitado(), automovil.getPropietario().getFechaNacimiento(),
+            telefonoDesencriptado, automovil.getPropietario().getLicencia(), automovil.getPropietario().getVehiculos());
 
+        // Crear el objeto AutomovilDTO
         AutomovilDTO automovilConsulta = new AutomovilDTO(automovil.getLinea(), automovil.getColor(), automovil.getNumeroSerie(),
-                automovil.getModelo(), automovil.getMarca(), persona);
+            automovil.getModelo(), automovil.getMarca(), personaDTO);
 
         return automovilConsulta;
+    } catch (PersistenciaException ex) {
+        logger.log(Level.SEVERE, "Error al consultar el automóvil y la placa", ex);
+        JOptionPane.showMessageDialog(null, "No se pudo consultar el automovil y la placa.");
+        return null;
+    }
     }
 
 }

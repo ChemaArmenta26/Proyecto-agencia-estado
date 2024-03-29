@@ -4,16 +4,20 @@
  */
 package DTO;
 
+import Entidades.Persona;
+import Entidades.Vehiculo;
 import java.util.Calendar;
 
 /**
  *
  * @author PC
  */
-public class PlacaDTO {
+public class PlacaDTO extends TramiteDTO {
     private String numeroPlaca;
     private Calendar fechaRecepcion;
     private boolean estado;
+    private Vehiculo vehiculo;
+    private Persona persona;
 
     public PlacaDTO() {
     }
@@ -46,6 +50,22 @@ public class PlacaDTO {
 
     public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
     
     

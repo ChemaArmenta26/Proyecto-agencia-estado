@@ -67,6 +67,9 @@ public class Persona implements Serializable {
 
     @OneToMany(mappedBy = "propietario", cascade = CascadeType.PERSIST)
     private List<Vehiculo> vehiculos;
+    
+    @OneToMany(mappedBy = "placas", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Placa> placas;
 
     public Persona() {
     }
@@ -114,22 +117,7 @@ public class Persona implements Serializable {
     public void setFechaNacimiento(Calendar fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
-
-    public boolean isDiscapacitado() {
-        return discapacitado;
-    }
-
-    public void setDiscapacitado(boolean discapacitado) {
-        this.discapacitado = discapacitado;
-    }
-
-    public List<Licencia> getLicencias() {
-        return licencia;
-    }
-
-    public void setLicencias(List<Licencia> licencia) {
-        this.licencia = licencia;
-    }
+    
 
     public String getApellidoPaterno() {
         return ApellidoPaterno;
@@ -153,6 +141,30 @@ public class Persona implements Serializable {
 
     public void setVehiculos(List<Vehiculo> vehiculos) {
         this.vehiculos = vehiculos;
+    }
+
+    public Boolean getDiscapacitado() {
+        return discapacitado;
+    }
+
+    public void setDiscapacitado(Boolean discapacitado) {
+        this.discapacitado = discapacitado;
+    }
+
+    public List<Licencia> getLicencia() {
+        return licencia;
+    }
+
+    public void setLicencia(List<Licencia> licencia) {
+        this.licencia = licencia;
+    }
+
+    public List<Placa> getPlacas() {
+        return placas;
+    }
+
+    public void setPlacas(List<Placa> placas) {
+        this.placas = placas;
     }
 
     @Override

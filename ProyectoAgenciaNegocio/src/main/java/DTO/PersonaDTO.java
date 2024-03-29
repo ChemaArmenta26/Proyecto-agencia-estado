@@ -5,6 +5,7 @@
 package DTO;
 
 import Entidades.Licencia;
+import Entidades.Placa;
 import Entidades.Vehiculo;
 import java.util.Calendar;
 import java.util.List;
@@ -22,8 +23,9 @@ public class PersonaDTO {
     private Boolean discapacitado;
     private Calendar fecha_nacimiento;
     private String telefono;
-     private List<Licencia> licencias;
+    private List<Licencia> licencias;
     private List<Vehiculo> vehiculos;
+    private List<Placa> placas;
 
     public PersonaDTO() {
     }
@@ -111,6 +113,14 @@ public class PersonaDTO {
 
     public void setVehiculos(List<Vehiculo> vehiculos) {
         this.vehiculos = vehiculos;
+    }
+
+    public List<Placa> getPlacas() {
+        return placas;
+    }
+
+    public void setPlacas(List<Placa> placas) {
+        this.placas = placas;
     }
 
     
