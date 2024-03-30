@@ -15,4 +15,5 @@ public interface IRegistroPlacaBO {
     public PlacaDTO agregarPlaca(PlacaDTO placa);
     
     public void agregarNuevaPlaca(PlacaDTO placaNuevaDTO);
+    public PlacaDTO consultarPlaca(String numPlaca);
 }

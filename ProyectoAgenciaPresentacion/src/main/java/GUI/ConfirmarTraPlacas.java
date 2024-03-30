@@ -4,17 +4,18 @@
  */
 package GUI;
 
+import Control.ControladorFlujo;
+
 /**
  *
  * @author Carlo
  */
 public class ConfirmarTraPlacas extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ConfirmarTraPlacas
-     */
+    ControladorFlujo controlador;
     public ConfirmarTraPlacas() {
         initComponents();
+        controlador = new ControladorFlujo();
     }
 
     /**
@@ -160,16 +161,14 @@ public class ConfirmarTraPlacas extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         dispose();
-        TramiteFinalizado o = new TramiteFinalizado();
-        o.setVisible(true);
+        controlador.mostrarTramiteFinalizado();
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         
         dispose();
-        Principal p = new Principal(false);
-        p.setVisible(true);
+        controlador.mostrarVentanaPrincipal(false);
         
     }//GEN-LAST:event_jButton2ActionPerformed
 

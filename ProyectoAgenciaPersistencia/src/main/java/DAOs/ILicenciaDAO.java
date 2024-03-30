@@ -16,5 +16,7 @@ public interface ILicenciaDAO extends ITramiteDAO{
     
     public boolean agregarLicencia(int duracion, Persona persona) throws PersistenciaException;
     public float sacarCosto(Persona persona, int duracion) throws PersistenciaException;
-    boolean actualizarEstadoLicencia(Persona persona) throws PersistenciaException;
+    public boolean actualizarEstadoLicencia(Persona persona) throws PersistenciaException;
+    public Persona consultarPersonaConNumLicencia(String numLicencia) throws PersistenciaException;
+    public String generarNumeroLicencia();
 }

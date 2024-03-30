@@ -5,15 +5,21 @@
 package BOs;
 
 import DTO.AutomovilDTO;
+import DTO.PersonaDTO;
+import Entidades.Persona;
 
 /**
  *
  * @author PC
  */
 public interface IRegistroAutomovilBO {
-    
-     public void agregarAutomovil(AutomovilDTO automovil);
+
+    public void agregarAutomovil(AutomovilDTO automovil);
 
     public AutomovilDTO consultarAutomovilPlaca(String numPlaca);
 
+    public PersonaDTO obtenerPersonaConLicencia(String id, boolean prueba);
+    public boolean verificarLicencia(String id);
+
+    public Long obtenerIdConNumeroDeSerie(String numSerie);
 }

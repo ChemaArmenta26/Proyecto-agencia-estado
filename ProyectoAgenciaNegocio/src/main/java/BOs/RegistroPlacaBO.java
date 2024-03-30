@@ -23,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -45,11 +46,13 @@ public class RegistroPlacaBO implements IRegistroPlacaBO {
             if (placaActiva == null) {
                 // Si el vehículo no tiene una placa activa, registrar la nueva placa sin modificar vigencias
                 agregarNuevaPlaca(placaNueva);
+                JOptionPane.showMessageDialog(null, "Se registró la placa exitosamente");
                 logger.log(Level.INFO, "Se registró la placa exitosamente");
             } else {
                 // Si el vehículo tiene una placa activa, modificar su estado y fecha de recepción
                 placaDAO.actualizarEstadoPlaca(placaActiva);
                 agregarNuevaPlaca(placaNueva);
+                JOptionPane.showMessageDialog(null, "Se registró la placa exitosamente");
                 logger.log(Level.INFO, "Se registró la placa exitosamente");
             }
 
@@ -62,7 +65,7 @@ public class RegistroPlacaBO implements IRegistroPlacaBO {
 
     @Override
     public void agregarNuevaPlaca(PlacaDTO placaNuevaDTO) {
-        Placa nuevaPlaca = new Placa(placaNuevaDTO.getNumeroPlaca(), true, placaNuevaDTO.getVehiculo(),
+        Placa nuevaPlaca = new Placa(placaDAO.generarCodigo(), true, placaNuevaDTO.getVehiculo(),
                 placaNuevaDTO.getPersona(), placaNuevaDTO.getFecha(), placaNuevaDTO.getCosto());
         try {
             placaDAO.agregarPlaca(nuevaPlaca);
@@ -70,5 +73,26 @@ public class RegistroPlacaBO implements IRegistroPlacaBO {
             Logger.getLogger(RegistroPlacaBO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    @Override
+    public PlacaDTO consultarPlaca(String numPlaca){
+        try{
+            Placa placa = placaDAO.consultarPlacaNum(numPlaca);
+            if (placa == null) {
+                JOptionPane.showMessageDialog(null, "No se encontro ninguna placa");
+                return null;
+            }else{
+            PlacaDTO placaNueva = new PlacaDTO(placa.getNumeroPlaca(), placa.getFechaRecepcion(), placa.getEstado(), placa.getVehiculo(), placa.getPersona(), placa.getFecha(), placa.getCosto());
+            JOptionPane.showMessageDialog(null, "Placa encontrada");
+            return placaNueva;
+            }
+        }catch (PersistenciaException ex) {
+            Logger.getLogger(RegistroPlacaBO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        
+    }
+    }
+    
 
-}
+

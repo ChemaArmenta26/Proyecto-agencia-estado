@@ -22,11 +22,24 @@ public class PlacaDTO extends TramiteDTO {
     public PlacaDTO() {
     }
 
-    public PlacaDTO(String numeroPlaca, Calendar fechaRecepcion, boolean estado) {
+    public PlacaDTO(String numeroPlaca, Calendar fechaRecepcion, boolean estado, Vehiculo vehiculo, Persona persona) {
         this.numeroPlaca = numeroPlaca;
         this.fechaRecepcion = fechaRecepcion;
         this.estado = estado;
+        this.vehiculo = vehiculo;
+        this.persona = persona;
     }
+
+    public PlacaDTO(String numeroPlaca, Calendar fechaRecepcion, boolean estado, Vehiculo vehiculo, Persona persona, Calendar fecha, float costo) {
+        super(fecha, costo);
+        this.numeroPlaca = numeroPlaca;
+        this.fechaRecepcion = fechaRecepcion;
+        this.estado = estado;
+        this.vehiculo = vehiculo;
+        this.persona = persona;
+    }
+
+    
 
     public String getNumeroPlaca() {
         return numeroPlaca;

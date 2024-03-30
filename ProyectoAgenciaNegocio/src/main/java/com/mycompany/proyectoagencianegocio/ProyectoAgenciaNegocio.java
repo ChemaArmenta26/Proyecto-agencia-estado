@@ -5,9 +5,20 @@ package com.mycompany.proyectoagencianegocio;
 
 import BOs.AgregarPersonaBO;
 import BOs.IAgregarPersonaBO;
+import BOs.IRegistroAutomovilBO;
 import BOs.IRegistroLicenciaBO;
+import BOs.IRegistroPlacaBO;
+import BOs.RegistroAutomovilBO;
 import BOs.RegistroLicenciaBO;
+import BOs.RegistroPlacaBO;
+import DTO.AutomovilDTO;
+import DTO.PersonaDTO;
+import DTO.PlacaDTO;
 import Encriptacion.AlgoritmoEncriptacion;
+import Entidades.Automovil;
+import Entidades.Persona;
+import Entidades.Vehiculo;
+import java.util.Calendar;
 
 /**
  *
@@ -26,10 +37,25 @@ public class ProyectoAgenciaNegocio {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-            IAgregarPersonaBO agregarBO = new AgregarPersonaBO();
-            agregarBO.agregarPersonas();
-//                IRegistroLicenciaBO licenciaBO = new RegistroLicenciaBO();
-//                String rfc = "JHUA920520DEF";
+        IAgregarPersonaBO agregarBO = new AgregarPersonaBO();
+//            agregarBO.agregarPersonas();
+        IRegistroLicenciaBO licenciaBO = new RegistroLicenciaBO();
+        String rfc = "RAGG940101ABC";
 //                licenciaBO.agregarLicencia(3, licenciaBO.consultarRFC(rfc, licenciaBO.verificarRFC(rfc)));
+
+        IRegistroPlacaBO placa = new RegistroPlacaBO();
+        IRegistroAutomovilBO auto = new RegistroAutomovilBO();
+        Persona persona1 = licenciaBO.consultarRFC(rfc, true);
+        PersonaDTO persona2 = new PersonaDTO(persona1.getRFC(), persona1.getNombre(), persona1.getApellidoPaterno(), persona1.getApellidoMaterno(), persona1.getDiscapacitado(), persona1.getFechaNacimiento(), persona1.getTelefono());
+        AutomovilDTO auto2 = new AutomovilDTO("rojo", "h000", "222", "as", "adasd", persona2);
+//            auto.agregarAutomovil(auto2);
+        Vehiculo vehiculo = new Vehiculo("as", "asd", "asasdasd", persona1);
+        vehiculo.setId(1l);
+        Calendar fechaNacimiento = Calendar.getInstance();
+        PlacaDTO placa2 = new PlacaDTO("GKM-970", fechaNacimiento, true, vehiculo, persona1, fechaNacimiento, 1000.0F);
+//                placa.agregarPlaca(placa2);
+//                    placa.agregarPlaca(placa.consultarPlaca("FKO-162"));
+//                        System.out.println(auto.obtenerPersonaConLicencia("srpf02p70"));
+        System.out.println(auto.obtenerIdConNumeroDeSerie("asda"));
     }
 }

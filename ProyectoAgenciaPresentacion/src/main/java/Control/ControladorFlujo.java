@@ -7,13 +7,12 @@ package Control;
 import GUI.ConfirmarTraPlacas;
 import GUI.ConsultarLP;
 import GUI.ConsultarLiYPla;
-import GUI.OpcionPlacas;
 import GUI.Principal;
 import GUI.ReporteLicYPla;
-import GUI.SolicitarLicPlacas;
+import GUI.SolcitarPlacas;
 import GUI.TramitarLicencia;
 import GUI.TramitarPlacaNuevo;
-import GUI.TramitarPlacaUsado;
+import GUI.TramitarPlacaUsado2;
 import GUI.TramiteFinalizado;
 
 /**
@@ -25,6 +24,10 @@ public class ControladorFlujo {
     public void mostrarVentanaPrincipal(boolean insercion) {
         Principal p = new Principal(insercion);
         p.setVisible(true);
+    }
+    public void mostrarSolicitarPlacas(){
+        SolcitarPlacas s = new SolcitarPlacas();
+        s.setVisible(true);
     }
 
     public void mostrarTramitarLicencia() {
@@ -53,20 +56,12 @@ public class ControladorFlujo {
         c.setVisible(true);
     }
 
-    public void mostrarOpcionPlacas() {
-        OpcionPlacas o = new OpcionPlacas();
-        o.setVisible(true);
-    }
-
     public void mostrarReporteLicenciaYPlacas() {
         ReporteLicYPla r = new ReporteLicYPla();
         r.setVisible(true);
     }
     
-     public void mostrarSolicitarPlacas() {
-        SolicitarLicPlacas s = new SolicitarLicPlacas();
-        s.setVisible(true);
-    }
+     
 
 
     public void mostrarTramitePlacaNueva() {
@@ -75,7 +70,7 @@ public class ControladorFlujo {
     }
 
     public void mostrarTramitePlacaUsada() {
-        TramitarPlacaUsado t = new TramitarPlacaUsado();
+        TramitarPlacaUsado2 t = new TramitarPlacaUsado2();
         t.setVisible(true);
     }
 }

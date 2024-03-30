@@ -219,10 +219,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnSolicitarPlacasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarPlacasActionPerformed
         // TODO add your handling code here:
-
         dispose();
         controlador.mostrarSolicitarPlacas();
-
     }//GEN-LAST:event_btnSolicitarPlacasActionPerformed
 
     private void btnConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultasActionPerformed

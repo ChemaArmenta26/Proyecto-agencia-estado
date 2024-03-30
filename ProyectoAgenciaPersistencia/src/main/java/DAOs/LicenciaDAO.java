@@ -10,8 +10,11 @@ import Entidades.Persona;
 import Entidades.Tramite;
 import Persistencia.PersistenciaException;
 import java.util.Calendar;
+import java.util.Random;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,9 +37,11 @@ public class LicenciaDAO extends TramiteDAO implements ILicenciaDAO {
                 entityManager.getTransaction().begin();
                 Calendar fecha = Calendar.getInstance();
                 Calendar fechaVigencia = Calendar.getInstance();
+                String numeroLicencia = generarNumeroLicencia();
                 fechaVigencia.set(fechaVigencia.get(Calendar.YEAR) + duracion, fechaVigencia.get(Calendar.MONTH), fechaVigencia.get(Calendar.DAY_OF_MONTH));
-                Licencia licencia = new Licencia(duracion, fechaVigencia, persona, fecha, this.sacarCosto(persona, duracion), true);
+                Licencia licencia = new Licencia(duracion, fechaVigencia, persona, fecha, this.sacarCosto(persona, duracion), true, numeroLicencia);
                 entityManager.persist(licencia);
+                JOptionPane.showMessageDialog(null, "Numero de licencia: " + numeroLicencia);
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 throw new PersistenciaException("No se pudo registrar la licencia correctamente");
@@ -86,6 +91,49 @@ public class LicenciaDAO extends TramiteDAO implements ILicenciaDAO {
         entityManager.close();
 
         return rowsUpdated > 0;
+    }
+
+    public Persona consultarPersonaConNumLicencia(String numLicencia) throws PersistenciaException {
+        EntityManager entityManager = conexion.conexion();
+        Persona persona = new Persona();
+        Query query = entityManager.createQuery("SELECT lic.persona FROM Licencia lic WHERE lic.numeroLicencia = :numeroLicencia AND lic.estado = true");
+        query.setParameter("numeroLicencia", numLicencia);
+        try {
+            persona = (Persona) query.getSingleResult();
+            return persona;
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    public String generarNumeroLicencia() {
+        StringBuilder numeroLicencia = new StringBuilder();
+
+        Random rand = new Random();
+
+        // Generar cuatro letras aleatorias
+        for (int i = 0; i < 4; i++) {
+            char letra = (char) (rand.nextInt(26) + 'a'); // Genera una letra minúscula aleatoria
+            numeroLicencia.append(letra);
+        }
+
+        // Generar dos dígitos aleatorios
+        for (int i = 0; i < 2; i++) {
+            int digito = rand.nextInt(10); // Genera un dígito aleatorio entre 0 y 9
+            numeroLicencia.append(digito);
+        }
+
+        // Generar una letra aleatoria
+        char letra = (char) (rand.nextInt(26) + 'a'); // Genera una letra minúscula aleatoria
+        numeroLicencia.append(letra);
+
+        // Generar dos dígitos aleatorios
+        for (int i = 0; i < 2; i++) {
+            int digito = rand.nextInt(10); // Genera un dígito aleatorio entre 0 y 9
+            numeroLicencia.append(digito);
+        }
+
+        return numeroLicencia.toString();
     }
 
 }

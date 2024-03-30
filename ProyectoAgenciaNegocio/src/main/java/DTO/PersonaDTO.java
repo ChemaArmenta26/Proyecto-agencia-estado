@@ -42,6 +42,17 @@ public class PersonaDTO {
         this.vehiculos = vehiculos;
     }
 
+    public PersonaDTO(String rfc, String nombre, String apellido_paterno, String apellido_materno, Boolean discapacitado, Calendar fecha_nacimiento, String telefono) {
+        this.rfc = rfc;
+        this.nombre = nombre;
+        this.apellido_paterno = apellido_paterno;
+        this.apellido_materno = apellido_materno;
+        this.discapacitado = discapacitado;
+        this.fecha_nacimiento = fecha_nacimiento;
+        this.telefono = telefono;
+    }
+    
+
    
     public String getRfc() {
         return rfc;

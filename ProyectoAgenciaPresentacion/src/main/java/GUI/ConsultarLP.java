@@ -4,17 +4,18 @@
  */
 package GUI;
 
+import Control.ControladorFlujo;
+
 /**
  *
  * @author Carlo
  */
 public class ConsultarLP extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ConsultarLP
-     */
+    ControladorFlujo controlador;
     public ConsultarLP() {
         initComponents();
+        controlador = new ControladorFlujo();
     }
 
     /**
@@ -176,8 +177,7 @@ public class ConsultarLP extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         dispose();
-        Principal p = new Principal(false);
-        p.setVisible(true);
+        controlador.mostrarVentanaPrincipal(false);
     }//GEN-LAST:event_btnMenuActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed

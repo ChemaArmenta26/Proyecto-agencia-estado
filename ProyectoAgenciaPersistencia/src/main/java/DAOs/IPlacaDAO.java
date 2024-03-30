@@ -21,4 +21,5 @@ public interface IPlacaDAO {
     public Placa consultarPlacaActiva(Vehiculo vehiculo) throws PersistenciaException;
     
     public boolean actualizarEstadoPlaca(Placa placa) throws PersistenciaException;
+    public String generarCodigo();
 }

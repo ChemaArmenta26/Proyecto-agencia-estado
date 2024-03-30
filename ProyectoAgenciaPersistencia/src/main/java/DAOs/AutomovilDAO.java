@@ -45,7 +45,7 @@ public class AutomovilDAO implements IAutomovilDAO {
 
         try {
             entityManager.getTransaction().begin();
-            String jpql = "SELECT a FROM Automovil a WHERE a.numSerie = :numSerie";
+            String jpql = "SELECT a FROM Automovil a WHERE a.numeroSerie = :numSerie";
 
             TypedQuery<Automovil> query = entityManager.createQuery(jpql, Automovil.class);
             query.setParameter("numSerie", numSerie);

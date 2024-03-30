@@ -9,6 +9,7 @@ import Entidades.Placa;
 import Entidades.Vehiculo;
 import Persistencia.PersistenciaException;
 import java.util.Calendar;
+import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -101,6 +102,29 @@ public class PlacaDAO implements IPlacaDAO {
         } catch (Exception e) {
             throw new PersistenciaException("Error al actualizar el estado de la placa", e);
         }
+    }
+
+    @Override
+    public String generarCodigo() {
+         Random rand = new Random();
+        StringBuilder codigo = new StringBuilder();
+
+        // Generar las tres letras
+        for (int i = 0; i < 3; i++) {
+            char letra = (char) (rand.nextInt(26) + 'A'); // Genera una letra mayúscula aleatoria
+            codigo.append(letra);
+        }
+
+        // Agregar el guión
+        codigo.append("-");
+
+        // Generar los tres dígitos
+        for (int i = 0; i < 3; i++) {
+            int digito = rand.nextInt(10); // Genera un dígito aleatorio entre 0 y 9
+            codigo.append(digito);
+        }
+
+        return codigo.toString();
     }
 
 }

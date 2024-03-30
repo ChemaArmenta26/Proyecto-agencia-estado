@@ -35,7 +35,8 @@ public class Licencia extends Tramite implements Serializable {
     @Column(name = "FechaVigenciaExpiracion", nullable = false)
     @Temporal(TemporalType.DATE)
     private Calendar vigenciaF;
-    
+    @Column(name = "numeroLicencia", nullable = false)
+    private String numeroLicencia;
     
     @ManyToOne
     @JoinColumn(name = "id_Persona", referencedColumnName = "id")
@@ -44,12 +45,13 @@ public class Licencia extends Tramite implements Serializable {
     public Licencia() {
     }
 
-    public Licencia(int duracionAños, Calendar vigenciaF, Persona persona, Calendar fecha, Float costo, boolean estado) {
+    public Licencia(int duracionAños, Calendar vigenciaF, Persona persona, Calendar fecha, Float costo, boolean estado, String numero) {
         super(fecha, costo);
         this.duracionAños = duracionAños;
         this.vigenciaF = vigenciaF;
         this.persona = persona;
         this.estado = estado;
+        this.numeroLicencia = numero;
     }
 
     public boolean isEstado() {
@@ -59,7 +61,7 @@ public class Licencia extends Tramite implements Serializable {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
-
+    
 
     public int getDuracionAños() {
         return duracionAños;
@@ -83,6 +85,14 @@ public class Licencia extends Tramite implements Serializable {
 
     public void setPersona(Persona persona) {
         this.persona = persona;
+    }
+
+    public String getNumeroLicencia() {
+        return numeroLicencia;
+    }
+
+    public void setNumeroLicencia(String numeroLicencia) {
+        this.numeroLicencia = numeroLicencia;
     }
     
 

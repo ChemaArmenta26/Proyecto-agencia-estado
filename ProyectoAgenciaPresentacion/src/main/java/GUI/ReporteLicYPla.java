@@ -4,17 +4,18 @@
  */
 package GUI;
 
+import Control.ControladorFlujo;
+
 /**
  *
  * @author Carlo
  */
 public class ReporteLicYPla extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ReporteLicYPla
-     */
+   ControladorFlujo controlador;
     public ReporteLicYPla() {
         initComponents();
+        controlador = new ControladorFlujo();
     }
 
     /**
@@ -281,8 +282,7 @@ public class ReporteLicYPla extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         dispose();
-        Principal p = new Principal(false);
-        p.setVisible(true);
+        controlador.mostrarVentanaPrincipal(false);
 
     }//GEN-LAST:event_btnMenuActionPerformed
 

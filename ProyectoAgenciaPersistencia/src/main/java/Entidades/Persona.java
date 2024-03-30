@@ -68,7 +68,7 @@ public class Persona implements Serializable {
     @OneToMany(mappedBy = "propietario", cascade = CascadeType.PERSIST)
     private List<Vehiculo> vehiculos;
     
-    @OneToMany(mappedBy = "placas", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "persona", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Placa> placas;
 
     public Persona() {

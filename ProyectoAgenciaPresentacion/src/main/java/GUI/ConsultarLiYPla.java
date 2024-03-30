@@ -4,17 +4,18 @@
  */
 package GUI;
 
+import Control.ControladorFlujo;
+
 /**
  *
  * @author Carlo
  */
 public class ConsultarLiYPla extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ConsultarLiYPla
-     */
+    ControladorFlujo controlador;
     public ConsultarLiYPla() {
         initComponents();
+        controlador = new ControladorFlujo();
     }
 
     /**
@@ -208,8 +209,7 @@ public class ConsultarLiYPla extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         dispose();
-        Principal p = new Principal(false);
-        p.setVisible(true);
+        controlador.mostrarVentanaPrincipal(false);
 
     }//GEN-LAST:event_btnMenuActionPerformed
 
@@ -217,8 +217,7 @@ public class ConsultarLiYPla extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         dispose();
-        ConsultarLP c = new ConsultarLP();
-        c.setVisible(true);
+        controlador.mostrarConsultarTramites();
         
         
         

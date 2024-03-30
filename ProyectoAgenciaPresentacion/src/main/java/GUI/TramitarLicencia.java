@@ -688,7 +688,7 @@ public class TramitarLicencia extends javax.swing.JFrame {
                 txtApellidoMaterno.setText(aes.decrypt(persona.getApellidoMaterno()));
                 txtFechaN.setCalendar(persona.getFechaNacimiento());
                 txtTelefono.setText(aes.decrypt(persona.getTelefono()));
-                if (persona.isDiscapacitado()) {
+                if (persona.getDiscapacitado()) {
                     DiscapacitadoSi.setSelected(true);
                 } else {
                     DiscapacitadoNo.setSelected(true);
