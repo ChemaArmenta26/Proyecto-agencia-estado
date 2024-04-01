@@ -51,6 +51,7 @@ public class RegistroPlacaBO implements IRegistroPlacaBO {
             } else {
                 // Si el vehículo tiene una placa activa, modificar su estado y fecha de recepción
                 placaDAO.actualizarEstadoPlaca(placaActiva);
+                placaNueva.setCosto(1500.0f);
                 agregarNuevaPlaca(placaNueva);
                 JOptionPane.showMessageDialog(null, "Se registró la placa exitosamente");
                 logger.log(Level.INFO, "Se registró la placa exitosamente");
