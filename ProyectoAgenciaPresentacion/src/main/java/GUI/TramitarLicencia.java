@@ -10,6 +10,7 @@ import Control.ControladorFlujo;
 import Encriptacion.AlgoritmoEncriptacion;
 import Entidades.Persona;
 import Validaciones.Validaciones;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
@@ -262,7 +263,6 @@ public class TramitarLicencia extends javax.swing.JFrame {
 
         txtFechaN.setBackground(new java.awt.Color(204, 204, 204));
         txtFechaN.setForeground(new java.awt.Color(255, 255, 255));
-        txtFechaN.setEnabled(false);
 
         botonVerificar.setBackground(new java.awt.Color(51, 153, 0));
         botonVerificar.setForeground(new java.awt.Color(255, 255, 255));
@@ -515,6 +515,21 @@ public class TramitarLicencia extends javax.swing.JFrame {
             //logica que falta para la activacion de las licencias
             dispose();
             controlador.mostrarVentanaPrincipal(false);
+
+            Date fechaActual = new Date();
+            Date fechaNacimiento = txtFechaN.getDate();
+
+            long diff = fechaActual.getTime() - fechaNacimiento.getTime();
+            long edadMillis = Math.abs(diff);
+            int edad = (int) (edadMillis / (24 * 60 * 60 * 1000 * 365.25));
+            System.out.println("Edad: " + edad + " años");
+
+            if (txtFechaN.getDate().compareTo(fechaActual) < 0 && edad >= 18) {
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Alguno de tus datos es erroneo debido a \n-Es menor de edad.", "Verifique campos", JOptionPane.ERROR_MESSAGE);
+            }
+
         } else {
             JOptionPane.showMessageDialog(this, "Por favor, verifica primero para continuar.", "Verifique campos", JOptionPane.ERROR_MESSAGE);
         }
@@ -532,12 +547,12 @@ public class TramitarLicencia extends javax.swing.JFrame {
 //                    Date fechaActual = new Date();
 //                    Date fechaNacimiento = txtFechaN.getDate();
 //
-//                    // Calcular la diferencia de años entre la fecha de nacimiento y la fecha actual
+//                     Calcular la diferencia de años entre la fecha de nacimiento y la fecha actual
 //                    long diff = fechaActual.getTime() - fechaNacimiento.getTime();
 //                    long edadMillis = Math.abs(diff);
 //                    int edad = (int) (edadMillis / (24 * 60 * 60 * 1000 * 365.25));
 //
-//                    // La variable 'edad' ahora contiene la edad de la persona
+//                     La variable 'edad' ahora contiene la edad de la persona
 //                    System.out.println("Edad: " + edad + " años");
 //
 //                    if (txtFechaN.getDate().compareTo(fechaActual) < 0 && edad >= 18) {
@@ -686,6 +701,7 @@ public class TramitarLicencia extends javax.swing.JFrame {
                 txtNombre.setText(aes.decrypt(persona.getNombre()));
                 txtApellidoPaterno.setText(aes.decrypt(persona.getApellidoPaterno()));
                 txtApellidoMaterno.setText(aes.decrypt(persona.getApellidoMaterno()));
+                txtFechaN.setEnabled(false);
                 txtFechaN.setCalendar(persona.getFechaNacimiento());
                 txtTelefono.setText(aes.decrypt(persona.getTelefono()));
                 if (persona.getDiscapacitado()) {
@@ -693,9 +709,21 @@ public class TramitarLicencia extends javax.swing.JFrame {
                 } else {
                     DiscapacitadoNo.setSelected(true);
                 }
+
             } catch (Exception e) {
 
             }
+
+        } else {
+
+            txtRFC.enable(true);
+            txtNombre.enable(true);
+            txtApellidoPaterno.enable(true);
+            txtApellidoMaterno.enable(true);
+            txtTelefono.enable(true);
+            txtFechaN.getJCalendar().setEnabled(true);
+            DiscapacitadoSi.setEnabled(true);
+            DiscapacitadoNo.setEnabled(true);
 
         }
     }//GEN-LAST:event_botonVerificarActionPerformed
@@ -709,6 +737,7 @@ public class TramitarLicencia extends javax.swing.JFrame {
         txtApellidoPaterno.setText("");
         txtApellidoMaterno.setText("");
         txtTelefono.setText("");
+        txtFechaN.setEnabled(true);
         txtFechaN.setDate(null);
         DiscapacitadoSi.setSelected(false);
         DiscapacitadoNo.setSelected(false);

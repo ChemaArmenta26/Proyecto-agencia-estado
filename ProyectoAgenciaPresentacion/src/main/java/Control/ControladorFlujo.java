@@ -41,10 +41,7 @@ public class ControladorFlujo {
         t.setVisible(true);
     }
 
-    public void mostrarConfirmarTramitePlacas() {
-        ConfirmarTraPlacas c = new ConfirmarTraPlacas();
-        c.setVisible(true);
-    }
+    
 
     public void mostrarConsultarLicenciaYPlacas() {
         ConsultarLiYPla c = new ConsultarLiYPla();

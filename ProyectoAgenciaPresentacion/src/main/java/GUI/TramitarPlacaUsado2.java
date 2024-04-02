@@ -202,6 +202,7 @@ public class TramitarPlacaUsado2 extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -218,9 +219,21 @@ public class TramitarPlacaUsado2 extends javax.swing.JFrame {
         if (placa != null && !(txtNumLICENCIA.getText().equalsIgnoreCase("") || txtNumPlaca.getText().equalsIgnoreCase(""))) {
             placaBO.agregarPlaca(placa);
             dispose();
-            controlador.mostrarConfirmarTramitePlacas();
+
+            // Después de validar y realizar otras operaciones, crear una instancia de ConfirmarTraPlacas
+            String tipoCosto = "Auto Usado";
+            String costoTotal = "$1000.00";
+            ConfirmarTraPlacas confirmarFrame = new ConfirmarTraPlacas();
+
+            // Establecer los valores de los JLabels en la ventana ConfirmarTraPlacas
+            confirmarFrame.setTipoCosto(tipoCosto);
+            confirmarFrame.setCostoTotal(costoTotal);
+
+            // Hacer visible la ventana ConfirmarTraPlacas
+            confirmarFrame.setVisible(true);
+
         } else {
-            
+
         }
 
 

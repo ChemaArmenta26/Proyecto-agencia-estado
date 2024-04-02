@@ -30,6 +30,7 @@ public class TramitarPlacaNuevo extends javax.swing.JFrame {
     IRegistroAutomovilBO automovilBO = new RegistroAutomovilBO();
     IRegistroPlacaBO placaBO = new RegistroPlacaBO();
     private IRegistroLicenciaBO licencia = new RegistroLicenciaBO();
+
     public TramitarPlacaNuevo() {
         initComponents();
         controlador = new ControladorFlujo();
@@ -257,34 +258,45 @@ public class TramitarPlacaNuevo extends javax.swing.JFrame {
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
         // TODO add your handling code here:
-        if (!(txtColor.getText().equalsIgnoreCase("") || txtLinea.getText().equalsIgnoreCase("") || txtMarca.getText().equalsIgnoreCase("") || txtModelo.getText().equalsIgnoreCase("")  || txtNumLICENCIA.getText().equalsIgnoreCase("")  || txtSerie.getText().equalsIgnoreCase(""))) {
-            AutomovilDTO automovil = new AutomovilDTO(txtLinea.getText(), txtColor.getText(), txtSerie.getText(), txtModelo.getText(), txtMarca.getText(), automovilBO.obtenerPersonaConLicencia(txtNumLICENCIA.getText(),true));
+        if (!(txtColor.getText().equalsIgnoreCase("") || txtLinea.getText().equalsIgnoreCase("") || txtMarca.getText().equalsIgnoreCase("") || txtModelo.getText().equalsIgnoreCase("") || txtNumLICENCIA.getText().equalsIgnoreCase("") || txtSerie.getText().equalsIgnoreCase(""))) {
+            AutomovilDTO automovil = new AutomovilDTO(txtLinea.getText(), txtColor.getText(), txtSerie.getText(), txtModelo.getText(), txtMarca.getText(), automovilBO.obtenerPersonaConLicencia(txtNumLICENCIA.getText(), true));
             automovilBO.agregarAutomovil(automovil);
             Calendar fecha = Calendar.getInstance();
             Vehiculo vehiculo = new Vehiculo(automovil.getNumero_serie(), automovil.getModelo(), automovil.getMarca(), licencia.consultarRFC(automovil.getPersona().getRfc(), true));
             vehiculo.setId(automovilBO.obtenerIdConNumeroDeSerie(txtSerie.getText()));
-            PlacaDTO placa = new PlacaDTO(automovil.getNumero_serie(), fecha, true, vehiculo, licencia.consultarRFC(automovil.getPersona().getRfc(), true), fecha, 1000.0f);
+            PlacaDTO placa = new PlacaDTO(automovil.getNumero_serie(), fecha, true, vehiculo, licencia.consultarRFC(automovil.getPersona().getRfc(), true), fecha, 1500.0f);
             placaBO.agregarPlaca(placa);
             dispose();
-            controlador.mostrarConfirmarTramitePlacas();
-        }else{
+
+            // Después de validar y realizar otras operaciones, crear una instancia de ConfirmarTraPlacas
+            String tipoCosto = "Auto Nuevo";
+            String costoTotal = "$1500.00";
+            ConfirmarTraPlacas confirmarFrame = new ConfirmarTraPlacas();
+
+            // Establecer los valores de los JLabels en la ventana ConfirmarTraPlacas
+            confirmarFrame.setTipoCosto(tipoCosto);
+            confirmarFrame.setCostoTotal(costoTotal);
+
+            // Hacer visible la ventana ConfirmarTraPlacas
+            confirmarFrame.setVisible(true);
+
+        } else {
             JOptionPane.showMessageDialog(this, "Por favor, verifica primero para continuar.", "Verifique campos", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnContinuarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        
-        
+
         dispose();
         controlador.mostrarSolicitarPlacas();
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void botonVerificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVerificar1ActionPerformed
-        if(automovilBO.verificarLicencia(txtNumLICENCIA.getText())){
+        if (automovilBO.verificarLicencia(txtNumLICENCIA.getText())) {
             txtNumLICENCIA.enable(false);
-    }else{
+        } else {
             txtNumLICENCIA.setText("");
         }
     }//GEN-LAST:event_botonVerificar1ActionPerformed
@@ -292,7 +304,6 @@ public class TramitarPlacaNuevo extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonVerificar1;

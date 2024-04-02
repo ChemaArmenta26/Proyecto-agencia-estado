@@ -5,6 +5,8 @@
 package GUI;
 
 import Control.ControladorFlujo;
+import java.awt.BorderLayout;
+import javax.swing.JLabel;
 
 /**
  *
@@ -12,10 +14,28 @@ import Control.ControladorFlujo;
  */
 public class ConfirmarTraPlacas extends javax.swing.JFrame {
 
+    
+    
+    
     ControladorFlujo controlador;
+
     public ConfirmarTraPlacas() {
         initComponents();
         controlador = new ControladorFlujo();
+
+    }
+    
+    
+    
+    
+    // Método para establecer el texto del JLabel lblTipoCosto
+    public void setTipoCosto(String tipoCosto) {
+        lblTipo.setText(tipoCosto);
+    }
+
+    // Método para establecer el texto del JLabel lblCostoTotal
+    public void setCostoTotal(String costoTotal) {
+        lblCosto.setText(costoTotal);
     }
 
     /**
@@ -32,11 +52,13 @@ public class ConfirmarTraPlacas extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        lblCostoTotal = new javax.swing.JLabel();
         btnConfirmar = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        lblTipoCosto1 = new javax.swing.JLabel();
+        lblTipo = new javax.swing.JLabel();
+        lblCosto = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -78,9 +100,9 @@ public class ConfirmarTraPlacas extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Costo Total:");
+        lblCostoTotal.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        lblCostoTotal.setForeground(new java.awt.Color(0, 0, 0));
+        lblCostoTotal.setText("Costo Total:");
 
         btnConfirmar.setBackground(new java.awt.Color(51, 153, 0));
         btnConfirmar.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -93,9 +115,17 @@ public class ConfirmarTraPlacas extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Tipo de costo:");
+        lblTipoCosto1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        lblTipoCosto1.setForeground(new java.awt.Color(0, 0, 0));
+        lblTipoCosto1.setText("Tipo de costo:");
+
+        lblTipo.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        lblTipo.setForeground(new java.awt.Color(0, 0, 0));
+        lblTipo.setText("Tipo de costo:");
+
+        lblCosto.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        lblCosto.setForeground(new java.awt.Color(0, 0, 0));
+        lblCosto.setText("Costo Total:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -103,24 +133,29 @@ public class ConfirmarTraPlacas extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(126, 126, 126)
-                .addComponent(jLabel4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(304, 304, 304))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(160, 160, 160)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(174, 174, 174))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(245, 245, 245)
+                        .addComponent(lblTipo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblCosto))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(126, 126, 126)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblCostoTotal)))
+                .addGap(304, 304, 304))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(238, 238, 238)
-                    .addComponent(jLabel3)
-                    .addContainerGap(716, Short.MAX_VALUE)))
+                    .addGap(248, 248, 248)
+                    .addComponent(lblTipoCosto1)
+                    .addContainerGap(706, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,17 +164,21 @@ public class ConfirmarTraPlacas extends javax.swing.JFrame {
                 .addGap(52, 52, 52)
                 .addComponent(jLabel4)
                 .addGap(118, 118, 118)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 295, Short.MAX_VALUE)
+                .addComponent(lblCostoTotal)
+                .addGap(47, 47, 47)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTipo)
+                    .addComponent(lblCosto))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 220, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(100, 100, 100))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(328, 328, 328)
-                    .addComponent(jLabel3)
-                    .addContainerGap(444, Short.MAX_VALUE)))
+                    .addGap(338, 338, 338)
+                    .addComponent(lblTipoCosto1)
+                    .addContainerGap(434, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -166,26 +205,26 @@ public class ConfirmarTraPlacas extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        
+
         dispose();
         controlador.mostrarVentanaPrincipal(false);
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConfirmar;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblCosto;
+    private javax.swing.JLabel lblCostoTotal;
+    private javax.swing.JLabel lblTipo;
+    private javax.swing.JLabel lblTipoCosto1;
     // End of variables declaration//GEN-END:variables
 }
