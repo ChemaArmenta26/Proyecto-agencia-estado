@@ -4,6 +4,7 @@
  */
 package BOs;
 
+import DTO.PersonaDTO;
 import DTO.ReporteDTO;
 import DTO.TramiteDTO;
 import java.util.List;
@@ -18,4 +19,6 @@ public interface IReporteTramiteBO {
     
     
     public boolean cumpleFiltro(TramiteDTO tramite, ReporteDTO filtro);
+    
+    public List<TramiteDTO> obtenerTramitesPorPersona(PersonaDTO persona);
 }

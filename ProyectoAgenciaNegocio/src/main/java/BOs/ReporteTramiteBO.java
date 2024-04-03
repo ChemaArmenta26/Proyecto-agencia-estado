@@ -8,10 +8,12 @@ import Conexion.ConexionBD;
 import DAOs.ITramiteDAO;
 import DAOs.TramiteDAO;
 import DTO.LicenciaDTO;
+import DTO.PersonaDTO;
 import DTO.PlacaDTO;
 import DTO.ReporteDTO;
 import DTO.TramiteDTO;
 import Entidades.Licencia;
+import Entidades.Persona;
 import Entidades.Placa;
 import Entidades.Tramite;
 import Persistencia.PersistenciaException;
@@ -36,7 +38,7 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
         List<TramiteDTO> listTramites = new ArrayList<>();
 
         try {
-            List<Tramite> tramitesBase = this.tramiteDAO.consultarTodosTramites();
+            List<Tramite> tramitesBase = tramiteDAO.consultarTodosTramites();
 
             for (Tramite tm : tramitesBase) {
                 TramiteDTO tramiteDTO = null;
@@ -88,11 +90,52 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
                 return false;
             }
         }
-
-        // Aquí puedes agregar más condiciones para filtrar según tus necesidades
-
         // Si pasa todos los filtros, devuelve true
         return true;
     }
+    public List<TramiteDTO> obtenerTramitesPorPersona(PersonaDTO persona) {
+    List<TramiteDTO> listTramites = new ArrayList<>();
+
+    try {
+        Persona personaEntity = new Persona();
+        personaEntity.setRFC(persona.getRfc());
+        List<Tramite> tramitesBase = tramiteDAO.consultarTramitesPersona(personaEntity);
+
+        for (Tramite tm : tramitesBase) {
+            TramiteDTO tramiteDTO = null;
+
+            if (tm instanceof Licencia) {
+                Licencia licencia = (Licencia) tm;
+                tramiteDTO = new LicenciaDTO(
+                        licencia.getDuracionAños(),
+                        licencia.getVigenciaF(),
+                        licencia.getFecha(),
+                        licencia.getCosto(),
+                        licencia.isEstado()
+                );
+            } else if (tm instanceof Placa) {
+                Placa placa = (Placa) tm;
+                tramiteDTO = new PlacaDTO(
+                        placa.getNumeroPlaca(),
+                        placa.getFechaRecepcion(),
+                        placa.getEstado(),
+                        placa.getVehiculo(),
+                        placa.getPersona(),
+                        placa.getFecha(),
+                        placa.getCosto()
+                );
+            }
+
+            // Agregar el trámite DTO a la lista
+            listTramites.add(tramiteDTO);
+        }
+
+        logger.log(Level.INFO, "Se generó la lista de trámites para la persona: {0}", persona.getRfc());
+        return listTramites;
+    } catch (PersistenciaException ex) {
+        logger.log(Level.SEVERE, "Error al generar la lista de trámites para la persona con RFC: {0}", persona.getRfc());
+        return null;
     }
+    }
+}
 
