@@ -11,7 +11,7 @@ import java.util.Calendar;
  * @author pc
  */
 public class TramiteDTO {
-     private Calendar fecha;
+    private Calendar fecha;
     private float costo;
 
     public TramiteDTO() {

@@ -4,8 +4,10 @@
  */
 package DAOs;
 
+import Entidades.Persona;
 import Entidades.Tramite;
 import Persistencia.PersistenciaException;
+import java.util.List;
 
 /**
  *
@@ -13,5 +15,6 @@ import Persistencia.PersistenciaException;
  */
 public interface ITramiteDAO {
     
-    public boolean agregarTramite(Tramite tramite) throws PersistenciaException;
+    public List<Tramite> consultarTramitesPersona(Persona persona) throws PersistenciaException;
+    public List<Tramite> consultarTodosTramites() throws PersistenciaException;
 }

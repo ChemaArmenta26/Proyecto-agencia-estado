@@ -5,8 +5,12 @@
 package DAOs;
 
 import Conexion.IConexionBD;
+import Entidades.Persona;
 import Entidades.Tramite;
 import Persistencia.PersistenciaException;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -21,8 +25,38 @@ public class TramiteDAO implements ITramiteDAO{
     }
     
     @Override
-    public boolean agregarTramite(Tramite tramite) throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Tramite> consultarTramitesPersona(Persona persona) throws PersistenciaException {
+        EntityManager entityManager = null;
+        try {
+            entityManager = conexion.conexion();
+            TypedQuery<Tramite> query = entityManager.createQuery(
+                    "SELECT t FROM Tramite t WHERE t.persona = :persona", Tramite.class);
+            query.setParameter("persona", persona);
+            return query.getResultList();
+        } catch (Exception ex) {
+            throw new PersistenciaException("Error al consultar trámites de la persona", ex);
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+    }
+
+    @Override
+    public List<Tramite> consultarTodosTramites() throws PersistenciaException {
+        EntityManager entityManager = null;
+        try {
+            entityManager = conexion.conexion();
+            TypedQuery<Tramite> query = entityManager.createQuery(
+                    "SELECT t FROM Tramite t", Tramite.class);
+            return query.getResultList();
+        } catch (Exception ex) {
+            throw new PersistenciaException("Error al consultar todos los trámites", ex);
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
     }
     
 }
