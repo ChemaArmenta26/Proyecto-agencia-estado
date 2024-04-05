@@ -11,6 +11,11 @@
             <artifactId>ProyectoAgenciaPersistencia</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>6.17.0</version> <!-- o la versión que estés utilizando -->
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -4,6 +4,7 @@
  */
 package DTO;
 
+import Entidades.Persona;
 import java.util.Calendar;
 
 /**
@@ -15,6 +16,7 @@ public class LicenciaDTO extends TramiteDTO {
     private int duracionAños;
     private Calendar vigenciaF;
     private boolean estado;
+     private Persona persona;
 
     public LicenciaDTO() {
     }
@@ -48,6 +50,14 @@ public class LicenciaDTO extends TramiteDTO {
 
     public void setVigenciaF(Calendar vigenciaF) {
         this.vigenciaF = vigenciaF;
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
     
     

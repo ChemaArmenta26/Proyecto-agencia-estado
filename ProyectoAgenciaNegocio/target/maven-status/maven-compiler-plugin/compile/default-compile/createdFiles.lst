@@ -1,3 +1,4 @@
+BOs\ReporteTramiteBO.class
 DTO\PersonaDTO.class
 DTO\VehiculoDTO.class
 BOs\AgregarPersonaBO.class
@@ -13,4 +14,6 @@ BOs\IRegistroLicenciaBO.class
 BOs\RegistroLicenciaBO.class
 BOs\RegistroPlacaBO.class
 DTO\LicenciaDTO.class
+DTO\ReporteDTO.class
+BOs\IReporteTramiteBO.class
 BOs\RegistroAutomovilBO.class

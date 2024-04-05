@@ -17,10 +17,25 @@ import Entidades.Persona;
 import Entidades.Placa;
 import Entidades.Tramite;
 import Persistencia.PersistenciaException;
+import ReporteEstilo.ReporteTramite;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 /**
  *
@@ -137,5 +152,50 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
         return null;
     }
     }
+    
+    public void generarReporte(List<TramiteDTO> listaTramites) {
+    // Crear un JRBeanCollectionDataSource con la lista de TramiteDTO
+    JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(listaTramites);
+    // Parámetros para el reporte
+    Map<String, Object> parameters = new HashMap<>();
+    parameters.put("CollectionBeanParam", itemsJRBean);
+
+    try {
+        
+        JasperReport jasperReport = ReporteTramite.getCompiledReport("ReporteEstilo/ReporteTramite.jasper");
+
+        // Llenar el reporte con los datos y parámetros proporcionados
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+
+        // Exportar el reporte a un archivo PDF
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar Reporte");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PDF", "pdf"));
+        int userSelection = fileChooser.showSaveDialog(null);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            String filePath = fileToSave.getAbsolutePath();
+            if (!filePath.endsWith(".pdf")) {
+                filePath += ".pdf";
+            }
+
+            try (OutputStream outputStream = new FileOutputStream(new File(filePath))) {
+                JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
+            }
+
+            // Log y mensaje de éxito
+            logger.log(Level.INFO, "Archivo generado");
+            JOptionPane.showMessageDialog(null, "Archivo guardado", "Info", JOptionPane.INFORMATION_MESSAGE);
+        } else if (userSelection == JFileChooser.CANCEL_OPTION) {
+            // Si el usuario cancela la operación
+            logger.log(Level.INFO, "Usuario canceló la operación");
+        }
+    } catch (Exception ex) {
+        // Log y excepción en caso de error
+        logger.log(Level.SEVERE, "Error al generar el reporte", ex);
+    }
+}
+
 }
 
