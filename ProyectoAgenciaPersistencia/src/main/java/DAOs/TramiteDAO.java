@@ -5,6 +5,7 @@
 package DAOs;
 
 import Conexion.IConexionBD;
+import Entidades.Licencia;
 import Entidades.Persona;
 import Entidades.Tramite;
 import Persistencia.PersistenciaException;
@@ -30,9 +31,18 @@ public class TramiteDAO implements ITramiteDAO{
         try {
             entityManager = conexion.conexion();
             TypedQuery<Tramite> query = entityManager.createQuery(
-                    "SELECT t FROM Tramite t WHERE t.persona = :persona", Tramite.class);
+                    "SELECT l FROM Licencia l WHERE l.persona = :persona", Tramite.class);
             query.setParameter("persona", persona);
-            return query.getResultList();
+            List<Tramite> listaTramites = query.getResultList();
+            
+            TypedQuery<Tramite> query2 = entityManager.createQuery(
+                    "SELECT p FROM Placa p WHERE p.persona = :persona", Tramite.class);
+            query2.setParameter("persona", persona);
+            
+            listaTramites.addAll(query2.getResultList());
+            
+            
+            return listaTramites;
         } catch (Exception ex) {
             throw new PersistenciaException("Error al consultar trámites de la persona", ex);
         } finally {
@@ -44,14 +54,22 @@ public class TramiteDAO implements ITramiteDAO{
 
     @Override
     public List<Tramite> consultarTodosTramites() throws PersistenciaException {
-        EntityManager entityManager = null;
+       EntityManager entityManager = null;
         try {
             entityManager = conexion.conexion();
             TypedQuery<Tramite> query = entityManager.createQuery(
-                    "SELECT t FROM Tramite t", Tramite.class);
-            return query.getResultList();
+                    "SELECT l FROM Licencia l", Tramite.class);
+            List<Tramite> listaTramites = query.getResultList();
+            
+            TypedQuery<Tramite> query2 = entityManager.createQuery(
+                    "SELECT p FROM Placa p", Tramite.class);
+            
+            listaTramites.addAll(query2.getResultList());
+            
+            
+            return listaTramites;
         } catch (Exception ex) {
-            throw new PersistenciaException("Error al consultar todos los trámites", ex);
+            throw new PersistenciaException("Error al consultar trámites de la persona", ex);
         } finally {
             if (entityManager != null) {
                 entityManager.close();

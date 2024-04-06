@@ -13,6 +13,7 @@ import DTO.ReporteDTO;
 import DTO.TramiteDTO;
 import java.util.List;
 import java.util.Calendar;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -320,7 +321,8 @@ public class ReporteLicYPla extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void llenarTabla(List<TramiteDTO> listaTramites) {
-        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        if (listaTramites != null) {
+            DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         modelo.setRowCount(0); // Limpiar la tabla antes de agregar nuevos datos
 
         for (TramiteDTO tramite : listaTramites) {
@@ -352,6 +354,10 @@ public class ReporteLicYPla extends javax.swing.JFrame {
                 costoTramite
             });
         }
+        } else{
+            JOptionPane.showMessageDialog(null, "La lista de tramites esta vacia, no hay ningun tramite realizado.", "Info", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
     }
 
     /**
