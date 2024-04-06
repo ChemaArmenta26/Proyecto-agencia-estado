@@ -63,9 +63,11 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
                     tramiteDTO = new LicenciaDTO(
                             licencia.getDuracionAños(),
                             licencia.getVigenciaF(),
+                            licencia.isEstado(),
+                            licencia.getPersona(),
+                            licencia.getNumeroLicencia(),
                             licencia.getFecha(),
-                            licencia.getCosto(),
-                            licencia.isEstado()
+                            licencia.getCosto()
                     );
                 } else if (tm instanceof Placa) {
                     Placa placa = (Placa) tm;
@@ -108,6 +110,7 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
         // Si pasa todos los filtros, devuelve true
         return true;
     }
+    @Override
     public List<TramiteDTO> obtenerTramitesPorPersona(PersonaDTO persona) {
     List<TramiteDTO> listTramites = new ArrayList<>();
 
@@ -122,12 +125,14 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
             if (tm instanceof Licencia) {
                 Licencia licencia = (Licencia) tm;
                 tramiteDTO = new LicenciaDTO(
-                        licencia.getDuracionAños(),
-                        licencia.getVigenciaF(),
-                        licencia.getFecha(),
-                        licencia.getCosto(),
-                        licencia.isEstado()
-                );
+                            licencia.getDuracionAños(),
+                            licencia.getVigenciaF(),
+                            licencia.isEstado(),
+                            licencia.getPersona(),
+                            licencia.getNumeroLicencia(),
+                            licencia.getFecha(),
+                            licencia.getCosto()
+                    );
             } else if (tm instanceof Placa) {
                 Placa placa = (Placa) tm;
                 tramiteDTO = new PlacaDTO(
@@ -153,6 +158,7 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
     }
     }
     
+    @Override
     public void generarReporte(List<TramiteDTO> listaTramites) {
     // Crear un JRBeanCollectionDataSource con la lista de TramiteDTO
     JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(listaTramites);

@@ -22,12 +22,18 @@ public class LicenciaDTO extends TramiteDTO {
     public LicenciaDTO() {
     }
 
-    public LicenciaDTO(int duracionAños, Calendar vigenciaF, Calendar fecha, float costo, boolean estado) {
+
+    public LicenciaDTO(int duracionAños, Calendar vigenciaF, boolean estado, Persona persona, String numeroLicencia, Calendar fecha, float costo) {
         super(fecha, costo);
         this.duracionAños = duracionAños;
         this.vigenciaF = vigenciaF;
         this.estado = estado;
+        this.persona = persona;
+        this.numeroLicencia = numeroLicencia;
     }
+
+    
+    
 
     public boolean isEstado() {
         return estado;
