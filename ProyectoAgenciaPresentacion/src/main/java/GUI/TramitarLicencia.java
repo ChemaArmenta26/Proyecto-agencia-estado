@@ -698,9 +698,9 @@ public class TramitarLicencia extends javax.swing.JFrame {
         if (persona != null) {
             try {
                 txtRFC.enable(false);
-                txtNombre.setText(aes.decrypt(persona.getNombre()));
-                txtApellidoPaterno.setText(aes.decrypt(persona.getApellidoPaterno()));
-                txtApellidoMaterno.setText(aes.decrypt(persona.getApellidoMaterno()));
+                txtNombre.setText(persona.getNombre());
+                txtApellidoPaterno.setText(persona.getApellidoPaterno());
+                txtApellidoMaterno.setText(persona.getApellidoMaterno());
                 txtFechaN.setEnabled(false);
                 txtFechaN.setCalendar(persona.getFechaNacimiento());
                 txtTelefono.setText(aes.decrypt(persona.getTelefono()));
