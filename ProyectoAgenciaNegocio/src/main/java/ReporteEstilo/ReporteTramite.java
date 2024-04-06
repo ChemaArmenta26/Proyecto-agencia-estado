@@ -12,12 +12,19 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 public class ReporteTramite {
 
     public static JasperReport getCompiledReport(String reportPath) throws Exception {
-        // Cargar el diseño del reporte desde el archivo jrxml
-        JasperDesign jasperDesign = JRXmlLoader.load(ReporteTramite.class.getResourceAsStream(reportPath));
+        JasperDesign jasperDesign = null;
+        try {
+            jasperDesign = JRXmlLoader.load(ReporteTramite.class.getResourceAsStream(reportPath));
+        } catch (Exception e) {
+            e.printStackTrace(); // O imprime el mensaje de la excepción
+        }
 
-        // Compilar el reporte
-        JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-
-        return jasperReport;
+        if (jasperDesign != null) {
+            // Compilar el reporte si jasperDesign no es nulo
+            return JasperCompileManager.compileReport(jasperDesign);
+        } else {
+            throw new Exception("No se pudo cargar el diseño del reporte.");
+        }
     }
+
 }

@@ -168,7 +168,7 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
 
     try {
         
-        JasperReport jasperReport = ReporteTramite.getCompiledReport("ReporteEstilo/ReporteTramite.jasper");
+        JasperReport jasperReport = ReporteTramite.getCompiledReport("src\\main\\java\\ReporteEstilo\\ReporteTramite.jrxml");
 
         // Llenar el reporte con los datos y parámetros proporcionados
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());

@@ -299,7 +299,19 @@ public class ReporteLicYPla extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuActionPerformed
 
     private void btnGenerarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarPDFActionPerformed
-        // TODO add your handling code here:
+        ReporteDTO filtro = new ReporteDTO();
+        filtro.setFechaFin(fechaFinChooser.getCalendar());
+        filtro.setFechaInicio(fechaInicioChooser.getCalendar());
+        filtro.setNombrePersonaSolicitante(this.campoNombre.getText() + " " + this.campoApellidoPaterno.getText() + " " + this.campoApellidoMaterno.getText());
+        if (this.checkBoxLicencia.isSelected()) {
+            filtro.setTipoTramite("Licencia");
+        } else if (this.checkBoxPlaca.isSelected()) {
+            filtro.setTipoTramite("Placa");
+        }
+
+        List<TramiteDTO> listaTramites = this.reporteTramite.obtenerTramites(filtro);
+        
+        this.reporteTramite.generarReporte(listaTramites);
 
 
     }//GEN-LAST:event_btnGenerarPDFActionPerformed
