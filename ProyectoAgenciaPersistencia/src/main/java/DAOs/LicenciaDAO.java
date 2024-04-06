@@ -30,18 +30,13 @@ public class LicenciaDAO extends TramiteDAO implements ILicenciaDAO {
     }
 
     @Override
-    public boolean agregarLicencia(int duracion, Persona persona) throws PersistenciaException {
-        if (persona != null) {
+    public boolean agregarLicencia(Licencia licenciaAgregar) throws PersistenciaException {
+        if (licenciaAgregar.getPersona() != null) {
             EntityManager entityManager = conexion.conexion();
             try {
                 entityManager.getTransaction().begin();
-                Calendar fecha = Calendar.getInstance();
-                Calendar fechaVigencia = Calendar.getInstance();
-                String numeroLicencia = generarNumeroLicencia();
-                fechaVigencia.set(fechaVigencia.get(Calendar.YEAR) + duracion, fechaVigencia.get(Calendar.MONTH), fechaVigencia.get(Calendar.DAY_OF_MONTH));
-                Licencia licencia = new Licencia(duracion, fechaVigencia, persona, fecha, this.sacarCosto(persona, duracion), true, numeroLicencia);
-                entityManager.persist(licencia);
-                JOptionPane.showMessageDialog(null, "Numero de licencia: " + numeroLicencia);
+                entityManager.persist(licenciaAgregar);
+                JOptionPane.showMessageDialog(null, "Numero de licencia: " + licenciaAgregar.getNumeroLicencia());
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 throw new PersistenciaException("No se pudo registrar la licencia correctamente");

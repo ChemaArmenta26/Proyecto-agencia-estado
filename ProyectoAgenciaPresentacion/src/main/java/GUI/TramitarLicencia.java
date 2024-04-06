@@ -7,6 +7,7 @@ package GUI;
 import BOs.IRegistroLicenciaBO;
 import BOs.RegistroLicenciaBO;
 import Control.ControladorFlujo;
+import DTO.LicenciaDTO;
 import Encriptacion.AlgoritmoEncriptacion;
 import Entidades.Persona;
 import Validaciones.Validaciones;
@@ -511,7 +512,10 @@ public class TramitarLicencia extends javax.swing.JFrame {
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
         if (!(txtRFC.getText().equalsIgnoreCase("")) && (cb1.isSelected() || cb2.isSelected() || cb3.isSelected())) {
-            licencia.agregarLicencia(duracion(), licencia.consultarRFC(txtRFC.getText(), true));
+            LicenciaDTO licenciaAgregar = new LicenciaDTO();
+            licenciaAgregar.setDuracionAños(duracion());
+            licenciaAgregar.setPersona(licencia.consultarRFC(txtRFC.getText(), true));
+            licencia.agregarLicencia(licenciaAgregar);
             //logica que falta para la activacion de las licencias
             dispose();
             controlador.mostrarVentanaPrincipal(false);

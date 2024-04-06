@@ -4,6 +4,7 @@
  */
 package BOs;
 
+import DTO.LicenciaDTO;
 import Entidades.Persona;
 
 /**
@@ -11,8 +12,10 @@ import Entidades.Persona;
  * @author PC
  */
 public interface IRegistroLicenciaBO {
-    
-    public void agregarLicencia(int duracion, Persona persona);
+
+    public void agregarLicencia(LicenciaDTO licenciaNueva);
+
     public Persona consultarRFC(String rfc, boolean verifiacion);
+
     public boolean verificarRFC(String rfc);
 }

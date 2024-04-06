@@ -12,16 +12,17 @@ import java.util.Calendar;
  * @author pc
  */
 public class LicenciaDTO extends TramiteDTO {
-    
+
     private int duracionAños;
     private Calendar vigenciaF;
     private boolean estado;
-     private Persona persona;
+    private Persona persona;
+    private String numeroLicencia;
 
     public LicenciaDTO() {
     }
 
-    public LicenciaDTO(int duracionAños, Calendar vigenciaF, Calendar fecha, float costo,boolean estado) {
+    public LicenciaDTO(int duracionAños, Calendar vigenciaF, Calendar fecha, float costo, boolean estado) {
         super(fecha, costo);
         this.duracionAños = duracionAños;
         this.vigenciaF = vigenciaF;
@@ -59,6 +60,13 @@ public class LicenciaDTO extends TramiteDTO {
     public void setPersona(Persona persona) {
         this.persona = persona;
     }
-    
-    
+
+    public String getNumeroLicencia() {
+        return numeroLicencia;
+    }
+
+    public void setNumeroLicencia(String numeroLicencia) {
+        this.numeroLicencia = numeroLicencia;
+    }
+
 }

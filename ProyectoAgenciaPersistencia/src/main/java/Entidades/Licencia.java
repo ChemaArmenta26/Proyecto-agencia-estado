@@ -45,7 +45,7 @@ public class Licencia extends Tramite implements Serializable {
     public Licencia() {
     }
 
-    public Licencia(int duracionAños, Calendar vigenciaF, Persona persona, Calendar fecha, Float costo, boolean estado, String numero) {
+    public Licencia(int duracionAños, Calendar vigenciaF, Persona persona, Calendar fecha, float costo, boolean estado, String numero) {
         super(fecha, costo);
         this.duracionAños = duracionAños;
         this.vigenciaF = vigenciaF;
