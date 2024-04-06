@@ -3,6 +3,8 @@ package DAOs;
 import Conexion.IConexionBD;
 import Entidades.Persona;
 import Persistencia.PersistenciaException;
+import java.util.Calendar;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
@@ -51,5 +53,22 @@ public class PersonaDAO implements IPersonaDAO {
         }
         return persona;
     }
+
+    @Override
+    public List<Persona> consultarPersonasNombre(String Nombre, String ApellidoPaterno, String ApellidoMaterno) throws PersistenciaException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Persona> consultarPersonasFechaN(Calendar fechaNacimiento) throws PersistenciaException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Persona> consultarPersonasFechaNYNombre(String Nombre, String ApellidoPaterno, String ApellidoMaterno, Calendar fechaNacimiento) throws PersistenciaException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    
 
 }

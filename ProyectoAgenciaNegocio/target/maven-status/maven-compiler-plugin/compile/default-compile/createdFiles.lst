@@ -4,6 +4,7 @@ DTO\VehiculoDTO.class
 BOs\AgregarPersonaBO.class
 DTO\PlacaDTO.class
 DTO\TramiteDTO.class
+ReporteEstilo\ReporteTramite.class
 com\mycompany\proyectoagencianegocio\ProyectoAgenciaNegocio.class
 DTO\AutomovilDTO.class
 Encriptacion\AlgoritmoEncriptacion.class

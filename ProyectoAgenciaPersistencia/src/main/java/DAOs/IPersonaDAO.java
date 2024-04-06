@@ -6,6 +6,8 @@ package DAOs;
 
 import Entidades.Persona;
 import Persistencia.PersistenciaException;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  *
@@ -16,4 +18,10 @@ public interface IPersonaDAO {
     public Persona agregarPersona(Persona persona) throws PersistenciaException;
     
     public Persona consultarPersonaRFC(String RFC) throws PersistenciaException;
+    
+    public List<Persona> consultarPersonasNombre(String Nombre, String ApellidoPaterno, String ApellidoMaterno) throws PersistenciaException;
+    
+    public List<Persona> consultarPersonasFechaN(Calendar fechaNacimiento) throws PersistenciaException;
+    
+    public List<Persona> consultarPersonasFechaNYNombre(String Nombre, String ApellidoPaterno, String ApellidoMaterno, Calendar fechaNacimiento) throws PersistenciaException;
 }
