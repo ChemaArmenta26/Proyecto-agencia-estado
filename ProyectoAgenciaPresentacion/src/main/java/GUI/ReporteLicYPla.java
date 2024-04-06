@@ -7,6 +7,13 @@ package GUI;
 import BOs.IReporteTramiteBO;
 import BOs.ReporteTramiteBO;
 import Control.ControladorFlujo;
+import DTO.LicenciaDTO;
+import DTO.PlacaDTO;
+import DTO.ReporteDTO;
+import DTO.TramiteDTO;
+import java.util.List;
+import java.util.Calendar;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,8 +21,9 @@ import Control.ControladorFlujo;
  */
 public class ReporteLicYPla extends javax.swing.JFrame {
 
-   ControladorFlujo controlador;
-   private IReporteTramiteBO reporteTramite = new ReporteTramiteBO();
+    ControladorFlujo controlador;
+    private IReporteTramiteBO reporteTramite = new ReporteTramiteBO();
+
     public ReporteLicYPla() {
         initComponents();
         controlador = new ControladorFlujo();
@@ -38,19 +46,19 @@ public class ReporteLicYPla extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        campoApellidoPaterno = new javax.swing.JTextField();
+        campoNombre = new javax.swing.JTextField();
+        campoApellidoMaterno = new javax.swing.JTextField();
         btnConsultar = new javax.swing.JButton();
         btnGenerarPDF = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        fechaFinChooser = new com.toedter.calendar.JDateChooser();
+        fechaInicioChooser = new com.toedter.calendar.JDateChooser();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
+        checkBoxLicencia = new javax.swing.JCheckBox();
+        checkBoxPlaca = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -104,11 +112,11 @@ public class ReporteLicYPla extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel6.setText("Apellido Materno:");
 
-        jTextField1.setBackground(new java.awt.Color(204, 204, 204));
+        campoApellidoPaterno.setBackground(new java.awt.Color(204, 204, 204));
 
-        jTextField3.setBackground(new java.awt.Color(204, 204, 204));
+        campoNombre.setBackground(new java.awt.Color(204, 204, 204));
 
-        jTextField5.setBackground(new java.awt.Color(204, 204, 204));
+        campoApellidoMaterno.setBackground(new java.awt.Color(204, 204, 204));
 
         btnConsultar.setBackground(new java.awt.Color(51, 153, 0));
         btnConsultar.setForeground(new java.awt.Color(255, 255, 255));
@@ -132,9 +140,9 @@ public class ReporteLicYPla extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel3.setText("PERIODO:");
 
-        jDateChooser1.setBackground(new java.awt.Color(204, 204, 204));
+        fechaFinChooser.setBackground(new java.awt.Color(204, 204, 204));
 
-        jDateChooser2.setBackground(new java.awt.Color(204, 204, 204));
+        fechaInicioChooser.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel7.setText("Fecha Inicio:");
@@ -145,9 +153,9 @@ public class ReporteLicYPla extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel9.setText("Tipo de tramite:");
 
-        jCheckBox1.setText("Licencia");
+        checkBoxLicencia.setText("Licencia");
 
-        jCheckBox2.setText("Placas");
+        checkBoxPlaca.setText("Placas");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -189,12 +197,12 @@ public class ReporteLicYPla extends javax.swing.JFrame {
                             .addComponent(jLabel8))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fechaFinChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jTextField1)
-                                .addComponent(jTextField3)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
-                                .addComponent(jDateChooser2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE))))
+                                .addComponent(campoApellidoPaterno)
+                                .addComponent(campoNombre)
+                                .addComponent(campoApellidoMaterno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                                .addComponent(fechaInicioChooser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(331, 331, 331)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,9 +210,9 @@ public class ReporteLicYPla extends javax.swing.JFrame {
                                 .addGap(21, 21, 21)
                                 .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jCheckBox1)
+                                .addComponent(checkBoxLicencia)
                                 .addGap(57, 57, 57)
-                                .addComponent(jCheckBox2)))))
+                                .addComponent(checkBoxPlaca)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -232,33 +240,33 @@ public class ReporteLicYPla extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addGap(63, 63, 63)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel4))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(campoApellidoPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel5))
                                 .addGap(24, 24, 24)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(campoApellidoMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel6))
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fechaInicioChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel7))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel8)
-                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(fechaFinChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(444, 444, 444)
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jCheckBox1)
-                                    .addComponent(jCheckBox2))))
+                                    .addComponent(checkBoxLicencia)
+                                    .addComponent(checkBoxPlaca))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
@@ -292,27 +300,75 @@ public class ReporteLicYPla extends javax.swing.JFrame {
     private void btnGenerarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarPDFActionPerformed
         // TODO add your handling code here:
 
-        
 
     }//GEN-LAST:event_btnGenerarPDFActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        // TODO add your handling code here:
+        ReporteDTO filtro = new ReporteDTO();
+        filtro.setFechaFin(fechaFinChooser.getCalendar());
+        filtro.setFechaInicio(fechaInicioChooser.getCalendar());
+        filtro.setNombrePersonaSolicitante(this.campoNombre.getText() + " " + this.campoApellidoPaterno.getText() + " " + this.campoApellidoMaterno.getText());
+        if (this.checkBoxLicencia.isSelected()) {
+            filtro.setTipoTramite("Licencia");
+        } else if (this.checkBoxPlaca.isSelected()) {
+            filtro.setTipoTramite("Placa");
+        }
+
+        List<TramiteDTO> listaTramites = this.reporteTramite.obtenerTramites(filtro);
+
+        llenarTabla(listaTramites);
     }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void llenarTabla(List<TramiteDTO> listaTramites) {
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0); // Limpiar la tabla antes de agregar nuevos datos
+
+        for (TramiteDTO tramite : listaTramites) {
+            String tipoTramite = "";
+            String nombrePersona = "";
+            Calendar fechaTramite = null;
+            double costoTramite = 0.0;
+
+            // Obtener los datos necesarios según el tipo de trámite
+            if (tramite instanceof LicenciaDTO) {
+                tipoTramite = "Licencia";
+                LicenciaDTO licencia = (LicenciaDTO) tramite;
+                nombrePersona = licencia.getPersona().getNombre() + " " + licencia.getPersona().getApellidoPaterno() + " " + licencia.getPersona().getApellidoMaterno();
+                fechaTramite = licencia.getFecha();
+                costoTramite = licencia.getCosto();
+            } else if (tramite instanceof PlacaDTO) {
+                tipoTramite = "Placa";
+                PlacaDTO placa = (PlacaDTO) tramite;
+                nombrePersona = placa.getPersona().getNombre() + " " + placa.getPersona().getApellidoPaterno() + " " + placa.getPersona().getApellidoMaterno();
+                fechaTramite = placa.getFecha();
+                costoTramite = placa.getCosto();
+            }
+
+            // Agregar una nueva fila a la tabla con los datos obtenidos
+            modelo.addRow(new Object[]{
+                fechaTramite,
+                tipoTramite,
+                nombrePersona,
+                costoTramite
+            });
+        }
+    }
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnGenerarPDF;
     private javax.swing.JButton btnMenu;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
+    private javax.swing.JTextField campoApellidoMaterno;
+    private javax.swing.JTextField campoApellidoPaterno;
+    private javax.swing.JTextField campoNombre;
+    private javax.swing.JCheckBox checkBoxLicencia;
+    private javax.swing.JCheckBox checkBoxPlaca;
+    private com.toedter.calendar.JDateChooser fechaFinChooser;
+    private com.toedter.calendar.JDateChooser fechaInicioChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -326,8 +382,5 @@ public class ReporteLicYPla extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
 }
