@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -55,18 +56,32 @@ public class PersonaDAO implements IPersonaDAO {
     }
 
     @Override
-    public List<Persona> consultarPersonasNombre(String Nombre, String ApellidoPaterno, String ApellidoMaterno) throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Persona> consultarPersonasNombre(String nombre, String apellidoPaterno, String apellidoMaterno) throws PersistenciaException {
+        EntityManager entityManager = conexion.conexion();
+        Query query = entityManager.createQuery("SELECT p FROM Persona p WHERE p.nombre = :nombre AND p.apellidoPaterno = :apellidoPaterno AND p.apellidoMaterno = :apellidoMaterno");
+        query.setParameter("nombre", nombre);
+        query.setParameter("apellidoPaterno", apellidoPaterno);
+        query.setParameter("apellidoMaterno", apellidoMaterno);
+        return query.getResultList();
     }
 
     @Override
     public List<Persona> consultarPersonasFechaN(Calendar fechaNacimiento) throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        EntityManager entityManager = conexion.conexion();
+        Query query = entityManager.createQuery("SELECT p FROM Persona p WHERE p.fechaNacimiento = :fechaNacimiento");
+        query.setParameter("fechaNacimiento", fechaNacimiento);
+        return query.getResultList();
     }
 
     @Override
-    public List<Persona> consultarPersonasFechaNYNombre(String Nombre, String ApellidoPaterno, String ApellidoMaterno, Calendar fechaNacimiento) throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Persona> consultarPersonasFechaNYNombre(String nombre, String apellidoPaterno, String apellidoMaterno, Calendar fechaNacimiento) throws PersistenciaException {
+        EntityManager entityManager = conexion.conexion();
+        Query query = entityManager.createQuery("SELECT p FROM Persona p WHERE p.nombre = :nombre AND p.apellidoPaterno = :apellidoPaterno AND p.apellidoMaterno = :apellidoMaterno AND p.fechaNacimiento = :fechaNacimiento");
+        query.setParameter("nombre", nombre);
+        query.setParameter("apellidoPaterno", apellidoPaterno);
+        query.setParameter("apellidoMaterno", apellidoMaterno);
+        query.setParameter("fechaNacimiento", fechaNacimiento);
+        return query.getResultList();
     }
 
     
