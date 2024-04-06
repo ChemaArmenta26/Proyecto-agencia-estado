@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import BOs.IReporteTramiteBO;
+import BOs.ReporteTramiteBO;
 import Control.ControladorFlujo;
 
 /**
@@ -13,6 +15,7 @@ import Control.ControladorFlujo;
 public class ReporteLicYPla extends javax.swing.JFrame {
 
    ControladorFlujo controlador;
+   private IReporteTramiteBO reporteTramite = new ReporteTramiteBO();
     public ReporteLicYPla() {
         initComponents();
         controlador = new ControladorFlujo();

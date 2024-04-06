@@ -21,4 +21,6 @@ public interface IReporteTramiteBO {
     public boolean cumpleFiltro(TramiteDTO tramite, ReporteDTO filtro);
     
     public List<TramiteDTO> obtenerTramitesPorPersona(PersonaDTO persona);
+    
+     public void generarReporte(List<TramiteDTO> listaTramites);
 }
