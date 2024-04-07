@@ -127,4 +127,52 @@ public class PersonaDAO implements IPersonaDAO {
         return query.getResultList();
     }
 
+    @Override
+    public List<Persona> consultarPersonasNombreYRFC(String nombre, String rfc) throws PersistenciaException {
+        EntityManager entityManager = conexion.conexion();
+        StringBuilder queryString = new StringBuilder("SELECT p FROM Persona p WHERE 1=1");
+        Map<String, Object> parameters = new HashMap<>();
+
+        if (nombre != null && !nombre.isEmpty()) {
+            queryString.append(" AND p.nombre LIKE :nombre");
+            parameters.put("nombre", "%" + nombre + "%");
+        }
+
+        if (rfc != null && !rfc.isEmpty()) {
+            queryString.append(" AND p.RFC = :rfc");
+            parameters.put("rfc", rfc);
+        }
+
+        Query query = entityManager.createQuery(queryString.toString());
+        for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Persona> consultarPersonasFechaNYYRFC(Calendar fechaNacimiento, String rfc) throws PersistenciaException {
+        EntityManager entityManager = conexion.conexion();
+        StringBuilder queryString = new StringBuilder("SELECT p FROM Persona p WHERE 1=1");
+        Map<String, Object> parameters = new HashMap<>();
+
+        if (fechaNacimiento != null) {
+            queryString.append(" AND p.fechaNacimiento = :fechaNacimiento");
+            parameters.put("fechaNacimiento", fechaNacimiento);
+        }
+
+        if (rfc != null && !rfc.isEmpty()) {
+            queryString.append(" AND p.RFC = :rfc");
+            parameters.put("rfc", rfc);
+        }
+
+        Query query = entityManager.createQuery(queryString.toString());
+        for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+
+        return query.getResultList();
+    }
+
 }

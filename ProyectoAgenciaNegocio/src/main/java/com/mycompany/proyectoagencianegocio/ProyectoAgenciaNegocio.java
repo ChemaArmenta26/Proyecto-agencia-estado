@@ -64,7 +64,7 @@ public class ProyectoAgenciaNegocio {
 //        System.out.println(auto.obtenerIdConNumeroDeSerie("asda"));
         Calendar fechaNacimiento = Calendar.getInstance();
         fechaNacimiento.set(2004, Calendar.DECEMBER, 21);
-        PersonaDTO persona = new PersonaDTO("", "asdasd", "", "", false, null, "");
+        PersonaDTO persona = new PersonaDTO("JLMG791115QRS", "luis", "", "", false, null, "");
         List<Persona> personas = new ArrayList<>();
         personas = reporteBO.obtenerListaDePersonas(persona);
         for (int i = 0; i < personas.size(); i++) {

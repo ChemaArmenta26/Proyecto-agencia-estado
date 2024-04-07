@@ -216,6 +216,20 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
                 JOptionPane.showMessageDialog(null, "Consulta fallida", "RFC", JOptionPane.INFORMATION_MESSAGE);
                 return null;
             }
+        }else if(!(persona.getRfc().equalsIgnoreCase("") && persona.getNombre().equalsIgnoreCase("")) && persona.getFecha_nacimiento() == null){
+            try{
+                personas = personaDAO.consultarPersonasNombreYRFC(persona.getNombre(), persona.getRfc());
+            }catch(PersistenciaException e){
+                JOptionPane.showMessageDialog(null, "Consulta fallida", "Nombre y RFC", JOptionPane.INFORMATION_MESSAGE);
+                return null;
+            }
+        }else if(!(persona.getRfc().equalsIgnoreCase("") && persona.getFecha_nacimiento()==null) && persona.getNombre().equalsIgnoreCase("")){
+            try{
+                personas = personaDAO.consultarPersonasFechaNYYRFC(persona.getFecha_nacimiento(), persona.getRfc());
+            }catch(PersistenciaException e){
+                JOptionPane.showMessageDialog(null, "Consulta fallida", "Fecha y RFC", JOptionPane.INFORMATION_MESSAGE);
+                return null;
+            }
         }else if(!persona.getNombre().equalsIgnoreCase("") && (persona.getRfc().equalsIgnoreCase("") && persona.getFecha_nacimiento() == null)){
             try{
                 personas = personaDAO.consultarPersonasNombre(persona.getNombre());
@@ -241,7 +255,7 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
             try{
                 personas = personaDAO.consultarPersonasFechaNYNombreYRFC(persona.getNombre(), persona.getFecha_nacimiento(), persona.getRfc());
             }catch(PersistenciaException e){
-                JOptionPane.showMessageDialog(null, "Consulta fallida", "Fecha y Nombre", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Consulta fallida", "Fecha Nombre y RFC", JOptionPane.INFORMATION_MESSAGE);
                 return null;
             }
         }
