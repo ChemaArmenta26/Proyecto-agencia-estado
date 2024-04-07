@@ -7,6 +7,7 @@ package DAOs;
 import Entidades.Licencia;
 import Entidades.Persona;
 import Persistencia.PersistenciaException;
+import java.util.List;
 
 /**
  *
@@ -23,4 +24,5 @@ public interface ILicenciaDAO extends ITramiteDAO {
     public Persona consultarPersonaConNumLicencia(String numLicencia) throws PersistenciaException;
 
     public String generarNumeroLicencia();
+    
 }

@@ -7,8 +7,10 @@ package DAOs;
 import Conexion.IConexionBD;
 import Entidades.Licencia;
 import Entidades.Persona;
+import Entidades.Placa;
 import Entidades.Tramite;
 import Persistencia.PersistenciaException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -76,5 +78,5 @@ public class TramiteDAO implements ITramiteDAO{
             }
         }
     }
-    
+   
 }

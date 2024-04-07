@@ -25,5 +25,5 @@ public interface IReporteTramiteBO {
     
      public void generarReporte(List<TramiteDTO> listaTramites);
      
-     public List<Persona> obtenerListaDePersonas(PersonaDTO persona);
+     public List<Persona> obtenerListaDePersonas(PersonaDTO persona);     
 }

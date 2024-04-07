@@ -6,7 +6,6 @@ package Control;
 
 import GUI.ConfirmarTraPlacas;
 import GUI.ConsultarLP;
-import GUI.ConsultarLiYPla;
 import GUI.Principal;
 import GUI.ReporteLicYPla;
 import GUI.SolcitarPlacas;
@@ -44,7 +43,7 @@ public class ControladorFlujo {
     
 
     public void mostrarConsultarLicenciaYPlacas() {
-        ConsultarLiYPla c = new ConsultarLiYPla();
+        ConsultarLP c = new ConsultarLP();
         c.setVisible(true);
     }
 

@@ -4,7 +4,23 @@
  */
 package GUI;
 
+import BOs.IReporteTramiteBO;
+import BOs.ReporteTramiteBO;
 import Control.ControladorFlujo;
+
+import DTO.LicenciaDTO;
+import DTO.PersonaDTO;
+import DTO.PlacaDTO;
+import DTO.TramiteDTO;
+
+import Entidades.Persona;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
+
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -12,11 +28,29 @@ import Control.ControladorFlujo;
  */
 public class ConsultarLP extends javax.swing.JFrame {
 
+    IReporteTramiteBO reporteBO = new ReporteTramiteBO();
+    private DefaultTableModel model;
     ControladorFlujo controlador;
+    
+    
+
     public ConsultarLP() {
         initComponents();
         controlador = new ControladorFlujo();
+        // Inicializar el modelo de la tabla
+        model = new DefaultTableModel();
+        tablaTramites.setModel(model); // Asignar el modelo a la tabla
+
+        // Agregar las columnas al modelo
+        model.addColumn("");
+        model.addColumn("Fecha");       
+        model.addColumn("Costo");
+        
+
     }
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,18 +65,18 @@ public class ConsultarLP extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        comboBox = new javax.swing.JComboBox<>();
+        personasComboBox = new javax.swing.JComboBox<>();
         btnMenu = new javax.swing.JButton();
         btnConsultar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jButton1 = new javax.swing.JButton();
+        txtNombre = new javax.swing.JTextField();
+        txtRFC = new javax.swing.JTextField();
+        txtFechaNacimiento = new com.toedter.calendar.JDateChooser();
+        btnBuscarPersona = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaTramites = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,12 +108,12 @@ public class ConsultarLP extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel2.setText("INGRESA LOS DATOS:");
 
-        comboBox.setBackground(new java.awt.Color(204, 204, 204));
-        comboBox.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        comboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboBox.addActionListener(new java.awt.event.ActionListener() {
+        personasComboBox.setBackground(new java.awt.Color(204, 204, 204));
+        personasComboBox.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        personasComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        personasComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboBoxActionPerformed(evt);
+                personasComboBoxActionPerformed(evt);
             }
         });
 
@@ -104,8 +138,34 @@ public class ConsultarLP extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setBackground(new java.awt.Color(153, 153, 153));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel3.setText("RFC:");
+
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel4.setText("Nombre:");
+
+        jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel7.setText("Fecha de nacimiento:");
+
+        txtNombre.setBackground(new java.awt.Color(204, 204, 204));
+        txtNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        txtRFC.setBackground(new java.awt.Color(204, 204, 204));
+        txtRFC.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        txtFechaNacimiento.setBackground(new java.awt.Color(204, 204, 204));
+
+        btnBuscarPersona.setBackground(new java.awt.Color(153, 153, 153));
+        btnBuscarPersona.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnBuscarPersona.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscarPersona.setText("BUSCAR PERSONA");
+        btnBuscarPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarPersonaActionPerformed(evt);
+            }
+        });
+
+        tablaTramites.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -116,29 +176,7 @@ public class ConsultarLP extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel3.setText("RFC:");
-
-        jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel4.setText("Nombre:");
-
-        jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel7.setText("Fecha de nacimiento:");
-
-        jTextField1.setBackground(new java.awt.Color(204, 204, 204));
-        jTextField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-
-        jTextField2.setBackground(new java.awt.Color(204, 204, 204));
-        jTextField2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-
-        jDateChooser1.setBackground(new java.awt.Color(204, 204, 204));
-
-        jButton1.setBackground(new java.awt.Color(153, 153, 153));
-        jButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("BUSCAR PERSONA");
+        jScrollPane1.setViewportView(tablaTramites);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -161,9 +199,9 @@ public class ConsultarLP extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField2)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNombre)
+                            .addComponent(txtRFC)
+                            .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -172,10 +210,10 @@ public class ConsultarLP extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addGap(79, 79, 79))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1)
+                                .addComponent(btnBuscarPersona)
                                 .addGap(126, 126, 126)))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(personasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46))
         );
@@ -184,7 +222,7 @@ public class ConsultarLP extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53)
-                .addComponent(comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(personasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
@@ -194,20 +232,21 @@ public class ConsultarLP extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel3)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtRFC, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel4)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(28, 28, 28)
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel7))
                         .addGap(29, 29, 29)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnBuscarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 226, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
@@ -231,9 +270,9 @@ public class ConsultarLP extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void comboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxActionPerformed
+    private void personasComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_personasComboBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_comboBoxActionPerformed
+    }//GEN-LAST:event_personasComboBoxActionPerformed
 
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
         // TODO add your handling code here:
@@ -243,21 +282,84 @@ public class ConsultarLP extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        // TODO add your handling code here:
+  // Obtener el RFC de la persona seleccionada en el JComboBox
+    String rfcPersonaSeleccionada = (String) personasComboBox.getSelectedItem();
+    
+    // Verificar si se ha seleccionado una persona
+    if (rfcPersonaSeleccionada != null && !rfcPersonaSeleccionada.isEmpty()) {
+        // Crear un objeto PersonaDTO con el RFC seleccionado
+        PersonaDTO personaDTO = new PersonaDTO();
+        personaDTO.setRfc(rfcPersonaSeleccionada);
+
+        // Llamar al método para obtener los trámites por RFC
+        List<TramiteDTO> tramitesPersona = reporteBO.obtenerTramitesPorPersona(personaDTO);
+
+        // Limpiar la tabla antes de agregar los nuevos datos
+        model.setRowCount(0);
+
+        // Verificar si se encontraron trámites para la persona seleccionada
+        if (tramitesPersona != null && !tramitesPersona.isEmpty()) {
+            // Agregar los trámites a la tabla
+            for (TramiteDTO tramite : tramitesPersona) {
+                Object[] row = new Object[3]; 
+                row[0] = tramite.getFecha(); 
+                row[1] = tramite.getCosto(); 
+
+                model.addRow(row);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontraron trámites para la persona seleccionada.");
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione una persona.");
+    }
+
 
     }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void btnBuscarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPersonaActionPerformed
+   // Obtener los datos de búsqueda
+    String rfc = txtRFC.getText();
+    String nombre = txtNombre.getText();
+    Date fechaSeleccionada = txtFechaNacimiento.getDate(); // Obtener la fecha seleccionada del JDateChooser
+
+    // Convertir la fecha seleccionada a tipo Calendar si es necesario
+    Calendar fechaCalendar = Calendar.getInstance();
+    fechaCalendar.setTime(fechaSeleccionada);
+
+    // Crear un objeto PersonaDTO con los datos de búsqueda
+    PersonaDTO personaBusqueda = new PersonaDTO();
+    personaBusqueda.setRfc(rfc);
+    personaBusqueda.setNombre(nombre);
+
+    // Llamar al método para buscar personas
+    List<Persona> personasEncontradas = reporteBO.obtenerListaDePersonas(personaBusqueda);
+
+    // Limpiar el ComboBox antes de agregar las nuevas personas
+    personasComboBox.removeAllItems();
+
+    // Llenar el ComboBox con las personas encontradas
+    for (Persona persona : personasEncontradas) {
+        // Agregar el RFC de la persona al ComboBox
+        personasComboBox.addItem(persona.getRFC());
+    }
+        
+    }//GEN-LAST:event_btnBuscarPersonaActionPerformed
+
+  
+    
+    
+    
+    
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscarPersona;
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnMenu;
-    private javax.swing.JComboBox<String> comboBox;
-    private javax.swing.JButton jButton1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -266,8 +368,10 @@ public class ConsultarLP extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JComboBox<String> personasComboBox;
+    private javax.swing.JTable tablaTramites;
+    private com.toedter.calendar.JDateChooser txtFechaNacimiento;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtRFC;
     // End of variables declaration//GEN-END:variables
 }

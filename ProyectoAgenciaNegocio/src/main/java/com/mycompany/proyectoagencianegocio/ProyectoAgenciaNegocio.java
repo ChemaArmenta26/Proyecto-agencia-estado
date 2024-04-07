@@ -41,6 +41,10 @@ public class ProyectoAgenciaNegocio {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
+
+
+
+
         IAgregarPersonaBO agregarBO = new AgregarPersonaBO();
 //            agregarBO.agregarPersonas();
         IRegistroLicenciaBO licenciaBO = new RegistroLicenciaBO();

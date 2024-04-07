@@ -29,6 +29,8 @@ public class PersonaDTO {
 
     public PersonaDTO() {
     }
+    
+    
 
     public PersonaDTO(String rfc, String nombre, String apellido_paterno, String apellido_materno, Boolean discapacitado, Calendar fecha_nacimiento, String telefono, List<Licencia> tramites, List<Vehiculo> vehiculos) {
         this.rfc = rfc;

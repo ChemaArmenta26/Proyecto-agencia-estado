@@ -5,9 +5,13 @@
 package BOs;
 
 import Conexion.ConexionBD;
+import DAOs.ILicenciaDAO;
 import DAOs.IPersonaDAO;
+import DAOs.IPlacaDAO;
 import DAOs.ITramiteDAO;
+import DAOs.LicenciaDAO;
 import DAOs.PersonaDAO;
+import DAOs.PlacaDAO;
 import DAOs.TramiteDAO;
 import DTO.LicenciaDTO;
 import DTO.PersonaDTO;
@@ -24,6 +28,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +52,7 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
 
     ConexionBD conexionBD = new ConexionBD();
     private ITramiteDAO tramiteDAO = new TramiteDAO(conexionBD);
-    private IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
+    private IPersonaDAO personaDAO = new PersonaDAO(conexionBD);   
     private static final Logger logger = Logger.getLogger(ReporteTramiteBO.class.getName());
     
 
@@ -269,6 +274,5 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
         }
         
     }
-
+    
 }
-
