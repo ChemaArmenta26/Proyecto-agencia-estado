@@ -7,6 +7,7 @@ package BOs;
 import DTO.PersonaDTO;
 import DTO.ReporteDTO;
 import DTO.TramiteDTO;
+import Entidades.Persona;
 import java.util.List;
 
 /**
@@ -23,4 +24,6 @@ public interface IReporteTramiteBO {
     public List<TramiteDTO> obtenerTramitesPorPersona(PersonaDTO persona);
     
      public void generarReporte(List<TramiteDTO> listaTramites);
+     
+     public List<Persona> obtenerListaDePersonas(PersonaDTO persona);
 }

@@ -5,7 +5,9 @@
 package BOs;
 
 import Conexion.ConexionBD;
+import DAOs.IPersonaDAO;
 import DAOs.ITramiteDAO;
+import DAOs.PersonaDAO;
 import DAOs.TramiteDAO;
 import DTO.LicenciaDTO;
 import DTO.PersonaDTO;
@@ -45,6 +47,7 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
 
     ConexionBD conexionBD = new ConexionBD();
     private ITramiteDAO tramiteDAO = new TramiteDAO(conexionBD);
+    private IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
     private static final Logger logger = Logger.getLogger(ReporteTramiteBO.class.getName());
     
 
@@ -202,6 +205,56 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
         logger.log(Level.SEVERE, "Error al generar el reporte", ex);
     }
 }
+
+    @Override
+    public List<Persona> obtenerListaDePersonas(PersonaDTO persona) {
+        List<Persona> personas = new ArrayList<>();
+        if (!persona.getRfc().equalsIgnoreCase("") && (persona.getNombre().equalsIgnoreCase("") && persona.getFecha_nacimiento() == null)) {
+            try{
+               personas.add(personaDAO.consultarPersonaRFC(persona.getRfc()));
+            }catch(PersistenciaException e){
+                JOptionPane.showMessageDialog(null, "Consulta fallida", "RFC", JOptionPane.INFORMATION_MESSAGE);
+                return null;
+            }
+        }else if(!persona.getNombre().equalsIgnoreCase("") && (persona.getRfc().equalsIgnoreCase("") && persona.getFecha_nacimiento() == null)){
+            try{
+                personas = personaDAO.consultarPersonasNombre(persona.getNombre());
+            }catch(PersistenciaException e){
+                JOptionPane.showMessageDialog(null, "Consulta fallida", "Nombre", JOptionPane.INFORMATION_MESSAGE);
+                return null;
+            }
+        }else if(persona.getFecha_nacimiento()!= null && (persona.getRfc().equalsIgnoreCase("") && persona.getNombre().equalsIgnoreCase(""))){
+            try{
+                personas = personaDAO.consultarPersonasFechaN(persona.getFecha_nacimiento());
+            }catch(PersistenciaException e){
+                JOptionPane.showMessageDialog(null, "Consulta fallida", "Fecha", JOptionPane.INFORMATION_MESSAGE);
+                return null;
+            }
+        }else if(!(persona.getFecha_nacimiento()==null && persona.getNombre().equalsIgnoreCase("")) && persona.getRfc().equalsIgnoreCase("")){
+            try{
+                personas = personaDAO.consultarPersonasFechaNYNombre(persona.getNombre(), persona.getFecha_nacimiento());
+            }catch(PersistenciaException e){
+                JOptionPane.showMessageDialog(null, "Consulta fallida", "Fecha y Nombre", JOptionPane.INFORMATION_MESSAGE);
+                return null;
+            }
+        }else{
+            try{
+                personas = personaDAO.consultarPersonasFechaNYNombreYRFC(persona.getNombre(), persona.getFecha_nacimiento(), persona.getRfc());
+            }catch(PersistenciaException e){
+                JOptionPane.showMessageDialog(null, "Consulta fallida", "Fecha y Nombre", JOptionPane.INFORMATION_MESSAGE);
+                return null;
+            }
+        }
+        
+        if (!personas.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Consulta Exitosa", "Info", JOptionPane.INFORMATION_MESSAGE);
+            return personas;
+        }else{
+            JOptionPane.showMessageDialog(null, "No se encontro personas", "Info", JOptionPane.INFORMATION_MESSAGE);
+            return null;
+        }
+        
+    }
 
 }
 

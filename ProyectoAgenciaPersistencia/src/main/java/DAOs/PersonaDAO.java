@@ -4,7 +4,9 @@ import Conexion.IConexionBD;
 import Entidades.Persona;
 import Persistencia.PersistenciaException;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -56,12 +58,10 @@ public class PersonaDAO implements IPersonaDAO {
     }
 
     @Override
-    public List<Persona> consultarPersonasNombre(String nombre, String apellidoPaterno, String apellidoMaterno) throws PersistenciaException {
+    public List<Persona> consultarPersonasNombre(String nombre) throws PersistenciaException {
         EntityManager entityManager = conexion.conexion();
-        Query query = entityManager.createQuery("SELECT p FROM Persona p WHERE p.nombre = :nombre AND p.apellidoPaterno = :apellidoPaterno AND p.apellidoMaterno = :apellidoMaterno");
-        query.setParameter("nombre", nombre);
-        query.setParameter("apellidoPaterno", apellidoPaterno);
-        query.setParameter("apellidoMaterno", apellidoMaterno);
+        Query query = entityManager.createQuery("SELECT p FROM Persona p WHERE p.nombre LIKE :nombre");
+        query.setParameter("nombre", "%" + nombre + "%");
         return query.getResultList();
     }
 
@@ -74,16 +74,57 @@ public class PersonaDAO implements IPersonaDAO {
     }
 
     @Override
-    public List<Persona> consultarPersonasFechaNYNombre(String nombre, String apellidoPaterno, String apellidoMaterno, Calendar fechaNacimiento) throws PersistenciaException {
+    public List<Persona> consultarPersonasFechaNYNombre(String nombre, Calendar fechaNacimiento) throws PersistenciaException {
         EntityManager entityManager = conexion.conexion();
-        Query query = entityManager.createQuery("SELECT p FROM Persona p WHERE p.nombre = :nombre AND p.apellidoPaterno = :apellidoPaterno AND p.apellidoMaterno = :apellidoMaterno AND p.fechaNacimiento = :fechaNacimiento");
-        query.setParameter("nombre", nombre);
-        query.setParameter("apellidoPaterno", apellidoPaterno);
-        query.setParameter("apellidoMaterno", apellidoMaterno);
-        query.setParameter("fechaNacimiento", fechaNacimiento);
+        StringBuilder queryString = new StringBuilder("SELECT p FROM Persona p WHERE 1=1");
+        Map<String, Object> parameters = new HashMap<>();
+
+        if (nombre != null && !nombre.isEmpty()) {
+            queryString.append(" AND p.nombre LIKE :nombre");
+            parameters.put("nombre", "%" + nombre + "%");
+        }
+
+        if (fechaNacimiento != null) {
+            // Depending on your date format and database setup, you may need to adjust how you handle the date comparison
+            queryString.append(" AND p.fechaNacimiento = :fechaNacimiento");
+            parameters.put("fechaNacimiento", fechaNacimiento);
+        }
+
+        Query query = entityManager.createQuery(queryString.toString());
+        for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+
         return query.getResultList();
     }
 
-    
+    public List<Persona> consultarPersonasFechaNYNombreYRFC(String nombre, Calendar fechaNacimiento, String rfc) throws PersistenciaException {
+        EntityManager entityManager = conexion.conexion();
+        StringBuilder queryString = new StringBuilder("SELECT p FROM Persona p WHERE 1=1");
+        Map<String, Object> parameters = new HashMap<>();
+
+        if (nombre != null && !nombre.isEmpty()) {
+            queryString.append(" AND p.nombre LIKE :nombre");
+            parameters.put("nombre", "%" + nombre + "%");
+        }
+
+        if (fechaNacimiento != null) {
+            // Depending on your date format and database setup, you may need to adjust how you handle the date comparison
+            queryString.append(" AND p.fechaNacimiento = :fechaNacimiento");
+            parameters.put("fechaNacimiento", fechaNacimiento);
+        }
+
+        if (rfc != null && !rfc.isEmpty()) {
+            queryString.append(" AND p.RFC = :rfc");
+            parameters.put("rfc", rfc);
+        }
+
+        Query query = entityManager.createQuery(queryString.toString());
+        for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+
+        return query.getResultList();
+    }
 
 }

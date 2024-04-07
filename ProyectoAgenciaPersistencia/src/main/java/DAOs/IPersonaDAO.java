@@ -19,9 +19,11 @@ public interface IPersonaDAO {
     
     public Persona consultarPersonaRFC(String RFC) throws PersistenciaException;
     
-    public List<Persona> consultarPersonasNombre(String Nombre, String ApellidoPaterno, String ApellidoMaterno) throws PersistenciaException;
+    public List<Persona> consultarPersonasNombre(String Nombre) throws PersistenciaException;
     
     public List<Persona> consultarPersonasFechaN(Calendar fechaNacimiento) throws PersistenciaException;
     
-    public List<Persona> consultarPersonasFechaNYNombre(String Nombre, String ApellidoPaterno, String ApellidoMaterno, Calendar fechaNacimiento) throws PersistenciaException;
+    public List<Persona> consultarPersonasFechaNYNombre(String Nombre, Calendar fechaNacimiento) throws PersistenciaException;
+    
+    public List<Persona> consultarPersonasFechaNYNombreYRFC(String Nombre, Calendar fechaNacimiento, String rfc) throws PersistenciaException;
 }

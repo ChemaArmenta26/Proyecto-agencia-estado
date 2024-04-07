@@ -42,7 +42,7 @@ public class ProyectoAgenciaPersistencia {
         IAutomovilDAO auto = new AutomovilDAO(conexion);
 
         Calendar fechaNacimiento = Calendar.getInstance();
-//       fechaNacimiento.set(2004, Calendar.AUGUST, 26);
+        fechaNacimiento.set(2004, Calendar.DECEMBER , 21);
 
 //         Ahora, podemos agregar años, meses o días según sea necesario
 //         Obtener la nueva fecha de nacimiento después de restar los años y meses
@@ -65,9 +65,13 @@ public class ProyectoAgenciaPersistencia {
 //                System.out.println(vehiculos.get(i));
 //            System.out.println(placa.consultarPlacaNum("asdasd"));
 //            System.out.println(licencia1.consultarPersonaConNumLicencia("as"));
-        Vehiculo vehiculo3 = new Vehiculo("as", "ASD", "SDASD", persona);
-        vehiculo3.setId(1l);
-        System.out.println(placa.consultarPlacaActiva(vehiculo3));
+//        Vehiculo vehiculo3 = new Vehiculo("as", "ASD", "SDASD", persona);
+//        vehiculo3.setId(1l);
+//        System.out.println(placa.consultarPlacaActiva(vehiculo3));
+            
+//            System.out.println(persona1.consultarPersonaRFC("RAGG940101ABC"));
+            
+            System.out.println(persona1.consultarPersonasFechaNYNombre("Luis",fechaNacimiento));
           
         
 
