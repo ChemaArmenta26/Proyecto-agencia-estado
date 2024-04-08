@@ -17,6 +17,7 @@ import DTO.LicenciaDTO;
 import DTO.PersonaDTO;
 import DTO.PlacaDTO;
 import DTO.ReporteDTO;
+import DTO.ReporteDeTramiteDTO;
 import DTO.TramiteDTO;
 import Entidades.Licencia;
 import Entidades.Persona;
@@ -27,7 +28,9 @@ import ReporteEstilo.ReporteTramite;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,9 +54,8 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
 
     ConexionBD conexionBD = new ConexionBD();
     private ITramiteDAO tramiteDAO = new TramiteDAO(conexionBD);
-    private IPersonaDAO personaDAO = new PersonaDAO(conexionBD);   
+    private IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
     private static final Logger logger = Logger.getLogger(ReporteTramiteBO.class.getName());
-    
 
     @Override
     public List<TramiteDTO> obtenerTramites(ReporteDTO filtro) {
@@ -103,9 +105,61 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
         }
     }
 
+    public List<ReporteDeTramiteDTO> obtenerTramitesReporte(ReporteDTO filtro) {
+        List<ReporteDeTramiteDTO> listTramites = new ArrayList<>();
+
+        try {
+            List<Tramite> tramitesBase = this.tramiteDAO.consultarTodosTramites();
+            for (Tramite tm : tramitesBase) {
+                TramiteDTO tramiteDTO = null;
+                StringBuilder nombreCompleto = new StringBuilder();
+
+                String tipoTramite = null;
+                if (tm instanceof Licencia) {
+                    tipoTramite = "Licencia";
+                    nombreCompleto.append(((Licencia) tm).getPersona().getNombre())
+                            .append(" ")
+                            .append(((Licencia) tm).getPersona().getApellidoPaterno())
+                            .append(" ")
+                            .append(((Licencia) tm).getPersona().getApellidoMaterno());
+                } else if (tm instanceof Placa) {
+                    tipoTramite = "Placa";
+                    nombreCompleto.append(((Placa) tm).getPersona().getNombre())
+                            .append(" ")
+                            .append(((Placa) tm).getPersona().getApellidoPaterno())
+                            .append(" ")
+                            .append(((Placa) tm).getPersona().getApellidoMaterno());
+                }
+
+                String nombreCompletoStr = nombreCompleto.toString();
+
+                Date fecha = tm.getFecha().getTime();
+
+                ReporteDeTramiteDTO tramiteReporte = new ReporteDeTramiteDTO(
+                        fecha,
+                        tipoTramite,
+                        nombreCompletoStr,
+                        NumberFormat.getCurrencyInstance().format(tm.getCosto()));
+
+                if (filtro.getTipoTramite() != null) {
+                    if (cumpleFiltro(tramiteDTO, filtro)) {
+                        listTramites.add(tramiteReporte);
+                    }
+                } else {
+                    listTramites.add(tramiteReporte);
+                }
+            }
+            logger.log(Level.INFO, "Se genero la lista de tramites para los reportes");
+            return listTramites;
+        } catch (PersistenciaException ex) {
+            logger.log(Level.SEVERE, "Error al generar la lista de tramites para reporte");
+            return null;
+        }
+    }
+
     @Override
     public boolean cumpleFiltro(TramiteDTO tramite, ReporteDTO filtro) {
-         // Verificar si el tipo de trámite coincide
+        // Verificar si el tipo de trámite coincide
         if (filtro.getTipoTramite() != null && !filtro.getTipoTramite().isEmpty()) {
             if (tramite instanceof LicenciaDTO && !filtro.getTipoTramite().equalsIgnoreCase("Licencia")) {
                 return false;
@@ -117,134 +171,133 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
         // Si pasa todos los filtros, devuelve true
         return true;
     }
-   
-    
+
     @Override
     public void generarReporte(List<TramiteDTO> listaTramites) {
-    // Crear un JRBeanCollectionDataSource con la lista de TramiteDTO
-    JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(listaTramites);
-    // Parámetros para el reporte
-    Map<String, Object> parameters = new HashMap<>();
-    parameters.put("CollectionBeanParam", itemsJRBean);
+        // Crear un JRBeanCollectionDataSource con la lista de TramiteDTO
+        JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(listaTramites);
+        // Parámetros para el reporte
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("CollectionBeanParam", itemsJRBean);
 
-    try {
-        
-        JasperReport jasperReport = ReporteTramite.getCompiledReport("src\\main\\java\\ReporteEstilo\\ReporteTramite.jrxml");
+        try {
 
-        // Llenar el reporte con los datos y parámetros proporcionados
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+            JasperReport jasperReport = ReporteTramite.getCompiledReport("src\\main\\java\\ReporteEstilo\\ReporteDeTramite.jrxml");
 
-        // Exportar el reporte a un archivo PDF
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Guardar Reporte");
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PDF", "pdf"));
-        int userSelection = fileChooser.showSaveDialog(null);
+            // Llenar el reporte con los datos y parámetros proporcionados
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
 
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File fileToSave = fileChooser.getSelectedFile();
-            String filePath = fileToSave.getAbsolutePath();
-            if (!filePath.endsWith(".pdf")) {
-                filePath += ".pdf";
+            // Exportar el reporte a un archivo PDF
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Guardar Reporte");
+            fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PDF", "pdf"));
+            int userSelection = fileChooser.showSaveDialog(null);
+
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileToSave = fileChooser.getSelectedFile();
+                String filePath = fileToSave.getAbsolutePath();
+                if (!filePath.endsWith(".pdf")) {
+                    filePath += ".pdf";
+                }
+
+                try (OutputStream outputStream = new FileOutputStream(new File(filePath))) {
+                    JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
+                }
+
+                // Log y mensaje de éxito
+                logger.log(Level.INFO, "Archivo generado");
+                JOptionPane.showMessageDialog(null, "Archivo guardado", "Info", JOptionPane.INFORMATION_MESSAGE);
+            } else if (userSelection == JFileChooser.CANCEL_OPTION) {
+                // Si el usuario cancela la operación
+                logger.log(Level.INFO, "Usuario canceló la operación");
             }
-
-            try (OutputStream outputStream = new FileOutputStream(new File(filePath))) {
-                JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
-            }
-
-            // Log y mensaje de éxito
-            logger.log(Level.INFO, "Archivo generado");
-            JOptionPane.showMessageDialog(null, "Archivo guardado", "Info", JOptionPane.INFORMATION_MESSAGE);
-        } else if (userSelection == JFileChooser.CANCEL_OPTION) {
-            // Si el usuario cancela la operación
-            logger.log(Level.INFO, "Usuario canceló la operación");
+        } catch (Exception ex) {
+            // Log y excepción en caso de error
+            logger.log(Level.SEVERE, "Error al generar el reporte", ex);
         }
-    } catch (Exception ex) {
-        // Log y excepción en caso de error
-        logger.log(Level.SEVERE, "Error al generar el reporte", ex);
     }
-}
 
     @Override
     public List<Persona> obtenerListaDePersonas(PersonaDTO persona) {
         List<Persona> personas = new ArrayList<>();
         if (!persona.getRfc().equalsIgnoreCase("") && (persona.getNombre().equalsIgnoreCase("") && persona.getFecha_nacimiento() == null)) {
-            try{
-               personas.add(personaDAO.consultarPersonaRFC(persona.getRfc()));
-            }catch(PersistenciaException e){
+            try {
+                personas.add(personaDAO.consultarPersonaRFC(persona.getRfc()));
+            } catch (PersistenciaException e) {
                 JOptionPane.showMessageDialog(null, "Consulta fallida", "RFC", JOptionPane.INFORMATION_MESSAGE);
                 return null;
             }
-        }else if(!(persona.getRfc().equalsIgnoreCase("") && persona.getNombre().equalsIgnoreCase("")) && persona.getFecha_nacimiento() == null){
-            try{
+        } else if (!(persona.getRfc().equalsIgnoreCase("") && persona.getNombre().equalsIgnoreCase("")) && persona.getFecha_nacimiento() == null) {
+            try {
                 personas = personaDAO.consultarPersonasNombreYRFC(persona.getNombre(), persona.getRfc());
-            }catch(PersistenciaException e){
+            } catch (PersistenciaException e) {
                 JOptionPane.showMessageDialog(null, "Consulta fallida", "Nombre y RFC", JOptionPane.INFORMATION_MESSAGE);
                 return null;
             }
-        }else if(!(persona.getRfc().equalsIgnoreCase("") && persona.getFecha_nacimiento()==null) && persona.getNombre().equalsIgnoreCase("")){
-            try{
+        } else if (!(persona.getRfc().equalsIgnoreCase("") && persona.getFecha_nacimiento() == null) && persona.getNombre().equalsIgnoreCase("")) {
+            try {
                 personas = personaDAO.consultarPersonasFechaNYYRFC(persona.getFecha_nacimiento(), persona.getRfc());
-            }catch(PersistenciaException e){
+            } catch (PersistenciaException e) {
                 JOptionPane.showMessageDialog(null, "Consulta fallida", "Fecha y RFC", JOptionPane.INFORMATION_MESSAGE);
                 return null;
             }
-        }else if(!persona.getNombre().equalsIgnoreCase("") && (persona.getRfc().equalsIgnoreCase("") && persona.getFecha_nacimiento() == null)){
-            try{
+        } else if (!persona.getNombre().equalsIgnoreCase("") && (persona.getRfc().equalsIgnoreCase("") && persona.getFecha_nacimiento() == null)) {
+            try {
                 personas = personaDAO.consultarPersonasNombre(persona.getNombre());
-            }catch(PersistenciaException e){
+            } catch (PersistenciaException e) {
                 JOptionPane.showMessageDialog(null, "Consulta fallida", "Nombre", JOptionPane.INFORMATION_MESSAGE);
                 return null;
             }
-        }else if(persona.getFecha_nacimiento()!= null && (persona.getRfc().equalsIgnoreCase("") && persona.getNombre().equalsIgnoreCase(""))){
-            try{
+        } else if (persona.getFecha_nacimiento() != null && (persona.getRfc().equalsIgnoreCase("") && persona.getNombre().equalsIgnoreCase(""))) {
+            try {
                 personas = personaDAO.consultarPersonasFechaN(persona.getFecha_nacimiento());
-            }catch(PersistenciaException e){
+            } catch (PersistenciaException e) {
                 JOptionPane.showMessageDialog(null, "Consulta fallida", "Fecha", JOptionPane.INFORMATION_MESSAGE);
                 return null;
             }
-        }else if(!(persona.getFecha_nacimiento()==null && persona.getNombre().equalsIgnoreCase("")) && persona.getRfc().equalsIgnoreCase("")){
-            try{
+        } else if (!(persona.getFecha_nacimiento() == null && persona.getNombre().equalsIgnoreCase("")) && persona.getRfc().equalsIgnoreCase("")) {
+            try {
                 personas = personaDAO.consultarPersonasFechaNYNombre(persona.getNombre(), persona.getFecha_nacimiento());
-            }catch(PersistenciaException e){
+            } catch (PersistenciaException e) {
                 JOptionPane.showMessageDialog(null, "Consulta fallida", "Fecha y Nombre", JOptionPane.INFORMATION_MESSAGE);
                 return null;
             }
-        }else{
-            try{
+        } else {
+            try {
                 personas = personaDAO.consultarPersonasFechaNYNombreYRFC(persona.getNombre(), persona.getFecha_nacimiento(), persona.getRfc());
-            }catch(PersistenciaException e){
+            } catch (PersistenciaException e) {
                 JOptionPane.showMessageDialog(null, "Consulta fallida", "Fecha Nombre y RFC", JOptionPane.INFORMATION_MESSAGE);
                 return null;
             }
         }
-        
+
         if (!personas.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Consulta Exitosa", "Info", JOptionPane.INFORMATION_MESSAGE);
             return personas;
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "No se encontro personas", "Info", JOptionPane.INFORMATION_MESSAGE);
             return null;
         }
-        
+
     }
 
     @Override
     public List<TramiteDTO> obtenerTramitesPorPersona(Long idpersona) {
-List<TramiteDTO> listTramites = new ArrayList<>();
+        List<TramiteDTO> listTramites = new ArrayList<>();
 
-    try {
-        // Obtener la persona por su ID
-        Persona personaEntity = personaDAO.obtenerPersonaPorId(idpersona);
-        
-        // Consultar los trámites de la persona
-        List<Tramite> tramitesBase = tramiteDAO.consultarTramitesPersona(personaEntity);
+        try {
+            // Obtener la persona por su ID
+            Persona personaEntity = personaDAO.obtenerPersonaPorId(idpersona);
 
-        for (Tramite tm : tramitesBase) {
-            TramiteDTO tramiteDTO = null;
+            // Consultar los trámites de la persona
+            List<Tramite> tramitesBase = tramiteDAO.consultarTramitesPersona(personaEntity);
 
-            if (tm instanceof Licencia) {
-                Licencia licencia = (Licencia) tm;
-                tramiteDTO = new LicenciaDTO(
+            for (Tramite tm : tramitesBase) {
+                TramiteDTO tramiteDTO = null;
+
+                if (tm instanceof Licencia) {
+                    Licencia licencia = (Licencia) tm;
+                    tramiteDTO = new LicenciaDTO(
                             licencia.getDuracionAños(),
                             licencia.getVigenciaF(),
                             licencia.isEstado(),
@@ -253,28 +306,29 @@ List<TramiteDTO> listTramites = new ArrayList<>();
                             licencia.getFecha(),
                             licencia.getCosto()
                     );
-            } else if (tm instanceof Placa) {
-                Placa placa = (Placa) tm;
-                tramiteDTO = new PlacaDTO(
-                        placa.getNumeroPlaca(),
-                        placa.getFechaRecepcion(),
-                        placa.getEstado(),
-                        placa.getVehiculo(),
-                        placa.getPersona(),
-                        placa.getFecha(),
-                        placa.getCosto()
-                );
+                } else if (tm instanceof Placa) {
+                    Placa placa = (Placa) tm;
+                    tramiteDTO = new PlacaDTO(
+                            placa.getNumeroPlaca(),
+                            placa.getFechaRecepcion(),
+                            placa.getEstado(),
+                            placa.getVehiculo(),
+                            placa.getPersona(),
+                            placa.getFecha(),
+                            placa.getCosto()
+                    );
+                }
+
+                // Agregar el trámite DTO a la lista
+                listTramites.add(tramiteDTO);
             }
 
-            // Agregar el trámite DTO a la lista
-            listTramites.add(tramiteDTO);
+            logger.log(Level.INFO, "Se generó la lista de trámites para la persona con ID: {0}", idpersona);
+            return listTramites;
+        } catch (PersistenciaException ex) {
+            logger.log(Level.SEVERE, "Error al generar la lista de trámites para la persona con ID: {0}", idpersona);
+            return null;
         }
+    }
 
-        logger.log(Level.INFO, "Se generó la lista de trámites para la persona con ID: {0}", idpersona);
-        return listTramites;
-    } catch (PersistenciaException ex) {
-        logger.log(Level.SEVERE, "Error al generar la lista de trámites para la persona con ID: {0}", idpersona);
-        return null;
-    }    }
-    
 }
