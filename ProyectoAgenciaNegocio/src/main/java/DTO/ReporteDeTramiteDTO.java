@@ -50,9 +50,9 @@ public class ReporteDeTramiteDTO {
     }
 
     /**
-     * Obtiene el nombre del contribuyente asociado al trámite.
+     * Obtiene el nombre del solicitante del trámite.
      *
-     * @return Nombre del contribuyente asociado al trámite.
+     * @return Nombre del solicitante del trámite.
      */
     public String getNombre() {
         return nombre;
@@ -81,6 +81,11 @@ public class ReporteDeTramiteDTO {
 
     public void setCosto(String costo) {
         this.costo = costo;
+    }
+
+    @Override
+    public String toString() {
+        return "ReporteDeTramiteDTO{" + "fecha=" + fecha + ", tipo=" + tipo + ", nombre=" + nombre + ", costo=" + costo + '}';
     }
     
 }
