@@ -28,7 +28,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -118,53 +117,7 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
         // Si pasa todos los filtros, devuelve true
         return true;
     }
-    @Override
-    public List<TramiteDTO> obtenerTramitesPorPersona(PersonaDTO persona) {
-    List<TramiteDTO> listTramites = new ArrayList<>();
-
-    try {
-        Persona personaEntity = new Persona();
-        personaEntity.setRFC(persona.getRfc());
-        List<Tramite> tramitesBase = tramiteDAO.consultarTramitesPersona(personaEntity);
-
-        for (Tramite tm : tramitesBase) {
-            TramiteDTO tramiteDTO = null;
-
-            if (tm instanceof Licencia) {
-                Licencia licencia = (Licencia) tm;
-                tramiteDTO = new LicenciaDTO(
-                            licencia.getDuracionAños(),
-                            licencia.getVigenciaF(),
-                            licencia.isEstado(),
-                            licencia.getPersona(),
-                            licencia.getNumeroLicencia(),
-                            licencia.getFecha(),
-                            licencia.getCosto()
-                    );
-            } else if (tm instanceof Placa) {
-                Placa placa = (Placa) tm;
-                tramiteDTO = new PlacaDTO(
-                        placa.getNumeroPlaca(),
-                        placa.getFechaRecepcion(),
-                        placa.getEstado(),
-                        placa.getVehiculo(),
-                        placa.getPersona(),
-                        placa.getFecha(),
-                        placa.getCosto()
-                );
-            }
-
-            // Agregar el trámite DTO a la lista
-            listTramites.add(tramiteDTO);
-        }
-
-        logger.log(Level.INFO, "Se generó la lista de trámites para la persona: {0}", persona.getRfc());
-        return listTramites;
-    } catch (PersistenciaException ex) {
-        logger.log(Level.SEVERE, "Error al generar la lista de trámites para la persona con RFC: {0}", persona.getRfc());
-        return null;
-    }
-    }
+   
     
     @Override
     public void generarReporte(List<TramiteDTO> listaTramites) {
@@ -274,5 +227,54 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
         }
         
     }
+
+    @Override
+    public List<TramiteDTO> obtenerTramitesPorPersona(Long idpersona) {
+List<TramiteDTO> listTramites = new ArrayList<>();
+
+    try {
+        // Obtener la persona por su ID
+        Persona personaEntity = personaDAO.obtenerPersonaPorId(idpersona);
+        
+        // Consultar los trámites de la persona
+        List<Tramite> tramitesBase = tramiteDAO.consultarTramitesPersona(personaEntity);
+
+        for (Tramite tm : tramitesBase) {
+            TramiteDTO tramiteDTO = null;
+
+            if (tm instanceof Licencia) {
+                Licencia licencia = (Licencia) tm;
+                tramiteDTO = new LicenciaDTO(
+                            licencia.getDuracionAños(),
+                            licencia.getVigenciaF(),
+                            licencia.isEstado(),
+                            licencia.getPersona(),
+                            licencia.getNumeroLicencia(),
+                            licencia.getFecha(),
+                            licencia.getCosto()
+                    );
+            } else if (tm instanceof Placa) {
+                Placa placa = (Placa) tm;
+                tramiteDTO = new PlacaDTO(
+                        placa.getNumeroPlaca(),
+                        placa.getFechaRecepcion(),
+                        placa.getEstado(),
+                        placa.getVehiculo(),
+                        placa.getPersona(),
+                        placa.getFecha(),
+                        placa.getCosto()
+                );
+            }
+
+            // Agregar el trámite DTO a la lista
+            listTramites.add(tramiteDTO);
+        }
+
+        logger.log(Level.INFO, "Se generó la lista de trámites para la persona con ID: {0}", idpersona);
+        return listTramites;
+    } catch (PersistenciaException ex) {
+        logger.log(Level.SEVERE, "Error al generar la lista de trámites para la persona con ID: {0}", idpersona);
+        return null;
+    }    }
     
 }

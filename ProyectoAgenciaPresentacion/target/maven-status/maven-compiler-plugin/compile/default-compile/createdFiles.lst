@@ -6,6 +6,7 @@ GUI\ReporteLicYPla.class
 GUI\TramitarLicencia$11.class
 GUI\SolcitarPlacas$1.class
 GUI\TramitarPlacaUsado2$3.class
+GUI\ConsultarLP$5.class
 GUI\Principal$3.class
 GUI\TramitarLicencia$2.class
 GUI\TramitarLicencia$8.class
@@ -15,6 +16,7 @@ Validaciones\Validaciones.class
 GUI\TramitarPlacaUsado2$4.class
 com\mycompany\proyectoagenciapresentacion\ProyectoAgenciaPresentacion.class
 GUI\TramitarLicencia$12.class
+GUI\ConsultarLP$6.class
 GUI\TramitarLicencia$4.class
 GUI\ConfirmarTraPlacas$2.class
 GUI\Principal$5.class
@@ -59,3 +61,4 @@ GUI\TramitarLicencia$9.class
 GUI\TramitarPlacaUsado2$2.class
 GUI\Principal$4.class
 GUI\TramitarLicencia$6.class
+GUI\ConsultarLP$7.class

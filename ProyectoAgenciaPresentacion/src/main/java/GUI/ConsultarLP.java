@@ -7,19 +7,22 @@ package GUI;
 import BOs.IReporteTramiteBO;
 import BOs.ReporteTramiteBO;
 import Control.ControladorFlujo;
-
 import DTO.LicenciaDTO;
 import DTO.PersonaDTO;
 import DTO.PlacaDTO;
 import DTO.TramiteDTO;
-
 import Entidades.Persona;
-
+import Validaciones.Validaciones;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -31,26 +34,48 @@ public class ConsultarLP extends javax.swing.JFrame {
     IReporteTramiteBO reporteBO = new ReporteTramiteBO();
     private DefaultTableModel model;
     ControladorFlujo controlador;
-    
-    
 
     public ConsultarLP() {
         initComponents();
         controlador = new ControladorFlujo();
         // Inicializar el modelo de la tabla
         model = new DefaultTableModel();
-        tablaTramites.setModel(model); // Asignar el modelo a la tabla
+        personasComboBox.setModel(new DefaultComboBoxModel<>());
 
-        // Agregar las columnas al modelo
-        model.addColumn("");
-        model.addColumn("Fecha");       
-        model.addColumn("Costo");
-        
+        txtRFC.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validarRFC();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validarRFC();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validarRFC();
+            }
+        });
+        txtNombre.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validarNombre();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validarNombre();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validarNombre();
+            }
+        });
 
     }
-    
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -64,6 +89,8 @@ public class ConsultarLP extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         personasComboBox = new javax.swing.JComboBox<>();
         btnMenu = new javax.swing.JButton();
@@ -75,8 +102,11 @@ public class ConsultarLP extends javax.swing.JFrame {
         txtRFC = new javax.swing.JTextField();
         txtFechaNacimiento = new com.toedter.calendar.JDateChooser();
         btnBuscarPersona = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
         tablaTramites = new javax.swing.JTable();
+        btnLimpiar = new javax.swing.JButton();
+        p1 = new javax.swing.JLabel();
+        p2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,21 +118,38 @@ public class ConsultarLP extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("CONSULTAR TRAMITES");
 
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoSonoraa.png"))); // NOI18N
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoGobierno.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(259, 259, 259)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63)
                 .addComponent(jLabel1)
-                .addContainerGap(281, Short.MAX_VALUE))
+                .addContainerGap(181, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(43, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(31, 31, 31))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(jLabel1)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
@@ -110,7 +157,7 @@ public class ConsultarLP extends javax.swing.JFrame {
 
         personasComboBox.setBackground(new java.awt.Color(204, 204, 204));
         personasComboBox.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        personasComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        personasComboBox.setForeground(new java.awt.Color(0, 0, 0));
         personasComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 personasComboBoxActionPerformed(evt);
@@ -167,16 +214,26 @@ public class ConsultarLP extends javax.swing.JFrame {
 
         tablaTramites.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nombre", "Fecha de Tramite", "Costo"
             }
         ));
-        jScrollPane1.setViewportView(tablaTramites);
+        jScrollPane2.setViewportView(tablaTramites);
+
+        btnLimpiar.setBackground(new java.awt.Color(102, 102, 102));
+        btnLimpiar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
+        btnLimpiar.setText("Limpiar Campos");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -191,62 +248,75 @@ public class ConsultarLP extends javax.swing.JFrame {
                 .addGap(193, 193, 193))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(128, 128, 128))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNombre)
-                            .addComponent(txtRFC)
-                            .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel3))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtNombre)
+                                    .addComponent(txtRFC)
+                                    .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnLimpiar)
+                                .addGap(43, 43, 43)
+                                .addComponent(btnBuscarPersona)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(79, 79, 79))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnBuscarPersona)
-                                .addGap(126, 126, 126)))))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(personasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46))
+                            .addComponent(p1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(p2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(personasComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE))
+                .addGap(77, 77, 77))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
+                .addGap(30, 30, 30)
                 .addComponent(personasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(txtRFC, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel3)
+                                        .addComponent(txtRFC, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(p1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel4)
+                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(p2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(28, 28, 28)
                                 .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel7))
-                        .addGap(29, 29, 29)
-                        .addComponent(btnBuscarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 226, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addComponent(btnBuscarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
@@ -282,73 +352,209 @@ public class ConsultarLP extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-  // Obtener el RFC de la persona seleccionada en el JComboBox
-    String rfcPersonaSeleccionada = (String) personasComboBox.getSelectedItem();
-    
-    // Verificar si se ha seleccionado una persona
-    if (rfcPersonaSeleccionada != null && !rfcPersonaSeleccionada.isEmpty()) {
-        // Crear un objeto PersonaDTO con el RFC seleccionado
-        PersonaDTO personaDTO = new PersonaDTO();
-        personaDTO.setRfc(rfcPersonaSeleccionada);
+        // Obtener el Map de personas del ComboBox
+        @SuppressWarnings("unchecked")
+        Map<String, Long> personasMap = (Map<String, Long>) personasComboBox.getClientProperty("personasMap");
 
-        // Llamar al método para obtener los trámites por RFC
-        List<TramiteDTO> tramitesPersona = reporteBO.obtenerTramitesPorPersona(personaDTO);
+        // Obtener el nombre de la persona seleccionada del ComboBox
+        String nombrePersonaSeleccionada = (String) personasComboBox.getSelectedItem();
 
-        // Limpiar la tabla antes de agregar los nuevos datos
-        model.setRowCount(0);
+        // Verificar si el Map y el nombre de la persona seleccionada no son nulos
+        if (personasMap != null && nombrePersonaSeleccionada != null) {
+            // Obtener el ID de la persona seleccionada del Map
+            Long idPersona = personasMap.get(nombrePersonaSeleccionada);
 
-        // Verificar si se encontraron trámites para la persona seleccionada
-        if (tramitesPersona != null && !tramitesPersona.isEmpty()) {
-            // Agregar los trámites a la tabla
-            for (TramiteDTO tramite : tramitesPersona) {
-                Object[] row = new Object[3]; 
-                row[0] = tramite.getFecha(); 
-                row[1] = tramite.getCosto(); 
+            // Llamar a los métodos necesarios usando el ID de la persona
+            // Por ejemplo, llamar al método para obtener los trámites de la persona por su ID
+            List<TramiteDTO> tramites = reporteBO.obtenerTramitesPorPersona(idPersona);
 
-                model.addRow(row);
-            }
+            // Mostrar los trámites en el JTextPane
+            mostrarTramitesEnTabla(tramites);
         } else {
-            JOptionPane.showMessageDialog(this, "No se encontraron trámites para la persona seleccionada.");
+            // Manejar el caso si el Map o el nombre de la persona seleccionada son nulos
+            JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna persona.");
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "Por favor, seleccione una persona.");
-    }
 
 
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnBuscarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPersonaActionPerformed
-   // Obtener los datos de búsqueda
-    String rfc = txtRFC.getText();
-    String nombre = txtNombre.getText();
-    Date fechaSeleccionada = txtFechaNacimiento.getDate(); // Obtener la fecha seleccionada del JDateChooser
+     
+    
+    // Verificar si el RFC ingresado es válido
+    if (!Validaciones.validarRFC(txtRFC.getText().trim())) {
+        JOptionPane.showMessageDialog(this, "El RFC ingresado no es válido.");
+        return; // No realizar la búsqueda si el RFC no es válido
+    }
+    
+    if (!Validaciones.validarNombre(txtNombre.getText().trim())) {
+        JOptionPane.showMessageDialog(this, "El Nombre ingresado no es válido.");
+        return; // No realizar la búsqueda si el RFC no es válido
+    }
+    
+    if(txtFechaNacimiento.getDate() == null){
+    JOptionPane.showMessageDialog(this, "La Fecha ingresada no es válida.");
+    return;
+    }
+    
+// Obtener los datos de búsqueda desde los campos de texto y el selector de fecha
+    String rfc = txtRFC.getText().trim();
+    String nombre = txtNombre.getText().trim();
+    Date fechaSeleccionada = txtFechaNacimiento.getDate();
 
-    // Convertir la fecha seleccionada a tipo Calendar si es necesario
-    Calendar fechaCalendar = Calendar.getInstance();
-    fechaCalendar.setTime(fechaSeleccionada);
+    // Verificar si al menos uno de los campos no está vacío
+    if (rfc.isEmpty() && nombre.isEmpty() && fechaSeleccionada == null) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingresa al menos un criterio de búsqueda.");
+        return; // No realizar la búsqueda si todos los campos están vacíos
+    }
 
     // Crear un objeto PersonaDTO con los datos de búsqueda
     PersonaDTO personaBusqueda = new PersonaDTO();
     personaBusqueda.setRfc(rfc);
     personaBusqueda.setNombre(nombre);
 
-    // Llamar al método para buscar personas
+    // Convertir la fecha seleccionada a Calendar, si es necesario
+    Calendar fechaNacimiento = null;
+    if (fechaSeleccionada != null) {
+        fechaNacimiento = Calendar.getInstance();
+        fechaNacimiento.setTime(fechaSeleccionada);
+    }
+    personaBusqueda.setFecha_nacimiento(fechaNacimiento);
+
+    // Llamar al método para buscar personas en ReporteTramiteBO
     List<Persona> personasEncontradas = reporteBO.obtenerListaDePersonas(personaBusqueda);
 
     // Limpiar el ComboBox antes de agregar las nuevas personas
     personasComboBox.removeAllItems();
 
-    // Llenar el ComboBox con las personas encontradas
-    for (Persona persona : personasEncontradas) {
-        // Agregar el RFC de la persona al ComboBox
-        personasComboBox.addItem(persona.getRFC());
+    // Crear un Map para asociar el nombre de la persona con su ID
+    Map<String, Long> personasMap = new HashMap<>();
+
+    // Llenar el ComboBox con las personas encontradas y asociar su nombre con su ID en el Map
+    if (personasEncontradas != null && !personasEncontradas.isEmpty()) {
+        for (Persona persona : personasEncontradas) {
+            // Agregar el nombre de la persona al ComboBox
+            personasComboBox.addItem(persona.getNombre());
+
+            // Asociar el nombre de la persona con su ID en el Map
+            personasMap.put(persona.getNombre(), persona.getId());
+        }
+    } else {
+        // Si no se encontraron personas, mostrar un mensaje al usuario
+        JOptionPane.showMessageDialog(this, "No se encontraron personas con los criterios de búsqueda proporcionados.");
     }
-        
+
+    // Guardar el Map en el ComboBox para poder recuperar el ID de la persona seleccionada
+    personasComboBox.putClientProperty("personasMap", personasMap);
+
     }//GEN-LAST:event_btnBuscarPersonaActionPerformed
 
-  
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+
+        txtNombre.setText("");
+        txtRFC.setText("");
+        txtFechaNacimiento.setDate(null);
+        personasComboBox.setSelectedIndex(-1);
+        DefaultTableModel model = (DefaultTableModel) tablaTramites.getModel();
+        model.setRowCount(0);
+
+
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+//    public void mostrarTramitesEnTextPane(List<TramiteDTO> tramites) {
+//    try {
+//        // Limpiar el JTextPane antes de agregar los nuevos datos
+//        textPane.setText("");
+//
+//        // Obtener el documento del JTextPane
+//        StyledDocument doc = textPane.getStyledDocument();
+//
+//        // Crear un AttributeSet para el estilo del texto
+//        StyleContext sc = StyleContext.getDefaultStyleContext();
+//        AttributeSet style = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.BLACK);
+//
+//        
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+//        
+//        // Agregar los trámites al JTextPane
+//        for (TramiteDTO tramite : tramites) {
+//            // Obtener el nombre del trámite
+//            String nombreTramite = obtenerNombreTramite(tramite);
+//
+//            // Formatear la información del trámite
+//            String infoTramite = String.format("Trámite: %s, Fecha: %s, Costo: %.2f\n",
+//                     nombreTramite, dateFormat.format(tramite.getFecha().getTime()), tramite.getCosto());
+//
+//            // Insertar el texto en el documento del JTextPane
+//            doc.insertString(doc.getLength(), infoTramite, style);
+//        }
+//
+//        JOptionPane.showMessageDialog(this, "Se generó la lista de trámites para la persona con RFC: {0}");
+//    } catch (Exception ex) {
+//        ex.printStackTrace(); // Manejo de errores, aquí puedes mostrar un mensaje al usuario si lo deseas
+//    }
+//}
+    public void mostrarTramitesEnTabla(List<TramiteDTO> tramites) {
+        try {
+            // Limpiar la tabla antes de agregar los nuevos datos
+            DefaultTableModel model = (DefaultTableModel) tablaTramites.getModel();
+            model.setRowCount(0); // Elimina todas las filas actuales de la tabla
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+            // Agregar los trámites a la tabla
+            for (TramiteDTO tramite : tramites) {
+                String nombreTramite = obtenerNombreTramite(tramite);
+                String fechaFormateada = "";
+
+                // Verificar si la fecha es un objeto Calendar
+                if (tramite.getFecha() instanceof Calendar) {
+                    Calendar fechaCalendar = (Calendar) tramite.getFecha();
+                    Date fecha = fechaCalendar.getTime();
+                    fechaFormateada = dateFormat.format(fecha);
+                } else {
+                    fechaFormateada = "Formato de fecha inválido";
+                }
+
+                // Insertar cada dato en la columna correspondiente del modelo de la tabla
+                model.addRow(new Object[]{nombreTramite, fechaFormateada, tramite.getCosto()});
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace(); // Manejo de errores, aquí puedes mostrar un mensaje al usuario si lo deseas
+        }
+    }
+
+    private String obtenerNombreTramite(TramiteDTO tramite) {
+        if (tramite instanceof LicenciaDTO) {
+            return "Licencia de Conducir";
+        } else if (tramite instanceof PlacaDTO) {
+            return "Placa de Vehículo";
+        } else {
+            return "Trámite Desconocido";
+        }
+    }
     
     
+    
+    private void validarRFC() {
+        String rfc = txtRFC.getText();
+
+        if (Validaciones.validarRFC(rfc)) {
+            p1.setText("<html><font color='green'>✓</font></html>");
+        } else {
+            p1.setText("<html><font color='red'>*</font></html>");
+        }
+    }
+    
+    private void validarNombre() {
+        String nombre = txtNombre.getText();
+        if (Validaciones.validarNombre(nombre)) {
+            p2.setText("<html><font color='green'>✓</font></html>");
+        } else {
+            p2.setText("<html><font color='red'>*</font></html>");
+        }
+    }
     
     
 
@@ -359,15 +565,20 @@ public class ConsultarLP extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarPersona;
     private javax.swing.JButton btnConsultar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel p1;
+    private javax.swing.JLabel p2;
     private javax.swing.JComboBox<String> personasComboBox;
     private javax.swing.JTable tablaTramites;
     private com.toedter.calendar.JDateChooser txtFechaNacimiento;

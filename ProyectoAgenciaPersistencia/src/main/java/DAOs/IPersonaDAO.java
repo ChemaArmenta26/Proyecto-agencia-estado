@@ -30,5 +30,6 @@ public interface IPersonaDAO {
     public List<Persona> consultarPersonasNombreYRFC(String Nombre, String rfc) throws PersistenciaException;
     
     public List<Persona> consultarPersonasFechaNYYRFC(Calendar fechaNacimiento, String rfc) throws PersistenciaException;
+    public Persona obtenerPersonaPorId(Long id) throws PersistenciaException;
        
 }

@@ -95,22 +95,26 @@ public class Login extends javax.swing.JFrame {
         );
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Ingresa Usuario:");
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("INICIAR SESION");
 
         txtUsuario.setBackground(new java.awt.Color(204, 204, 204));
         txtUsuario.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Contraseña:");
 
         txtContra.setBackground(new java.awt.Color(204, 204, 204));
         txtContra.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
 
-        btnEntrar.setBackground(new java.awt.Color(153, 153, 153));
+        btnEntrar.setBackground(new java.awt.Color(102, 102, 102));
         btnEntrar.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        btnEntrar.setForeground(new java.awt.Color(255, 255, 255));
         btnEntrar.setText("Entrar");
         btnEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEntrar.addActionListener(new java.awt.event.ActionListener() {
@@ -119,8 +123,9 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        btnRegistrar.setBackground(new java.awt.Color(153, 153, 153));
+        btnRegistrar.setBackground(new java.awt.Color(102, 102, 102));
         btnRegistrar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrar.setText("Registrar");
         btnRegistrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {

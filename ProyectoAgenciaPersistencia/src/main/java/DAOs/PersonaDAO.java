@@ -175,4 +175,23 @@ public class PersonaDAO implements IPersonaDAO {
         return query.getResultList();
     }
 
+    @Override
+    public Persona obtenerPersonaPorId(Long id) throws PersistenciaException {
+        EntityManager entityManager = conexion.conexion();
+        
+try {
+            // Utilizar una consulta tipada para obtener la persona por su ID
+            TypedQuery<Persona> query = entityManager.createQuery(
+                    "SELECT p FROM Persona p WHERE p.id = :id", Persona.class);
+            query.setParameter("id", id);
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            // Si no se encuentra ninguna persona con el ID proporcionado, devolver null
+            return null;
+        }    }
+    
+    
+    
+    
+
 }
