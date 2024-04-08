@@ -24,9 +24,10 @@ import Entidades.Persona;
 import Entidades.Placa;
 import Entidades.Tramite;
 import Persistencia.PersistenciaException;
-import ReporteEstilo.ReporteTramite;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -40,11 +41,14 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 /**
  *
@@ -105,6 +109,7 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
         }
     }
 
+    @Override
     public List<ReporteDeTramiteDTO> obtenerTramitesReporte(ReporteDTO filtro) {
         List<ReporteDeTramiteDTO> listTramites = new ArrayList<>();
 
@@ -173,47 +178,56 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
     }
 
     @Override
-    public void generarReporte(List<TramiteDTO> listaTramites) {
-        // Crear un JRBeanCollectionDataSource con la lista de TramiteDTO
+    public void generarReporte(List<ReporteDeTramiteDTO> listaTramites) {
+        
         JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(listaTramites);
-        // Parámetros para el reporte
+        
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("CollectionBeanParam", itemsJRBean);
+        parameters.put("ds", itemsJRBean);
 
-        try {
+        
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar Reporte");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PDF", "pdf"));
 
-            JasperReport jasperReport = ReporteTramite.getCompiledReport("src\\main\\java\\ReporteEstilo\\ReporteDeTramite.jrxml");
+        
+        int userSelection = fileChooser.showSaveDialog(null);
 
-            // Llenar el reporte con los datos y parámetros proporcionados
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+       
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            String filePath = fileToSave.getAbsolutePath();
 
-            // Exportar el reporte a un archivo PDF
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setDialogTitle("Guardar Reporte");
-            fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PDF", "pdf"));
-            int userSelection = fileChooser.showSaveDialog(null);
+           
+            if (!filePath.endsWith(".pdf")) {
+                filePath += ".pdf";
+            }
 
-            if (userSelection == JFileChooser.APPROVE_OPTION) {
-                File fileToSave = fileChooser.getSelectedFile();
-                String filePath = fileToSave.getAbsolutePath();
-                if (!filePath.endsWith(".pdf")) {
-                    filePath += ".pdf";
-                }
 
-                try (OutputStream outputStream = new FileOutputStream(new File(filePath))) {
+            try (InputStream input = new FileInputStream(new File("ReporteDeTramites.jrxml"))) {
+                JasperDesign jasperDesign = JRXmlLoader.load(input);
+
+                JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+              
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+
+             
+                try (
+                        OutputStream outputStream = new FileOutputStream(new File(filePath))) {
                     JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
                 }
 
-                // Log y mensaje de éxito
-                logger.log(Level.INFO, "Archivo generado");
-                JOptionPane.showMessageDialog(null, "Archivo guardado", "Info", JOptionPane.INFORMATION_MESSAGE);
-            } else if (userSelection == JFileChooser.CANCEL_OPTION) {
-                // Si el usuario cancela la operación
-                logger.log(Level.INFO, "Usuario canceló la operación");
+            } catch (Exception ex) {
+               
+                logger.log(Level.SEVERE, "Error al generar el reporte");
+
             }
-        } catch (Exception ex) {
-            // Log y excepción en caso de error
-            logger.log(Level.SEVERE, "Error al generar el reporte", ex);
+         
+            logger.log(Level.INFO, "Archivo generado");
+            JOptionPane.showMessageDialog(null, "Archivo guardado", "Info", JOptionPane.INFORMATION_MESSAGE);
+        } else if (userSelection == JFileChooser.CANCEL_OPTION) {
+            
+            logger.log(Level.INFO, "Usuario cancelo la operacion");
         }
     }
 

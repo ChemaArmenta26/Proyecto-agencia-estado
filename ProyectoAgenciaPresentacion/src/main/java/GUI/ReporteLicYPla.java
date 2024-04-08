@@ -10,9 +10,12 @@ import Control.ControladorFlujo;
 import DTO.LicenciaDTO;
 import DTO.PlacaDTO;
 import DTO.ReporteDTO;
+import DTO.ReporteDeTramiteDTO;
 import DTO.TramiteDTO;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -184,7 +187,7 @@ public class ReporteLicYPla extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Fecha", "Tipo", "Nombre", "Costo"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -327,8 +330,8 @@ public class ReporteLicYPla extends javax.swing.JFrame {
             filtro.setTipoTramite("Placa");
         }
 
-        List<TramiteDTO> listaTramites = this.reporteTramite.obtenerTramites(filtro);
-        
+        List<ReporteDeTramiteDTO> listaTramites = this.reporteTramite.obtenerTramitesReporte(filtro);
+
         this.reporteTramite.generarReporte(listaTramites);
 
 
@@ -353,41 +356,47 @@ public class ReporteLicYPla extends javax.swing.JFrame {
     private void llenarTabla(List<TramiteDTO> listaTramites) {
         if (listaTramites != null) {
             DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-        modelo.setRowCount(0); // Limpiar la tabla antes de agregar nuevos datos
+            modelo.setRowCount(0); // Limpiar la tabla antes de agregar nuevos datos
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            for (TramiteDTO tramite : listaTramites) {
+                String fechaFormateada = "";
+                String tipoTramite = "";
+                String nombrePersona = "";
+                Calendar fechaTramite = null;
 
-        for (TramiteDTO tramite : listaTramites) {
-            String tipoTramite = "";
-            String nombrePersona = "";
-            Calendar fechaTramite = null;
-            double costoTramite = 0.0;
+                double costoTramite = 0.0;
 
-            // Obtener los datos necesarios según el tipo de trámite
-            if (tramite instanceof LicenciaDTO) {
-                tipoTramite = "Licencia";
-                LicenciaDTO licencia = (LicenciaDTO) tramite;
-                nombrePersona = licencia.getPersona().getNombre() + " " + licencia.getPersona().getApellidoPaterno() + " " + licencia.getPersona().getApellidoMaterno();
-                fechaTramite = licencia.getFecha();
-                costoTramite = licencia.getCosto();
-            } else if (tramite instanceof PlacaDTO) {
-                tipoTramite = "Placa";
-                PlacaDTO placa = (PlacaDTO) tramite;
-                nombrePersona = placa.getPersona().getNombre() + " " + placa.getPersona().getApellidoPaterno() + " " + placa.getPersona().getApellidoMaterno();
-                fechaTramite = placa.getFecha();
-                costoTramite = placa.getCosto();
+                // Obtener los datos necesarios según el tipo de trámite
+                if (tramite instanceof LicenciaDTO) {
+                    tipoTramite = "Licencia";
+                    LicenciaDTO licencia = (LicenciaDTO) tramite;
+                    nombrePersona = licencia.getPersona().getNombre() + " " + licencia.getPersona().getApellidoPaterno() + " " + licencia.getPersona().getApellidoMaterno();
+                    fechaTramite = licencia.getFecha();
+                    Date fecha = fechaTramite.getTime();
+                    fechaFormateada = dateFormat.format(fecha);
+                    costoTramite = licencia.getCosto();
+                } else if (tramite instanceof PlacaDTO) {
+                    tipoTramite = "Placa";
+                    PlacaDTO placa = (PlacaDTO) tramite;
+                    nombrePersona = placa.getPersona().getNombre() + " " + placa.getPersona().getApellidoPaterno() + " " + placa.getPersona().getApellidoMaterno();
+                    fechaTramite = placa.getFecha();
+                    Date fecha = fechaTramite.getTime();
+                    fechaFormateada = dateFormat.format(fecha);
+                    costoTramite = placa.getCosto();
+                }
+
+                // Agregar una nueva fila a la tabla con los datos obtenidos
+                modelo.addRow(new Object[]{
+                    fechaFormateada,
+                    tipoTramite,
+                    nombrePersona,
+                    costoTramite
+                });
             }
-
-            // Agregar una nueva fila a la tabla con los datos obtenidos
-            modelo.addRow(new Object[]{
-                fechaTramite,
-                tipoTramite,
-                nombrePersona,
-                costoTramite
-            });
-        }
-        } else{
+        } else {
             JOptionPane.showMessageDialog(null, "La lista de tramites esta vacia, no hay ningun tramite realizado.", "Info", JOptionPane.INFORMATION_MESSAGE);
         }
-        
+
     }
 
     /**
