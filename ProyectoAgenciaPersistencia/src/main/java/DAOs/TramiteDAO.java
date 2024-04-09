@@ -16,17 +16,28 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 /**
- *
- * @author pc
+ * Clase que implementa los métodos de acceso a datos para la entidad Tramite.
  */
 public class TramiteDAO implements ITramiteDAO{
 
     IConexionBD conexion;
 
+    /**
+     * Constructor de la clase TramiteDAO.
+     *
+     * @param conexion La conexión a la base de datos.
+     */
     public TramiteDAO(IConexionBD conexion) {
         this.conexion = conexion;
     }
     
+    /**
+     * Consulta los trámites asociados a una persona en la base de datos.
+     *
+     * @param persona La persona de la cual se desean consultar los trámites.
+     * @return Una lista de trámites asociados a la persona.
+     * @throws PersistenciaException Si ocurre un error al intentar consultar los trámites de la persona.
+     */
     @Override
     public List<Tramite> consultarTramitesPersona(Persona persona) throws PersistenciaException {
         EntityManager entityManager = null;
@@ -54,6 +65,12 @@ public class TramiteDAO implements ITramiteDAO{
         }
     }
 
+    /**
+     * Consulta todos los trámites almacenados en la base de datos.
+     *
+     * @return Una lista de todos los trámites almacenados.
+     * @throws PersistenciaException Si ocurre un error al intentar consultar todos los trámites.
+     */
     @Override
     public List<Tramite> consultarTodosTramites() throws PersistenciaException {
        EntityManager entityManager = null;

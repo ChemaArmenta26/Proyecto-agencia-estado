@@ -15,7 +15,7 @@ import DTO.PlacaDTO;
 
 /**
  *
- * @author Carlo
+ * Frame TramitarPlacaUsado2
  */
 public class TramitarPlacaUsado2 extends javax.swing.JFrame {
 
@@ -24,6 +24,9 @@ public class TramitarPlacaUsado2 extends javax.swing.JFrame {
     IRegistroPlacaBO placaBO = new RegistroPlacaBO();
     private IRegistroLicenciaBO licencia = new RegistroLicenciaBO();
 
+    /**
+     * constructor por defecto
+     */
     public TramitarPlacaUsado2() {
         initComponents();
         controlador = new ControladorFlujo();
@@ -270,9 +273,7 @@ public class TramitarPlacaUsado2 extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnLimpiarCamposActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonVerificar1;

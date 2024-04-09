@@ -13,17 +13,28 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
- *
- * @author pc
+ * Clase que implementa los métodos de acceso a datos para la entidad Persona.
  */
 public class PersonaDAO implements IPersonaDAO {
 
     IConexionBD conexion;
 
+    /**
+     * Constructor de la clase PersonaDAO.
+     *
+     * @param conexion La conexión a la base de datos.
+     */
     public PersonaDAO(IConexionBD conexion) {
         this.conexion = conexion;
     }
 
+    /**
+     * Agrega una persona a la base de datos.
+     *
+     * @param persona La persona que se desea agregar.
+     * @return La persona agregada.
+     * @throws PersistenciaException Si ocurre un error al intentar agregar la persona.
+     */
     @Override
     public Persona agregarPersona(Persona persona) throws PersistenciaException {
         EntityManager entityManager = conexion.conexion();
@@ -39,6 +50,13 @@ public class PersonaDAO implements IPersonaDAO {
         return persona;
     }
 
+    /**
+     * Consulta una persona por su RFC en la base de datos.
+     *
+     * @param RFC El RFC de la persona que se desea consultar.
+     * @return La persona encontrada con el RFC especificado.
+     * @throws PersistenciaException Si ocurre un error al intentar consultar la persona por su RFC.
+     */
     @Override
     public Persona consultarPersonaRFC(String RFC) throws PersistenciaException {
         EntityManager entityManager = conexion.conexion();
@@ -57,6 +75,13 @@ public class PersonaDAO implements IPersonaDAO {
         return persona;
     }
 
+    /**
+     * Consulta personas cuyo nombre coincida parcialmente con el proporcionado.
+     *
+     * @param nombre El nombre (o parte del nombre) de las personas que se desean consultar.
+     * @return Una lista de personas cuyo nombre coincida parcialmente con el proporcionado.
+     * @throws PersistenciaException Si ocurre un error al intentar consultar las personas por nombre.
+     */
     @Override
     public List<Persona> consultarPersonasNombre(String nombre) throws PersistenciaException {
         EntityManager entityManager = conexion.conexion();
@@ -65,6 +90,13 @@ public class PersonaDAO implements IPersonaDAO {
         return query.getResultList();
     }
 
+    /**
+     * Consulta personas que nacieron en una fecha específica.
+     *
+     * @param fechaNacimiento La fecha de nacimiento de las personas que se desean consultar.
+     * @return Una lista de personas que nacieron en la fecha especificada.
+     * @throws PersistenciaException Si ocurre un error al intentar consultar las personas por fecha de nacimiento.
+     */
     @Override
     public List<Persona> consultarPersonasFechaN(Calendar fechaNacimiento) throws PersistenciaException {
         EntityManager entityManager = conexion.conexion();
@@ -73,6 +105,14 @@ public class PersonaDAO implements IPersonaDAO {
         return query.getResultList();
     }
 
+    /**
+     * Consulta personas cuyo nombre coincida parcialmente con el proporcionado y que nacieron en una fecha específica.
+     *
+     * @param nombre El nombre (o parte del nombre) de las personas que se desean consultar.
+     * @param fechaNacimiento La fecha de nacimiento de las personas que se desean consultar.
+     * @return Una lista de personas cuyo nombre coincida parcialmente con el proporcionado y que nacieron en la fecha especificada.
+     * @throws PersistenciaException Si ocurre un error al intentar consultar las personas por nombre y fecha de nacimiento.
+     */
     @Override
     public List<Persona> consultarPersonasFechaNYNombre(String nombre, Calendar fechaNacimiento) throws PersistenciaException {
         EntityManager entityManager = conexion.conexion();
@@ -98,6 +138,15 @@ public class PersonaDAO implements IPersonaDAO {
         return query.getResultList();
     }
 
+    /**
+     * Consulta personas cuyo nombre coincida parcialmente con el proporcionado, que nacieron en una fecha específica y que tienen un RFC específico.
+     *
+     * @param nombre El nombre (o parte del nombre) de las personas que se desean consultar.
+     * @param fechaNacimiento La fecha de nacimiento de las personas que se desean consultar.
+     * @param rfc El RFC de las personas que se desean consultar.
+     * @return Una lista de personas cuyo nombre coincida parcialmente con el proporcionado, que nacieron en la fecha especificada y que tienen el RFC especificado.
+     * @throws PersistenciaException Si ocurre un error al intentar consultar las personas por nombre, fecha de nacimiento y RFC.
+     */
     public List<Persona> consultarPersonasFechaNYNombreYRFC(String nombre, Calendar fechaNacimiento, String rfc) throws PersistenciaException {
         EntityManager entityManager = conexion.conexion();
         StringBuilder queryString = new StringBuilder("SELECT p FROM Persona p WHERE 1=1");
@@ -127,6 +176,14 @@ public class PersonaDAO implements IPersonaDAO {
         return query.getResultList();
     }
 
+    /**
+     * Consulta personas cuyo nombre coincida parcialmente con el proporcionado y que tengan un RFC específico.
+     *
+     * @param nombre El nombre (o parte del nombre) de las personas que se desean consultar.
+     * @param rfc El RFC de las personas que se desean consultar.
+     * @return Una lista de personas cuyo nombre coincida parcialmente con el proporcionado y que tengan el RFC especificado.
+     * @throws PersistenciaException Si ocurre un error al intentar consultar las personas por nombre y RFC.
+     */
     @Override
     public List<Persona> consultarPersonasNombreYRFC(String nombre, String rfc) throws PersistenciaException {
         EntityManager entityManager = conexion.conexion();
@@ -151,6 +208,14 @@ public class PersonaDAO implements IPersonaDAO {
         return query.getResultList();
     }
 
+    /**
+     * Consulta personas que nacieron en una fecha específica y que tengan un RFC específico.
+     *
+     * @param fechaNacimiento La fecha de nacimiento de las personas que se desean consultar.
+     * @param rfc El RFC de las personas que se desean consultar.
+     * @return Una lista de personas que nacieron en la fecha especificada y que tienen el RFC especificado.
+     * @throws PersistenciaException Si ocurre un error al intentar consultar las personas por fecha de nacimiento y RFC.
+     */
     @Override
     public List<Persona> consultarPersonasFechaNYYRFC(Calendar fechaNacimiento, String rfc) throws PersistenciaException {
         EntityManager entityManager = conexion.conexion();
@@ -175,6 +240,13 @@ public class PersonaDAO implements IPersonaDAO {
         return query.getResultList();
     }
 
+    /**
+     * Obtiene una persona por su ID.
+     *
+     * @param id El ID de la persona que se desea obtener.
+     * @return La persona encontrada con el ID especificado, o null si no se encuentra ninguna persona con ese ID.
+     * @throws PersistenciaException Si ocurre un error al intentar obtener la persona por su ID.
+     */
     @Override
     public Persona obtenerPersonaPorId(Long id) throws PersistenciaException {
         EntityManager entityManager = conexion.conexion();

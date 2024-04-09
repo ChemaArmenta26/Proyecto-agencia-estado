@@ -8,11 +8,15 @@ import Control.ControladorFlujo;
 
 /**
  *
- * @author pc
+ * Frame SolcitarPlacas
  */
 public class SolcitarPlacas extends javax.swing.JFrame {
 
     ControladorFlujo controlador;
+
+    /**
+     * constructor por defecto
+     */
     public SolcitarPlacas() {
         initComponents();
         controlador = new ControladorFlujo();

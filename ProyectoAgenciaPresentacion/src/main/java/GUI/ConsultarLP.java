@@ -27,7 +27,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Carlo
+ * Frame ConsultarLP
  */
 public class ConsultarLP extends javax.swing.JFrame {
 
@@ -35,6 +35,10 @@ public class ConsultarLP extends javax.swing.JFrame {
     private DefaultTableModel model;
     ControladorFlujo controlador;
 
+    /**
+     * Constructor de la clase ConsultarLP.
+     * Inicializa los componentes y configura los escuchadores de documentos para los campos de texto.
+     */
     public ConsultarLP() {
         initComponents();
         controlador = new ControladorFlujo();
@@ -495,6 +499,12 @@ public class ConsultarLP extends javax.swing.JFrame {
 //        ex.printStackTrace(); // Manejo de errores, aquí puedes mostrar un mensaje al usuario si lo deseas
 //    }
 //}
+
+    /**
+ * Muestra los trámites en una tabla.
+ *
+ * @param tramites la lista de trámites a mostrar en la tabla
+ */
     public void mostrarTramitesEnTabla(List<TramiteDTO> tramites) {
         try {
             // Limpiar la tabla antes de agregar los nuevos datos
@@ -558,9 +568,7 @@ public class ConsultarLP extends javax.swing.JFrame {
     
     
 
-    /**
-     * @param args the command line arguments
-     */
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarPersona;

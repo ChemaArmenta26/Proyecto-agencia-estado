@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Carlo
+ * Frame Principal
  */
 public class Principal extends javax.swing.JFrame {
 
@@ -20,6 +20,7 @@ public class Principal extends javax.swing.JFrame {
     private boolean insercionMasivaRealizada;
     /**
      * Creates new form Menu
+     * @param insercionMasiva regresa la insercionMasiva
      */
     public Principal(boolean insercionMasiva) {
         initComponents();
@@ -281,9 +282,7 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botonInsercionMasivaActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonInsercionMasiva;

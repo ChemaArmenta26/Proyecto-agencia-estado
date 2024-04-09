@@ -10,30 +10,41 @@ import javax.swing.JLabel;
 
 /**
  *
- * @author Carlo
+ * Frame ConfirmarTraPlacas
  */
 public class ConfirmarTraPlacas extends javax.swing.JFrame {
 
-    
-    
-    
+    /**
+     * Controlador
+     */
     ControladorFlujo controlador;
 
+    /**
+     * Constructor de la clase ConfirmarTraPlacas.
+     */
     public ConfirmarTraPlacas() {
         initComponents();
         controlador = new ControladorFlujo();
 
     }
-    
-    
-    
-    
+
     // Método para establecer el texto del JLabel lblTipoCosto
+    /**
+     * Establece el tipo de costo en la ventana.
+     *
+     * @param tipoCosto El tipo de costo a establecer.
+     */
     public void setTipoCosto(String tipoCosto) {
         lblTipo.setText(tipoCosto);
     }
 
     // Método para establecer el texto del JLabel lblCostoTotal
+    // Método para establecer el texto del JLabel lblCostoTotal
+    /**
+     * Establece el costo total en la ventana.
+     *
+     * @param costoTotal El costo total a establecer.
+     */
     public void setCostoTotal(String costoTotal) {
         lblCosto.setText(costoTotal);
     }
@@ -229,10 +240,7 @@ public class ConfirmarTraPlacas extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConfirmar;
     private javax.swing.JButton jButton2;

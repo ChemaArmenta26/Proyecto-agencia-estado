@@ -48,8 +48,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author PC
+ *  Clase que implementa la lógica de negocio para ReporteTramiteBO
  */
 public class ReporteTramiteBO implements IReporteTramiteBO {
 
@@ -58,6 +57,23 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
     private IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
     private static final Logger logger = Logger.getLogger(ReporteTramiteBO.class.getName());
 
+    
+    
+    
+    /**
+     * constructor por defecto
+     */
+    public ReporteTramiteBO() {
+    }
+    
+    
+    
+
+    /**
+     * btiene una lista de trámites aplicando un filtro y devuelve una lista de DTOs.
+     * @param filtro El objeto ReporteDTO que contiene los criterios de filtrado.
+     * @return Una lista de objetos TramiteDTO que cumplen con el filtro.
+     */
     @Override
     public List<TramiteDTO> obtenerTramites(ReporteDTO filtro) {
         List<TramiteDTO> listTramites = new ArrayList<>();
@@ -106,6 +122,11 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
         }
     }
 
+    /**
+     * Obtiene una lista de trámites para generar un reporte y devuelve una lista de DTOs.
+     * @param filtro El objeto ReporteDTO que contiene los criterios de filtrado.
+     * @return Una lista de objetos ReporteDeTramiteDTO que cumplen con el filtro.
+     */
     @Override
     public List<ReporteDeTramiteDTO> obtenerTramitesReporte(ReporteDTO filtro) {
         List<ReporteDeTramiteDTO> listTramites = new ArrayList<>();
@@ -159,6 +180,12 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
         }
     }
 
+    /**
+     * Verifica si un trámite cumple con los criterios de un filtro.
+     * @param tramite El trámite a verificar.
+     * @param filtro El objeto ReporteDTO que contiene los criterios de filtrado.
+     * @return true si el trámite cumple con el filtro, false en caso contrario.
+     */
     @Override
     public boolean cumpleFiltro(TramiteDTO tramite, ReporteDTO filtro) {
         // Verificar si el tipo de trámite coincide
@@ -174,6 +201,10 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
         return true;
     }
 
+    /**
+     * Genera un reporte en formato PDF basado en una lista de trámites.
+     * @param listaTramites listaTramites La lista de trámites a incluir en el reporte.
+     */
     @Override
     public void generarReporte(List<ReporteDeTramiteDTO> listaTramites) {
         Document doc = new Document();
@@ -230,6 +261,11 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
         return cell;
     }
 
+    /**
+     * Obtiene una lista de personas aplicando un filtro y devuelve una lista de objetos Persona.
+     * @param persona El objeto PersonaDTO que contiene los criterios de filtrado.
+     * @return Una lista de objetos Persona que cumplen con el filtro.
+     */
     @Override
     public List<Persona> obtenerListaDePersonas(PersonaDTO persona) {
         List<Persona> personas = new ArrayList<>();
@@ -294,6 +330,11 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
 
     }
 
+    /**
+     * Obtiene una lista de trámites realizados por una persona específica y devuelve una lista de DTOs.
+     * @param idpersona El ID de la persona de la cual se desea obtener los trámites.
+     * @return Una lista de objetos TramiteDTO realizados por la persona especificada.
+     */
     @Override
     public List<TramiteDTO> obtenerTramitesPorPersona(Long idpersona) {
         List<TramiteDTO> listTramites = new ArrayList<>();
@@ -344,6 +385,11 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
         }
     }
 
+    
+    /**
+     * Clase interna para manejar eventos de números de página en el PDF generado.
+     */
+    
     private static class PageNumberEvent extends PdfPageEventHelper {
 
         @Override

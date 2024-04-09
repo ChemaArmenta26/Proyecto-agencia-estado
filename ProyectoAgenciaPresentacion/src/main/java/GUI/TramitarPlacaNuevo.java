@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Carlo
+ * Frame TramitarPlacaNuevo
  */
 public class TramitarPlacaNuevo extends javax.swing.JFrame {
 
@@ -31,6 +31,9 @@ public class TramitarPlacaNuevo extends javax.swing.JFrame {
     IRegistroPlacaBO placaBO = new RegistroPlacaBO();
     private IRegistroLicenciaBO licencia = new RegistroLicenciaBO();
 
+    /**
+     * constructor por defecto
+     */
     public TramitarPlacaNuevo() {
         initComponents();
         controlador = new ControladorFlujo();
@@ -320,9 +323,7 @@ public class TramitarPlacaNuevo extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botonVerificar1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonVerificar1;

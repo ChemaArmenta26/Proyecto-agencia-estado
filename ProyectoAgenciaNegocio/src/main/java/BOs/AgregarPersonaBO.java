@@ -19,8 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author PC
+ * Clase que implementa la lógica de negocio para AgregarPersonaBO
  */
 public class AgregarPersonaBO implements IAgregarPersonaBO {
 
@@ -28,6 +27,20 @@ public class AgregarPersonaBO implements IAgregarPersonaBO {
     private IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
     private AlgoritmoEncriptacion aes = new AlgoritmoEncriptacion();
 
+    /**
+     * Constructor por defecto de la clase AgregarPersonaBO.
+     */
+    public AgregarPersonaBO() {
+    }
+
+    /**
+     * Agrega personas al sistema
+     *
+     * Este método recupera una lista de personas utilizando el método
+     * crearPersonas(), encripta los números de teléfono de cada persona y los
+     * agrega a la base de datos y por ultimo muestra un mensaje indicando si el
+     * registro fue exitoso o no.
+     */
     @Override
     public void agregarPersonas() {
         List<Persona> listaPersonas = this.crearPersonas();
@@ -51,6 +64,12 @@ public class AgregarPersonaBO implements IAgregarPersonaBO {
         }
     }
 
+    /**
+     * Método que crea personas con información predefinida y las agrega a una
+     * lista.
+     *
+     * @return Una lista de objetos Persona con información predefinida.
+     */
     @Override
     public List<Persona> crearPersonas() {
         List<Persona> listaPersonas = new ArrayList<>();

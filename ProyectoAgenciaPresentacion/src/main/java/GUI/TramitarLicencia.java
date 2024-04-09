@@ -19,7 +19,7 @@ import javax.swing.event.DocumentListener;
 
 /**
  *
- * @author Carlo
+ * Frame TramitarLicencia
  */
 public class TramitarLicencia extends javax.swing.JFrame {
 
@@ -773,7 +773,11 @@ public class TramitarLicencia extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnLimpiarCamposActionPerformed
 
-    //FUTUROS METODOS A UTILIZAR
+    // METODOS A UTILIZAR
+
+    /**
+     * Metodo para actualizar precio
+     */
     public void actualizaprecio() {
         if (DiscapacitadoSi.isSelected()) {
             if (cb1.isSelected()) {
@@ -799,6 +803,10 @@ public class TramitarLicencia extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Metodo duracion
+     * @return regresa la duracion
+     */
     public int duracion() {
         if (cb1.isSelected()) {
             return 1;
@@ -818,9 +826,7 @@ public class TramitarLicencia extends javax.swing.JFrame {
         p5.setText("");
     }
 
-    /**
-     * @param args the command line arguments
-     */
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox DiscapacitadoNo;

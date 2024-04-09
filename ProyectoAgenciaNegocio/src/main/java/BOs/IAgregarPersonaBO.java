@@ -8,12 +8,18 @@ import Entidades.Persona;
 import java.util.List;
 
 /**
- *
- * @author PC
+ *  Clase que implementa la lógica de negocio para IAgregarPersonaBO
  */
 public interface IAgregarPersonaBO {
 
+    /**
+     * Método para agregar personas al sistema.
+     */
     public void agregarPersonas();
 
+    /**
+     * Método para crear una lista de personas.
+     * @return Una lista de objetos Persona creados.
+     */
     public List<Persona> crearPersonas();
 }

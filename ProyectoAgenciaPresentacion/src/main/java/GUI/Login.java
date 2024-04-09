@@ -9,19 +9,24 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author pc
+ * Frame Login
  */
 public class Login extends javax.swing.JFrame {
     ControladorFlujo controlador;
 
     /**
-     * Creates new form Login
+     * constructor por defecto
      */
     public Login() {
         initComponents();
         controlador = new ControladorFlujo();
     }
 
+    /**
+ * Realiza la verificación de las credenciales de usuario.
+ *
+ * @return true si las credenciales son válidas (usuario: "root", contraseña: "Itson"), false en caso contrario
+ */
     public boolean verificacion() {
         if (txtUsuario.getText().equalsIgnoreCase("root") && txtContra.getText().equalsIgnoreCase("Itson")) {
             return true;
@@ -220,8 +225,10 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     /**
-     * @param args the command line arguments
-     */
+ * Método principal que inicia la aplicación.
+ *
+ * @param args los argumentos de la línea de comandos 
+ */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

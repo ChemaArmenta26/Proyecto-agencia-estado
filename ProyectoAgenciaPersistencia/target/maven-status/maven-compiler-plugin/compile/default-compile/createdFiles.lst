@@ -1,7 +1,6 @@
 DAOs\IPlacaDAO.class
 Entidades\Persona.class
 Entidades\Automovil.class
-com\mycompany\proyectoagenciapersistencia\ProyectoAgenciaPersistencia.class
 Conexion\ConexionBD.class
 Entidades\Licencia.class
 DAOs\ILicenciaDAO.class

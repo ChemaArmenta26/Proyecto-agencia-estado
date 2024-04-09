@@ -26,8 +26,7 @@ import javax.persistence.PersistenceException;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author PC
+ *  Clase que implementa la lógica de negocio para RegistroPlacaBO
  */
 public class RegistroPlacaBO implements IRegistroPlacaBO {
 
@@ -37,6 +36,22 @@ public class RegistroPlacaBO implements IRegistroPlacaBO {
     AlgoritmoEncriptacion encriptador = new AlgoritmoEncriptacion();
     private static final Logger logger = Logger.getLogger(RegistroPlacaBO.class.getName());
 
+    
+    
+    /**
+     * constructor por defecto
+     */
+    public RegistroPlacaBO() {
+    }
+    
+    
+    
+
+    /**
+     * Agrega una nueva placa al sistema.
+     * @param placaNueva El objeto PlacaDTO que representa la nueva placa a agregar.
+     * @return PlacaDTO que representa la placa agregada, o null si ocurrió un error durante el proceso.
+     */
     @Override
     public PlacaDTO agregarPlaca(PlacaDTO placaNueva) {
         try {
@@ -64,6 +79,10 @@ public class RegistroPlacaBO implements IRegistroPlacaBO {
         return null;
     }
 
+    /**
+     * Agrega una nueva placa al sistema sin verificar la existencia de una placa activa para el vehículo.
+     * @param placaNuevaDTO El objeto PlacaDTO que representa la nueva placa a agregar.
+     */
     @Override
     public void agregarNuevaPlaca(PlacaDTO placaNuevaDTO) {
         Placa nuevaPlaca = new Placa(placaDAO.generarCodigo(), true, placaNuevaDTO.getVehiculo(),
@@ -75,6 +94,11 @@ public class RegistroPlacaBO implements IRegistroPlacaBO {
         }
     }
     
+    /**
+     * Consulta una placa en el sistema mediante su número.
+     * @param numPlaca El número de la placa a consultar.
+     * @return El objeto PlacaDTO que representa la placa consultada, o null si no se encontró la placa.
+     */
     @Override
     public PlacaDTO consultarPlaca(String numPlaca){
         try{

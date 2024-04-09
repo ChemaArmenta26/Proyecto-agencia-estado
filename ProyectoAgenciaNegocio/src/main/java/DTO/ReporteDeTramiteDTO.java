@@ -7,8 +7,7 @@ package DTO;
 import java.util.Date;
 
 /**
- *
- * @author PC
+ *  Clase que implementa la lógica de negocio para ReporteDeTramiteDTO
  */
 public class ReporteDeTramiteDTO {
     private Date fecha;
@@ -67,22 +66,42 @@ public class ReporteDeTramiteDTO {
         return costo;
     }
 
+    /**
+     * Establece la fecha del trámite.
+     * @param fecha Fecha del trámite a establecer.
+     */
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
+    /**
+     * Establece el tipo de trámite.
+     * @param tipo Tipo de trámite a establecer.
+     */
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 
+    /**
+     * Establece el nombre del solicitante del trámite.
+     * @param nombre Nombre del solicitante del trámite a establecer.
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    /**
+     * Establece el costo del trámite.
+     * @param costo Costo del trámite a establecer.
+     */
     public void setCosto(Float costo) {
         this.costo = costo;
     }
 
+    /** 
+     * Retorna una representación de cadena de este objeto.
+     * @return Una cadena que representa este objeto.
+     */
     @Override
     public String toString() {
         return "ReporteDeTramiteDTO{" + "fecha=" + fecha + ", tipo=" + tipo + ", nombre=" + nombre + ", costo=" + costo + '}';

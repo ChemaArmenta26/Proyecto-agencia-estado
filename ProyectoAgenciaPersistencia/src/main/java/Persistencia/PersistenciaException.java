@@ -5,8 +5,7 @@
 package Persistencia;
 
 /**
- *
- * @author pc
+ * Excepción personalizada para errores de persistencia.
  */
 public class PersistenciaException extends Exception{
 

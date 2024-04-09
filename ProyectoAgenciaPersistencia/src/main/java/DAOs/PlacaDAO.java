@@ -16,17 +16,28 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
- *
- * @author PC
+ * Clase que implementa los métodos de acceso a datos para la entidad Placa.
  */
 public class PlacaDAO implements IPlacaDAO {
 
     IConexionBD conexion;
 
+    /**
+     * Constructor de la clase PlacaDAO.
+     *
+     * @param conexion La conexión a la base de datos.
+     */
     public PlacaDAO(IConexionBD conexion) {
         this.conexion = conexion;
     }
 
+    /**
+     * Agrega una nueva placa a la base de datos.
+     *
+     * @param placa La placa que se desea agregar.
+     * @return La placa agregada.
+     * @throws PersistenciaException Si ocurre un error al intentar agregar la placa.
+     */
     @Override
     public Placa agregarPlaca(Placa placa) throws PersistenciaException {
         EntityManager entityManager = conexion.conexion();
@@ -42,6 +53,13 @@ public class PlacaDAO implements IPlacaDAO {
         return placa;
     }
 
+    /**
+     * Consulta una placa por su número en la base de datos.
+     *
+     * @param num El número de placa que se desea consultar.
+     * @return La placa encontrada con el número especificado, o null si no se encuentra ninguna.
+     * @throws PersistenciaException Si ocurre un error al intentar consultar la placa por su número.
+     */
     @Override
     public Placa consultarPlacaNum(String num) throws PersistenciaException {
         EntityManager entityManager = conexion.conexion();
@@ -62,6 +80,13 @@ public class PlacaDAO implements IPlacaDAO {
         return placa;
     }
 
+    /**
+     * Consulta la placa activa de un vehículo en la base de datos.
+     *
+     * @param vehiculo El vehículo del cual se desea consultar la placa activa.
+     * @return La placa activa del vehículo especificado, o null si no tiene ninguna placa activa.
+     * @throws PersistenciaException Si ocurre un error al intentar consultar la placa activa del vehículo.
+     */
     @Override
     public Placa consultarPlacaActiva(Vehiculo vehiculo) throws PersistenciaException {
         EntityManager entityManager = conexion.conexion();
@@ -80,6 +105,13 @@ public class PlacaDAO implements IPlacaDAO {
         }
     }
 
+    /**
+     * Actualiza el estado de una placa en la base de datos.
+     *
+     * @param placa La placa cuyo estado se desea actualizar.
+     * @return true si se actualizó el estado correctamente, false en caso contrario.
+     * @throws PersistenciaException Si ocurre un error al intentar actualizar el estado de la placa.
+     */
     @Override
     public boolean actualizarEstadoPlaca(Placa placa) throws PersistenciaException {
         try {
@@ -104,6 +136,11 @@ public class PlacaDAO implements IPlacaDAO {
         }
     }
 
+    /**
+     * Genera un código aleatorio para una nueva placa.
+     *
+     * @return El código aleatorio generado para la nueva placa.
+     */
     @Override
     public String generarCodigo() {
          Random rand = new Random();

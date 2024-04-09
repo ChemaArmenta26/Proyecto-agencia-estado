@@ -4,13 +4,13 @@ DTO\VehiculoDTO.class
 BOs\AgregarPersonaBO.class
 DTO\PlacaDTO.class
 DTO\TramiteDTO.class
-ReporteEstilo\ReporteTramite.class
-com\mycompany\proyectoagencianegocio\ProyectoAgenciaNegocio.class
 DTO\AutomovilDTO.class
 Encriptacion\AlgoritmoEncriptacion.class
 BOs\IRegistroPlacaBO.class
+BOs\ReporteTramiteBO$PageNumberEvent.class
 BOs\IRegistroAutomovilBO.class
 BOs\IAgregarPersonaBO.class
+DTO\ReporteDeTramiteDTO.class
 BOs\IRegistroLicenciaBO.class
 BOs\RegistroLicenciaBO.class
 BOs\RegistroPlacaBO.class

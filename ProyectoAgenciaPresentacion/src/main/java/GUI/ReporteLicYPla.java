@@ -21,13 +21,16 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Carlo
+ * Frame ReporteLicYPla
  */
 public class ReporteLicYPla extends javax.swing.JFrame {
 
     ControladorFlujo controlador;
     private IReporteTramiteBO reporteTramite = new ReporteTramiteBO();
 
+    /**
+     * constructor por defecto
+     */
     public ReporteLicYPla() {
         initComponents();
         controlador = new ControladorFlujo();
@@ -399,9 +402,7 @@ public class ReporteLicYPla extends javax.swing.JFrame {
 
     }
 
-    /**
-     * @param args the command line arguments
-     */
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsultar;

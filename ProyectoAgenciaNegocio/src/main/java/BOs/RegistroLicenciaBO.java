@@ -18,8 +18,7 @@ import java.util.Calendar;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author pc
+ *  Clase que implementa la lógica de negocio para RegistroLicenciaBO
  */
 public class RegistroLicenciaBO implements IRegistroLicenciaBO {
 
@@ -27,6 +26,21 @@ public class RegistroLicenciaBO implements IRegistroLicenciaBO {
     private ILicenciaDAO licenciaDAO = new LicenciaDAO(conexionBD);
     private IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
 
+    
+    
+    /**
+     * constructor por defecto
+     */
+    public RegistroLicenciaBO() {
+    }
+    
+    
+    
+
+    /**
+     * Agrega una nueva licencia al sistema.
+     * @param licenciaNueva El objeto LicenciaDTO que representa la nueva licencia a agregar.
+     */
     @Override
     public void agregarLicencia(LicenciaDTO licenciaNueva) {
         try {
@@ -60,6 +74,12 @@ public class RegistroLicenciaBO implements IRegistroLicenciaBO {
         }
     }
 
+    /**
+     * Consulta una persona en el sistema mediante su RFC.
+     * @param rfc El RFC de la persona a consultar.
+     * @param verificacion Indica si se requiere una verificación adicional.
+     * @return Persona que representa la persona consultada, o null si no se encontró la persona.
+     */
     @Override
     public Persona consultarRFC(String rfc, boolean verificacion) {
         try {
@@ -75,6 +95,11 @@ public class RegistroLicenciaBO implements IRegistroLicenciaBO {
         }
     }
 
+    /**
+     * Verifica la existencia de una persona en el sistema mediante su RFC.
+     * @param rfc El RFC de la persona a verificar.
+     * @return si la persona existe en el sistema, false en caso contrario.
+     */
     @Override
     public boolean verificarRFC(String rfc) {
         try {

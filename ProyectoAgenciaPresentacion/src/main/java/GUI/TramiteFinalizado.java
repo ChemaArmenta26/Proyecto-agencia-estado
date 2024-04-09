@@ -8,7 +8,7 @@ import Control.ControladorFlujo;
 
 /**
  *
- * @author Carlo
+ * Frame TramiteFinalizado
  */
 public class TramiteFinalizado extends javax.swing.JFrame {
 
@@ -147,9 +147,7 @@ public class TramiteFinalizado extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnMenuActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMenu;
