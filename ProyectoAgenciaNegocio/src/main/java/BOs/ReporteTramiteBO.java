@@ -24,31 +24,28 @@ import Entidades.Persona;
 import Entidades.Placa;
 import Entidades.Tramite;
 import Persistencia.PersistenciaException;
-import java.io.File;
-import java.io.FileInputStream;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.ColumnText;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfPageEventHelper;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import net.sf.jasperreports.engine.JREmptyDataSource;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 /**
  *
@@ -144,7 +141,7 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
                         fecha,
                         tipoTramite,
                         nombreCompletoStr,
-                        NumberFormat.getCurrencyInstance().format(tm.getCosto()));
+                        tm.getCosto());
 
                 if (filtro.getTipoTramite() != null) {
                     if (cumpleFiltro(tramiteDTO, filtro)) {
@@ -179,56 +176,58 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
 
     @Override
     public void generarReporte(List<ReporteDeTramiteDTO> listaTramites) {
-        
-        JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(listaTramites);
-        
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("ds", itemsJRBean);
+        Document doc = new Document();
 
-        
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Guardar Reporte");
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PDF", "pdf"));
+        try {
+            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("ReporteDeTramites.pdf"));
+            writer.setPageEvent(new PageNumberEvent());
 
-        
-        int userSelection = fileChooser.showSaveDialog(null);
+            Font tituloFont = new Font(Font.FontFamily.TIMES_ROMAN, 24, Font.BOLD);
+            Paragraph titulo = new Paragraph("Reporte de Trámites", tituloFont);
+            titulo.setAlignment(Element.ALIGN_CENTER);
 
-       
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File fileToSave = fileChooser.getSelectedFile();
-            String filePath = fileToSave.getAbsolutePath();
+            Date fechaActual = new Date();
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+            Paragraph fecha = new Paragraph("Fecha del Reporte: " + formatoFecha.format(fechaActual));
+            fecha.setAlignment(Element.ALIGN_LEFT);
 
-           
-            if (!filePath.endsWith(".pdf")) {
-                filePath += ".pdf";
+            PdfPTable tabla = new PdfPTable(4);
+            tabla.addCell(createCell("Fecha del Trámite", true));
+            tabla.addCell(createCell("Costo", true));
+            tabla.addCell(createCell("Nombre del solicitante", true));
+            tabla.addCell(createCell("Tipo de Trámite", true));
+
+            for (ReporteDeTramiteDTO tramite : listaTramites) {
+                String fechaExpedicionFormateada = (tramite.getFecha() != null) ? formatoFecha.format(tramite.getFecha().getTime()) : "NoDate";
+                tabla.addCell(createCell(fechaExpedicionFormateada, false));
+                tabla.addCell(createCell(Double.toString(tramite.getCosto()), false));
+                tabla.addCell(createCell(tramite.getNombre(), false));
+                tabla.addCell(createCell(tramite.getTipo(), false));
             }
 
+            doc.open();
+            doc.add(titulo);
+            doc.add(fecha);
+            doc.add(Chunk.NEWLINE);
+            doc.add(tabla);
+            doc.close();
 
-            try (InputStream input = new FileInputStream(new File("ReporteDeTramites.jrxml"))) {
-                JasperDesign jasperDesign = JRXmlLoader.load(input);
+            JOptionPane.showMessageDialog(null, "El PDF ha sido exportado con exito!  Nombre del Archivo: ReporteDeTramites.pdf", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-                JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-              
-                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
-
-             
-                try (
-                        OutputStream outputStream = new FileOutputStream(new File(filePath))) {
-                    JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
-                }
-
-            } catch (Exception ex) {
-               
-                logger.log(Level.SEVERE, "Error al generar el reporte");
-
-            }
-         
-            logger.log(Level.INFO, "Archivo generado");
-            JOptionPane.showMessageDialog(null, "Archivo guardado", "Info", JOptionPane.INFORMATION_MESSAGE);
-        } else if (userSelection == JFileChooser.CANCEL_OPTION) {
-            
-            logger.log(Level.INFO, "Usuario cancelo la operacion");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error al generar el reporte de trámites.");
         }
+    }
+
+    private PdfPCell createCell(String content, boolean header) {
+        PdfPCell cell = new PdfPCell(new Phrase(content));
+        if (header) {
+            cell.setBackgroundColor(new BaseColor(252, 121, 93));
+        } else {
+            cell.setBackgroundColor(new BaseColor(246, 236, 162));
+        }
+        return cell;
     }
 
     @Override
@@ -345,4 +344,16 @@ public class ReporteTramiteBO implements IReporteTramiteBO {
         }
     }
 
+    private static class PageNumberEvent extends PdfPageEventHelper {
+
+        @Override
+        public void onEndPage(PdfWriter writer, Document document) {
+            PdfContentByte cb = writer.getDirectContent();
+            Phrase footer = new Phrase("Página " + writer.getPageNumber(), new Font(Font.FontFamily.HELVETICA, 12));
+            ColumnText.showTextAligned(cb, Element.ALIGN_CENTER,
+                    footer,
+                    document.right() - 50,
+                    document.bottom() - 10, 0);
+        }
+    }
 }

@@ -12,9 +12,9 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>net.sf.jasperreports</groupId>
-            <artifactId>jasperreports</artifactId>
-            <version>6.17.0</version> <!-- o la versión que estés utilizando -->
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.12</version>
         </dependency>
     </dependencies>
     <properties>
